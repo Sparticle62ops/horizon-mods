@@ -1,0 +1,32 @@
+## Horizon registry entry for ShulkerBoxTooltip (port of MisterPeModder/ShulkerBoxTooltip).
+id = "shulkerboxtooltip"
+kind = "native-mod"
+name = "Shulker Box Tooltip"
+summary = "Container-content previews on hover, ported 1:1 on the logic core: config model, color registry, item merging and preview providers."
+description = """
+**A native Horizon mod**: the launcher builds it into the game (install it on the launcher's Mods page, then press Build there). Native mods are not sandboxed and run with your account's rights, so read the source before you build it. Pinned to the Horizon tree this was built against.
+
+- The complete configuration model with upstream defaults: preview category (swap modes, compact preview NBT behavior, max row size, server integration, theme, position, short item counts), tooltip category, server category, colors and the three control keys. Config loads and saves as upstream-style key=value lines.
+- The color registry: ColorKey/ColorKeyImpl with float rgb components, the 0.15 per-channel clamp, the default key set (default, ender chest, generic container, shulker box, bundle plus all 16 dyed keys).
+- Item merging: ItemKey with upstream's asymmetric hashing rule, MergedItemStack and mergeInventory with all three merging strategies and both compact-preview orderings.
+- Preview providers: block-entity gating, generic container (27 slots), shulker box dye-to-color mapping, bundle tail placement with selected-slot mapping, ender-chest cache-backed provider, and the priority-ordered registry lookup.
+
+Port of [ShulkerBoxTooltip](https://github.com/MisterPeModder/ShulkerBoxTooltip) by Yanis Guaye (MIT, (c) 2019, read upstream at commit 68e7f8e); credited upstream, original license preserved. Host seams tracked on horizon-rust/horizon: the client tooltip/preview-window render surface on [#10199](https://github.com/horizon-rust/horizon/issues/10199), and preview keybinds, ender-chest sync networking and item component maps on [#11020](https://github.com/horizon-rust/horizon/issues/11020). The logic core is 1:1 with 11 passing tests; the README documents the seams.
+"""
+authors = ["sparticle62ops"]
+owners = ["sparticle62ops"]
+owner_ids = [209812745]
+license = "MIT"
+source = "https://github.com/Sparticle62ops/horizon-shulkerboxtooltip"
+categories = ["utility"]
+tags = ["tooltips", "inventory", "previews", "qol"]
+
+icon = "icons/shulkerboxtooltip.png"
+
+[[versions]]
+published = "2026-11-06"
+version = "1.0.0"
+game = "26.3"
+file = "shulkerboxtooltip-1.0.0.hnmod"
+sha256 = "0650be63bdf16acc04bb1590ab88f416bd6c53b4aca9ebb4e6ce9d8a0426b0d1"
+changelog = "First release: config model, color registry, item merging and preview providers, ported 1:1 with 11 passing tests; render/keybind/network seams tracked on horizon-rust/horizon #10199 and #11020."
