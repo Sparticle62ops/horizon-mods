@@ -1,0 +1,31 @@
+## Horizon registry entry for Fabrishot (port of ramidzkh/fabrishot).
+id = "fabrishot"
+kind = "native-mod"
+name = "Fabrishot"
+summary = "Custom-resolution screenshots, ported 1:1 around the capture core: config, filename logic and the capture state machine."
+description = """
+**A native Horizon mod**: the launcher builds it into the game (install it on the launcher's Mods page, then press Build there). Native mods are not sandboxed and run with your account's rights, so read the source before you build it. Pinned to the Horizon tree this was built against.
+
+- All eight config values with upstream's original defaults, loaded and saved as `fabrishot.properties`-style key=value lines with upstream's all-or-nothing fallback to defaults on a bad line.
+- Output filenames: the screenshots directory, `%time%` and `%world%` placeholders with the `no_world` fallback, and upstream's exact no-clobber suffix sequence (first file plain, then _3, _4, ...).
+- The capture state machine: the resolution swap with restore bookkeeping, the delay frame count, and the HUD hide/restore around the capture frame. PNG, JPG, TGA and BMP output with upstream's extensions.
+
+Port of [fabrishot](https://github.com/ramidzkh/fabrishot) by Ramid Khan (MIT, (c) 2021 Ramid Khan), itself a Fabric port of ata4's mineshot; credited upstream, original license preserved. Horizon has no screenshot-capture hook for native mods yet (tracked on [#9606](https://github.com/horizon-rust/horizon/issues/9606)), so the framebuffer read is the one gap; everything around it is 1:1 and the port fires the moment a capture surface lands. The README documents it.
+"""
+authors = ["sparticle62ops"]
+owners = ["sparticle62ops"]
+owner_ids = [209812745]
+license = "MIT"
+source = "https://github.com/Sparticle62ops/horizon-fabrishot"
+categories = ["utility"]
+tags = ["screenshots", "graphics", "utility", "qol"]
+
+icon = "icons/fabrishot.png"
+
+[[versions]]
+published = "2026-11-06"
+version = "1.0.0"
+game = "26.3"
+file = "fabrishot-1.0.0.hnmod"
+sha256 = "aa272d9a3430e9c1f83525d3d747d8cec2b9a1c33f312532b5c647dd87781aea"
+changelog = "First release: config, filename logic and the capture state machine, ported 1:1 around Horizon's missing screenshot-capture hook (tracked on horizon-rust/horizon #9606)."
