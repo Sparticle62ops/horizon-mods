@@ -1,0 +1,31 @@
+## Horizon registry entry for uku's Armor HUD (port of uku3lig/armor-hud).
+id = "ukus_armor_hud"
+kind = "native-mod"
+name = "uku's Armor HUD"
+summary = "A minimalist vanilla-like armor HUD widget, ported 1:1 on the config and layout core: the full config model, anchor geometry and low-durability warning math."
+description = """
+**A native Horizon mod**: the launcher builds it into the game (install it on the launcher's Mods page, then press Build there). Native mods are not sandboxed and run with your account's rights, so read the source before you build it. Pinned to the Horizon tree this was built against.
+
+- The complete configuration model with upstream defaults: anchor (hotbar/top/vertical center/bottom), side (left/right), style (hotbar/crosshair/vertical), orientation, widget-shown gate (always/never/not empty), off-hand slot behavior (always ignore/always leave space/adhere), durability display (bar/number/off) with independent off-hand and main-hand switches, and push-aside toggles for bossbars, status icons and subtitles.
+- ArmorHudMod's layout constants and getWidgetRect geometry 1:1: the side multipliers (hotbar+left or non-hotbar+right flip), the addedHotbarOffset switch (always ignore / always leave space / adhere with attack-indicator and offhand checks), and the X and Y switches per anchor (hotbar center with offsets, top at offsetY, vertical center, bottom/hotbar minus safe area).
+- The low-durability warning: gate at minDurabilityValue 20 or minDurabilityPercentage 0.1 (whichever triggers first), with the warning bob driven by sin of game ticks times warningBobIntensity 3, plus the widget-shown and empty-slot gates.
+
+Port of [uku's Armor HUD](https://github.com/uku3lig/armor-hud) by uku3lig (MIT; a fork of BerdinskiyBear's Armor HUD), read upstream at commit 233932b; credited upstream, original license preserved. The config and layout core is 1:1 with 9 passing tests; the widget drawing (armor item icons, durability bars, warning icon, armor-break sound) and the config screen need Horizon surfaces tracked on horizon-rust/horizon [#10125](https://github.com/horizon-rust/horizon/issues/10125). The README documents the seams.
+"""
+authors = ["sparticle62ops"]
+owners = ["sparticle62ops"]
+owner_ids = [209812745]
+license = "MIT"
+source = "https://github.com/Sparticle62ops/horizon-ukus-armor-hud"
+categories = ["utility", "equipment"]
+tags = ["hud", "armor", "durability", "qol"]
+
+icon = "icons/ukus_armor_hud.png"
+
+[[versions]]
+published = "2026-11-06"
+version = "1.0.0"
+game = "26.3"
+file = "ukus-armor-hud-1.0.0.hnmod"
+sha256 = "e60809cc394157c5f646b4a116816d54b0ccda521a1a28e94ae5e8e92ae69b2a"
+changelog = "First release: the config model, enum tables, layout constants, getWidgetRect geometry and warning math ported 1:1 with 9 passing tests; the HUD drawing surface is blocked on horizon-rust/horizon #10125."
