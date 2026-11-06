@@ -1,0 +1,30 @@
+## Horizon registry entry for TwinSession (port of TheMisterFish/Fabric_TwinSession).
+id = "twinsession"
+kind = "native-mod"
+name = "TwinSession"
+summary = "Lets several clients join one server from the same Minecraft account: each duplicate gets a fresh UUID and name, so they play side by side."
+description = """
+**A native Horizon mod**: the launcher builds it into the game (install it on the launchers Mods page, then press Build there). Native mods are not sandboxed and run with your accounts rights, so read the source before you build it. Pinned to the Horizon tree this was built against.
+
+- Several clients join one server from one account without kicking the original.
+- The server mints each duplicate a fresh UUID and name; they play side by side.
+
+Port of [TwinSession](https://github.com/TheMisterFish/Fabric_TwinSession) by TheMisterFish (CC0-1.0); credited upstream, original license preserved. Feature gaps vs upstream are documented in the port README and tracked on horizon-rust/horizon.
+"""
+authors = ["sparticle62ops"]
+owners = ["sparticle62ops"]
+owner_ids = [209812745]
+license = "CC0-1.0"
+source = "https://github.com/Sparticle62ops/horizon-twinsession"
+categories = ["utility"]
+tags = ["sessions", "multi-account", "login", "qol"]
+
+icon = "icons/twinsession.png"
+
+[[versions]]
+published = "2026-11-06"
+version = "1.0.0"
+game = "26.3"
+file = "twinsession-1.0.0.hnmod"
+sha256 = "792742718c628f86f115d48a01825621d0785d646280697a53ba331c3058597f"
+changelog = "First release: duplicate-login support with fresh UUID and name per session."
