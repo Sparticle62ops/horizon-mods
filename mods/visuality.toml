@@ -1,0 +1,31 @@
+## Horizon registry entry for Visuality (port of PinkGoosik/visuality).
+id = "visuality"
+kind = "native-mod"
+name = "Visuality"
+summary = "Particle visuals, ported 1:1: rain and snow circles on water, hit particles, soul puffs, sparkles, and creeper charge."
+description = """
+**A native Horizon mod**: the launcher builds it into the game (install it on the launcher's Mods page, then press Build there). Native mods are not sandboxed and run with your account's rights, so read the source before you build it. Pinned to the Horizon tree this was built against.
+
+- Rain and snow circles on water surfaces, with the spawn-condition, density-roll and radius-offset math kept.
+- Hit particles when mobs are hurt (attacker's attack-damage stat sets the count), plus the sparkles on baby zombies and sneaking self-view gates.
+- Sprint soul puffs near wither-summon bases, soul particles above those bases, sparkles on shiny blocks and amethyst clusters, and the creeper charge particle when powered.
+
+Port of [Visuality](https://github.com/PinkGoosik/visuality) by PinkGoosik (MIT, read upstream at commit fd8e592); credited upstream, original license preserved. Upstream's slime path stays out because upstream ships it commented out; the README documents it.
+"""
+authors = ["sparticle62ops"]
+owners = ["sparticle62ops"]
+owner_ids = [209812745]
+license = "MIT"
+source = "https://github.com/Sparticle62ops/horizon-visuality"
+categories = ["utility"]
+tags = ["particles", "visuals", "decoration", "qol"]
+
+icon = "icons/visuality.png"
+
+[[versions]]
+published = "2026-11-06"
+version = "1.0.0"
+game = "26.3"
+file = "visuality-1.0.0.hnmod"
+sha256 = "4db43b5b63db66211ef34699ffb1da428c2f0648040bd4ff8b88bc957947d483"
+changelog = "First release: water circles, hit particles, soul puffs, sparkles and creeper charge, ported 1:1. Upstream's disabled slime path stays out."
