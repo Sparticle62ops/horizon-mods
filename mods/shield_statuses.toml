@@ -1,0 +1,32 @@
+## Horizon registry entry for Shield Statuses (port of Walksy/ShieldStatus).
+id = "shield_statuses"
+kind = "native-mod"
+name = "Shield Statuses"
+summary = "Tints players' shields by live or axe-disabled state, with cooldown interpolation and shown-players gating."
+description = """
+**A native Horizon mod**: the launcher builds it into the game (install it on the launchers Mods page, then press Build there). Native mods are not sandboxed and run with your accounts rights, so read the source before you build it. Pinned to the Horizon tree this was built against.
+
+- Enabled shields show the enabled color, disabled shields the disabled color.
+- With interpolation on, the disabled color gradually transitions back to the enabled color as the cooldown runs out.
+- The shown-players setting gates whose shields are tinted: self only, others only, or all; a keybind cycles it.
+- Cooldown facts arrive through the client packet hook, so it works on real servers.
+
+Port of [Shield Statuses](https://github.com/Walksy/ShieldStatus) by Walksy (MIT); credited upstream, original license preserved. Degradation vs upstream: the held-item render redirect seam is tracked on horizon-rust/horizon #10074.
+"""
+authors = ["sparticle62ops"]
+owners = ["sparticle62ops"]
+owner_ids = [209812745]
+license = "MIT"
+source = "https://github.com/Sparticle62ops/horizon-shield-statuses"
+categories = ["utility"]
+tags = ["shield", "combat", "hud", "pvp"]
+
+icon = "icons/shield_statuses.png"
+
+[[versions]]
+published = "2026-11-06"
+version = "1.0.0"
+game = "26.3"
+file = "shield_statuses-1.0.0.hnmod"
+sha256 = "1e0e6085cdbc58e6c7f190e485a7be9fbce739481d2d429f659ae03fac686d5a"
+changelog = "First release: state logic + packet-hook tint, 1:1 with upstream behavior modulo the #10074 render seam."
