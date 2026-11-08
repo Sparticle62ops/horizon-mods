@@ -1,0 +1,30 @@
+id = "commandkeys"
+kind = "native-mod"
+name = "CommandKeys"
+summary = "Port of CommandKeys: bind keys to macros of chat messages and commands with per-message delays."
+description = """Rust port of [CommandKeys by TerminalMC](https://github.com/TerminalMC/CommandKeys) (Apache-2.0); this port keeps Apache-2.0.
+
+Bind keys to macros: lists of chat messages and commands with per-message delays, so one keypress runs a whole routine. Config lives where the original put it (`config/commandkeys.json`).
+
+Known degradations against the original, where Horizon hooks are still missing, are listed in the port's README and tracked as API asks on horizon-rust/horizon.
+
+Tested against Horizon `3fb4c3138e0c5d8fdd2fdb555cf31368e8897497` with Horizon Mixins `d9c83d7096b7ea5b83678da2efdfd6161f74997e`.
+
+Source and port notes: [github.com/Sparticle62ops/horizon-commandkeys](https://github.com/Sparticle62ops/horizon-commandkeys)."""
+authors = ["Sparticle62ops"]
+owners = ["Sparticle62ops"]
+# owner_ids: filled by the submit form from the signed-in GitHub account
+license = "Apache-2.0"
+source = "https://github.com/Sparticle62ops/horizon-commandkeys"
+categories = ['utility']
+tags = ['keybinds', 'macros', 'chat']
+
+icon = "icons/commandkeys.png"
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-08"
+game = "26.3"
+file = "commandkeys-1.0.0.hnmod"
+sha256 = "d1d31b2a156ecf9ac6a88372fbca3f3d9d17d5a9a9326400ea882308f483f07f"
+changelog = """Initial release. Port of CommandKeys by TerminalMC (Apache-2.0); pinned to Horizon 3fb4c31 and Horizon Mixins d9c83d7."""
