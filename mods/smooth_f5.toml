@@ -1,0 +1,32 @@
+id = "smooth_f5"
+kind = "native-mod"
+name = "Smooth F5"
+summary = "Port of Countered's Smooth F5: no hard snaps when you toggle F5, gentle springs while you move, eased return into first person."
+description = """A port of [Countered's Smooth F5](https://github.com/Coun7ered/smooth_f5) (CC0-1.0, by Countered), which smooths the third-person camera: no more hard snaps when you toggle F5, gentle springs while you move, and an eased return into first person.
+
+The original hooks Minecraft's `Camera.update` and rewrites the camera pose each frame. Horizon's camera is native, so this port rides the game's camera-shake surface instead: every frame the vanilla camera aligns as usual, then the mod answers the camera-shake hook with the turn and offset that carries the rendered camera onto the smoothed pose the original would have written.
+
+Everything else is a faithful port of the original's `CameraMixin`: the same four smoothing modes (transition, movement, always, never) with the same defaults; the same spring physics for position and rotation with damping twice the square root of the stiffness; the same eased cubic return into first person, re-anchored each frame; the same front-view fall-flying reset. The camera-shake surface clamps each frame's turn to 10 degrees and each offset axis to 0.5 blocks; the mod answers within those bounds and keeps its state in step with what actually rendered.
+
+Commands: `/smoothf5 status` (`/sf5`), `/smoothf5 mode <transition|movement|always|never>`, `/smoothf5 pos|rot <on|off>`, `/smoothf5 stiffness <pos|rot> <0.01-1>`, `/smoothf5 return <1-100>`. Settings live at `<config>/smooth_f5/config.json`.
+
+Tested against Horizon `3fb4c3138e0c5d8fdd2fdb555cf31368e8897497` with Horizon Mixins `d9c83d7096b7ea5b83678da2efdfd6161f74997e`.
+
+Source and port notes: [github.com/Sparticle62ops/horizon-smooth-f5](https://github.com/Sparticle62ops/horizon-smooth-f5)."""
+authors = ["Sparticle62ops"]
+owners = ["Sparticle62ops"]
+# owner_ids: filled by the submit form from the signed-in GitHub account
+license = "CC0-1.0"
+source = "https://github.com/Sparticle62ops/horizon-smooth-f5"
+categories = ['utility']
+tags = ['camera', 'third-person', 'render']
+
+icon = "icons/smooth_f5.png"
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-08"
+game = "26.3"
+file = "smooth_f5-1.0.0.hnmod"
+sha256 = "a3378a8907269f2c499f0414e9c218719ec3fda1e8c5ce436be4835d7ad75a4e"
+changelog = """Initial release. Port of Countered's Smooth F5 (CC0-1.0); pinned to Horizon 3fb4c31 and Horizon Mixins d9c83d7."""
