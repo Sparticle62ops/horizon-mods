@@ -1,15 +1,15 @@
 ## Horizon registry entry for Simple Voice Chat (client half).
 id = "simple_voice_chat"
 kind = "native-mod"
-name = "Simple Voice Chat"
+name = "Simple Voice Chat client (unofficial)"
 summary = "Client-side voice chat: mic capture, Opus, positional mixing, push-to-talk, groups. Speaks Simple Voice Chat 2.6.x protocol (compat version 20)."
 description = """
-**A native Horizon mod**: the launcher builds it into the game (install it on the launchers Mods page, then press Build there). Native mods are not sandboxed and run with your accounts rights, so read the source before you build it. Pinned to the Horizon tree this was built against.
+**A native Horizon mod**: the launcher builds it into the game (install it on the launcher's Mods page, then press Build there). Native mods are not sandboxed and run with your account's rights, so read the source before you build it. Pinned to the Horizon tree this was built against.
 
-- **Mic capture + playback** through the platforms audio stack, Opus encode/decode (libopus vendored, Xiph BSD).
+- **Mic capture + playback** through the platform's audio stack, Opus encode/decode (libopus vendored, Xiph BSD).
 - **UDP voice** with positional mixing, so players hear each other from where they stand.
 - **Push-to-talk**, voice **groups**, and activation controls.
-- Speaks **Simple Voice Chat 2.6.x** protocol compatibility version 20, so it works on real Java servers running SVC, and with Horizons own voicechat-server.
+- Speaks the **Simple Voice Chat 2.6.x** protocol (compatibility version 20). Tested so far only against Horizon's own voicechat-server, not yet against the Simple Voice Chat plugin on a Paper or Fabric server.
 
 Clean-room reimplementation of the client half of [Simple Voice Chat](https://modrinth.com/mod/simple-voice-chat) by henkelmax; not affiliated, no code or assets from it. Original implementation, MIT. Includes libopus (Xiph, BSD-style license).
 """
