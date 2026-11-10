@@ -22,9 +22,9 @@ tags = ["commands", "macros", "keybinds", "qol"]
 icon = "icons/commandkeys.png"
 
 [[versions]]
-published = "2026-11-06"
-version = "1.0.0"
+published = "2026-11-09"
+version = "1.0.1"
 game = "26.3"
-file = "commandkeys-1.0.0.hnmod"
-sha256 = "d1d31b2a156ecf9ac6a88372fbca3f3d9d17d5a9a9326400ea882308f483f07f"
-changelog = "First release: key-to-macro bindings with per-message delays, in-game editor hooked into the controls screen."
+file = "commandkeys-1.0.1.hnmod"
+sha256 = "4da745a6f4b5d7b9fb1f1a2d2629404b32c3e91765599b858b4d86055c0ad0fc"
+changelog = "Ships the Apache-2.0 licence (TerminalMC copyright) inside the bundle and a changed-from-CommandKeys notice in every ported file, per Apache-2.0 sections 4(a) and 4(b). No code changes."
