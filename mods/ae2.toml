@@ -46,6 +46,21 @@ categories = ["technology", "utility", "storage"]
 tags = ["ae2", "applied-energistics", "storage", "autocrafting", "automation"]
 
 [[versions]]
+version = "15.4.18"
+published = "2026-11-11"
+game = "26.3"
+file = "ae2-15.4.18.hnmod"
+sha256 = "a0f56e3800fa43ad95e6cd62dec8a0bf926e8dde7f03dc530df618d692c99a82"
+changelog = """
+Ported from AE2 15.4.12 (Fabric); 15.4.18 is this port's own version number, not an AE2 release. Built on Horizon commit fdc87ae (Nightly 2026-11-08).
+
+- Builds with the new Horizon ports of Tinkers' Construct, Ender IO, Powah and Apothic Spawners: all ten mods compile and run together.
+- With JEI (mod kit 14): recipe cards draw fluids as their textures, never as buckets.
+- The W guide: 3D scenes find their structures from any page, a block whose textures aren't on the GUI atlas is drawn as its item rather than left blank, and the Back and Contents buttons are translated.
+- Crafting time left follows an import bus that speeds up as it takes results back (not yet measured on this version).
+"""
+
+[[versions]]
 version = "15.4.17"
 published = "2026-11-08"
 game = "26.3"
