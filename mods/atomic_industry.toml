@@ -23,6 +23,16 @@ tags = ["tech", "nuclear", "automation", "quarry", "factory", "kitchen-sink"]
 screenshots = ["screenshots/atomic_industry/1.jpg", "screenshots/atomic_industry/2.jpg", "screenshots/atomic_industry/3.jpg", "screenshots/atomic_industry/4.jpg", "screenshots/atomic_industry/5.jpg", "screenshots/atomic_industry/6.jpg", "screenshots/atomic_industry/7.jpg"]
 
 [[versions]]
+version = "1.1.0"
+published = "2026-11-12"
+game = "26.3"
+file = "atomic_industry-1.1.0.hpack"
+sha256 = "c4ed8b1312669c4b65dded96bbf21c3d7b4358166d5227b63453ea4a4c3e4238"
+changelog = """
+Adds Orbital Laser 0.5.10 (fifteen orbital strikes), Silent's Gems 5.2.0 (21 gems and their ores), Horizonmatica 0.3.2 (schematics) and Better Dynamic Lights 1.0.3: 30 mods, built together and played on Nightly 2026-11-08 (fdc87ae).
+"""
+
+[[versions]]
 version = "1.0.0"
 published = "2026-11-10"
 game = "26.3"
