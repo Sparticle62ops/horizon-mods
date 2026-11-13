@@ -7,7 +7,6 @@
 // coefficient, and the debug HUD renderer. The drawing itself (strata,
 // gradients, text) is a seam: draw specs are returned for the client.
 
-#![allow(dead_code)]
 
 use std::sync::atomic::{AtomicBool, Ordering};
 
