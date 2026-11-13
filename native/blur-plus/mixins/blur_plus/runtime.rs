@@ -7,7 +7,6 @@
 // coefficient, and the debug HUD renderer. The drawing itself (strata,
 // gradients, text) is a seam: draw specs are returned for the client.
 
-
 use std::sync::atomic::{AtomicBool, Ordering};
 
 // ---------------------------------------------------------------------------
@@ -215,7 +214,7 @@ impl Default for BlurConfig {
                 "me.shedaniel.rei.impl.client.gui.screen.DefaultDisplayViewingScreen".to_string(),
             ],
             force_disabled_screens: vec![
-                "net.irisshaders.iris.gui.screen.ShaderPackScreen".to_string(),
+                "net.irisshaders.iris.gui.screen.ShaderPackScreen".to_string()
             ],
             use_gradient: true,
             gradient_start: "#000000".to_string(),
@@ -1080,10 +1079,9 @@ mod tests {
         assert!(old.init());
         assert_eq!(old.config_version, 3);
         assert_eq!(old.force_enabled_screens.len(), 5);
-        assert!(
-            old.force_enabled_screens
-                .contains(&"mezz.jei.gui.recipes.RecipesGui".to_string())
-        );
+        assert!(old
+            .force_enabled_screens
+            .contains(&"mezz.jei.gui.recipes.RecipesGui".to_string()));
         assert!(old.force_enabled_screens.contains(
             &"me.shedaniel.rei.impl.client.gui.screen.DefaultDisplayViewingScreen".to_string()
         ));
@@ -1223,7 +1221,7 @@ mod tests {
         b.gradient_animation
             .update_animation(0.1, Easing::Flat, &b.config);
         let cur = b.gradient_animation.current_value(); // 1/3
-        // rotation drifted 0.1s * 20 deg/s = 2 deg, blended with config's 90
+                                                        // rotation drifted 0.1s * 20 deg/s = 2 deg, blended with config's 90
         let rot = b.gradient_animation.rotation(&b.config);
         assert!((rot - (2.0 * cur + 90.0 * (1.0 - cur))).abs() < 1e-4);
         assert_eq!(b.get_background_gradient_rotation(), 60); // 60.67 truncates
@@ -1424,7 +1422,7 @@ mod tests {
         let (render_blurred, in_game_ui) = b.container_gate(i32::MAX, true);
         assert!(render_blurred);
         assert!(!in_game_ui); // containers never count as in-game UI
-        // blurContainers off: passthrough, no blur
+                              // blurContainers off: passthrough, no blur
         set_reduced_blur(false);
         let mut b2 = Blur::new(plain_config());
         b2.config.blur_containers = false;
@@ -1531,7 +1529,7 @@ mod tests {
         let line =
             Blur::render_debug_line("x", 100, 2, 4, Some(0xFF102030u32 as i32), true).unwrap();
         assert_eq!(line.bg_color as u32, 0x9004080c); // 0x10*0.25=4, 0x20*0.25=8, 0x30*0.25=12
-        // empty text draws nothing
+                                                      // empty text draws nothing
         assert!(Blur::render_debug_line("", 100, 2, 0, None, true).is_none());
     }
 
