@@ -11,7 +11,6 @@
 // server->client transport and the server Touch hooks (ItemEntityMixin.playerTouch at
 // awardStat, ExperienceOrbMixin.playerTouch at take) are game-side seams.
 
-
 use serde::{Deserialize, Serialize};
 use std::sync::Mutex;
 
