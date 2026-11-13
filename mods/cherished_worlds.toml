@@ -1,0 +1,31 @@
+## Horizon registry entry for Cherished Worlds (behavioral clean-room port of the LGPL-3.0-or-later mod).
+id = "cherished_worlds"
+kind = "native-mod"
+name = "Cherished Worlds"
+summary = "Favorite/pin/bookmark worlds: favorites always sort to the top of the list and cannot be deleted."
+description = """
+**A native Horizon mod**: the launcher builds it into the game (install it on the launchers Mods page, then press Build there). Native mods are not sandboxed and run with your accounts rights, so read the source before you build it. Pinned to the Horizon tree this was built against.
+
+- **Favorite worlds**: toggle a world's pinned state; the set persists with the launcher's world index.
+- **Favorites-first sort**: the world list renders favorites at the top, then by most recently played, stable and deterministic.
+- **Delete guard**: a favorite world cannot be deleted until it is unfavored.
+
+Behavioral clean-room port of [Cherished Worlds](https://modrinth.com/mod/cherished-worlds) (LGPL-3.0-or-later): no upstream code or assets are included, ported under CC0-1.0. Degradation: the world-list screen, star button and delete confirmation are launcher UI seams, so the port ships the full policy logic (7 tests) while the launcher wires the set into its world index; the port upgrades to full 1:1 when the seam lands. Ported to Rust by sparticle.
+"""
+authors = ["sparticle62ops"]
+owners = ["sparticle62ops"]
+owner_ids = [209812745]
+license = "CC0-1.0"
+source = "https://github.com/Sparticle62ops/horizon-cherished-worlds"
+categories = ["utility"]
+tags = ["worlds", "favorites", "launcher"]
+
+icon = "icons/cherished_worlds.png"
+
+[[versions]]
+published = "2026-11-12"
+version = "1.0.0"
+game = "26.3"
+file = "cherished_worlds-1.0.0.hnmod"
+sha256 = "7d167eca2380c64619dca5706d2b4d75ea993d4b1c56cdf4a90607d45231afd7"
+changelog = "Initial behavioral clean-room port of Cherished Worlds (LGPL-3.0): favorite set, favorites-first sort order, delete guard; launcher UI seam noted in README."
