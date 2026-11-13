@@ -1,0 +1,12 @@
+[package]
+name = "horizon-mod-continuity"
+version = "1.0.0"
+edition = "2024"
+license = "CC0-1.0"
+publish = false
+description = "Connected textures: a Horizon behavioral port of Continuity (LGPL-3.0, no upstream code)."
+
+[lib]
+path = "src/lib.rs"
+
+[workspace]
