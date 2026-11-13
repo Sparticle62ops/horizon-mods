@@ -13,6 +13,19 @@ tags = ["skins", "3d-skins", "players", "cosmetic"]
 key = "RWT9Ujo/oCprPGHHiSLHFNOJV1ZzoJdAU6EdZyiQcBwT2iMXfiYms4hD"
 
 [[versions]]
+version = "1.1.1"
+published = "2026-11-13"
+game = "26.3"
+file = "skins_3d-1.1.1.hnmod"
+sha256 = "c2d127a919fe3f1bc66dfff9031bc6fb3ad91819ee9396e874f967aa968599cc"
+signature = """
+untrusted comment: signature from minisign secret key\r
+RUT9Ujo/oCprPICZBRA/SiFS8qGBMVJQ2sM5jQVzl/utox8YbrxOFUy2WFAmaf9PcStkLP0Co43b1Bq8ADSuMYk6yUBSNmryNwM=\r
+trusted comment: timestamp:1794592764\tfile:skins_3d-1.1.1.hnmod\thashed\r
+DqRE/MgwiSJ79/wFZ+kV9ktSSyZCO6DXi+m/o23rtwkWvfUV8dKASiljOT3e+r3CX0cOBEuRHOsy7YJIrdK/Dw=="""
+changelog = "Works on Horizon Nightly 2026-11-13 (9f42064). No other changes."
+
+[[versions]]
 version = "1.1.0"
 published = "2026-11-06"
 game = "26.3"
