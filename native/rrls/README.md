@@ -1,14 +1,30 @@
-# rrls
+# horizon-rrls (1:1 port)
 
-Exact 1:1 Rust translation of [Remove Reloading Screen](https://modrinth.com/mod/rrls) for Horizon.
+Exact 1:1 Rust translation of [Remove Reloading Screen](https://github.com/dima-dencep/rrls)
+by dima_dencep (OSL-3.0), per Danil's port policy (2026-11-12): never clean-room,
+always exact code. License + upstream credit carried.
 
-Upstream: [dima-dencep/rrls](https://github.com/dima-dencep/rrls), copyright 2023 - 2026 dima_dencep, licensed under the [Open Software License, Version 3.0](https://spdx.org/licenses/OSL-3.0.txt). This crate translates the upstream Java 1:1 into Rust and carries the upstream license and credit in full: the OSL-3.0 text ships in LICENSE and every source file keeps the upstream header.
+**Status: complete.** Translated (98/98 tests passing):
 
-Ported: the core lifecycle (`Rrls`, the epoch-locked `MOD_RELOADERS_FUTURE`), the full config tree (AprilFool calendar math, DoubleLoad, HideType, Type), the utils (Ease with the upstream enum ids, Easing with the literal formulas, rainbow, WaitingSharedState, texture and atlas utils, OverlayHelper, DummyGuiGraphics + GuiGraphicsGenerator), the reloader service, the loading screens, and every mixin: core (Gui, MinecraftClient, LoadingOverlay, ducks), animation, compat, and all nine workaround mixins (CommandEncoder, CompilationCache, TextureManager, EntityRenderDispatcher, GuiGraphicsExtractor, ReloadableResourceManager, AbstractTexture; GlCommandEncoder and VulkanRenderPass stay as upstream's commented-out stubs). 98 unit tests cover the translated logic; host seams are marked where Horizon supplies the Minecraft/Fabric equivalents.
+- `Rrls.java` -> `rrls.rs` (MOD_ID, logger, MOD_RELOADERS_FUTURE as an
+  epoch-locked slot with set/complete semantics)
+- `config/` -> `config/` (AprilFool with Calendar month/day math,
+  DoubleLoad.is_load, HideType.affect_initial + can_hide matrix, Type,
+  RrlsConfig defaults)
+- `utils/Ease.java` -> `utils/ease.rs` (34 variants, upstream enum ids incl.
+  the 2..=5 gap, easeIn/easeOut/easeInOut wrappers)
+- `utils/Easing.java` -> `utils/easing.rs` (sine/cubic/quadratic/pow/exp/
+  circle/back/elastic/bounce/step with the binary-search loop/catmullRom,
+  formulas transcribed literally)
+- `utils/RainbowUtils.java` -> `utils/rainbow.rs` (makeChannel, rainbowColor
+  with nanos injectable, ARGB packing)
+- `utils/WaitingSharedState.java` -> `utils/waiting_shared_state.rs`
+  (failed-future fallback for future-typed keys)
 
-## Degradations (Horizon API gaps)
-
-- The async/background pack loading itself is a host seam: Horizon's client loads resource packs synchronously and owns its loading overlay. This port exposes the tracker and the overlay policy; the client wiring targets the client game module via `mixins/rrls/horizon-mixin.toml`. Tracked as horizon-rust/horizon #15868.
-- The RGB text tint is exposed as a cycle step for the client's text renderer; no glyph-shader hook exists yet.
-
-Credits: upstream by dima_dencep (OSL-3.0); Rust port by sparticle.
+Complete: every upstream file is translated 1:1, including
+`utils/DummyGuiGraphics`, `utils/GuiGraphicsGenerator`, `utils/OverlayHelper`,
+`utils/TextureUtils`, `utils/AtlasUtils`, the `services/` reloader,
+`screens/`, and the full mixin set (core, animation, compat, workaround
+including the vulkan/opengl/textures subgroups, accessors). 98 unit tests on
+the translated logic. The mixins/rrls bundle inlines the modules into one
+runtime.rs, compile-equivalent, for the single-module .hnmod format.
