@@ -77,9 +77,7 @@ pub fn hsb_to_rgb(hue: f32, saturation: f32, brightness: f32) -> i32 {
         4 => (t, p, brightness),
         _ => (brightness, p, q),
     };
-    ((r * 255.0 + 0.5) as i32) << 16
-        | ((g * 255.0 + 0.5) as i32) << 8
-        | ((b * 255.0 + 0.5) as i32)
+    ((r * 255.0 + 0.5) as i32) << 16 | ((g * 255.0 + 0.5) as i32) << 8 | ((b * 255.0 + 0.5) as i32)
 }
 
 pub fn hsb_color(hue: f32, saturation: f32, brightness: f32) -> Color {
@@ -679,7 +677,8 @@ impl Blur {
     pub fn on_render(&mut self) {
         if !self.is_processing_render_pass {
             self.is_processing_render_pass = true;
-            self.blur_radius_animation.set_target(BlurRadiusTarget::FadeOut);
+            self.blur_radius_animation
+                .set_target(BlurRadiusTarget::FadeOut);
             self.background_alpha_animation
                 .set_target(BackgroundAlphaTarget::FadeOut);
             self.force_rendered_background = false;
@@ -719,8 +718,7 @@ impl Blur {
         } else {
             self.gradient_animation.first_color(&self.config)
         };
-        let alpha =
-            (self.background_alpha_animation.current_value() * color.alpha() as f32) as i32;
+        let alpha = (self.background_alpha_animation.current_value() * color.alpha() as f32) as i32;
         (alpha << 24) | (color.red() << 16) | (color.green() << 8) | color.blue()
     }
 
@@ -731,14 +729,11 @@ impl Blur {
     /// renderRotatedGradient(): the math behind the rotated gradient; None
     /// when there's nothing to draw.
     pub fn render_rotated_gradient(&self) -> Option<GradientDraw> {
-        if !self.config.use_gradient
-            || self.background_alpha_animation.current_value() < 0.001
-        {
+        if !self.config.use_gradient || self.background_alpha_animation.current_value() < 0.001 {
             return None; // there's no gradient to draw
         }
         let (width, height) = (self.gui_width, self.gui_height);
-        let diagonal =
-            (width as f32 * width as f32 + height as f32 * height as f32).sqrt();
+        let diagonal = (width as f32 * width as f32 + height as f32 * height as f32).sqrt();
         let smallest_dimension = width.min(height) as f32;
         let rotation = (self.get_background_gradient_rotation() as f32).to_radians();
         let first_color = self.get_background_gradient_color(false);
@@ -783,7 +778,8 @@ impl Blur {
             // force a background fade-in for forceEnabledScreens
             if let Some(name) = &screen_name {
                 if self.config.force_enabled_screens.contains(name) {
-                    self.blur_radius_animation.set_target(BlurRadiusTarget::FadeIn);
+                    self.blur_radius_animation
+                        .set_target(BlurRadiusTarget::FadeIn);
                     self.background_alpha_animation
                         .set_target(BackgroundAlphaTarget::FadeIn);
                 }
@@ -792,18 +788,20 @@ impl Blur {
             // force a background fade-out for forceDisabledScreens
             if let Some(name) = &screen_name {
                 if self.config.force_disabled_screens.contains(name) {
-                    self.blur_radius_animation.set_target(BlurRadiusTarget::FadeOut);
+                    self.blur_radius_animation
+                        .set_target(BlurRadiusTarget::FadeOut);
                     self.background_alpha_animation
                         .set_target(BackgroundAlphaTarget::FadeOut);
                 }
             }
 
             // update gradientAnimation target from config
-            self.gradient_animation.set_target(if self.config.rainbow_mode {
-                GradientTarget::Rainbow
-            } else {
-                GradientTarget::Fixed
-            });
+            self.gradient_animation
+                .set_target(if self.config.rainbow_mode {
+                    GradientTarget::Rainbow
+                } else {
+                    GradientTarget::Fixed
+                });
 
             self.update_animations(realtime_delta_ticks);
 
@@ -824,10 +822,16 @@ impl Blur {
     /// MixinScreen.blur$onRenderBackground: the screen drew any background,
     /// so fade the background alpha in; forceEnabledScreens (minus
     /// forceDisabledScreens) also get their blurred background drawn.
-    pub fn on_screen_background(&mut self, screen_name: &str, first_stratum_after_blur: i32) -> bool {
+    pub fn on_screen_background(
+        &mut self,
+        screen_name: &str,
+        first_stratum_after_blur: i32,
+    ) -> bool {
         self.background_alpha_animation
             .set_target(BackgroundAlphaTarget::FadeIn);
-        self.config.force_enabled_screens.contains(&screen_name.to_string())
+        self.config
+            .force_enabled_screens
+            .contains(&screen_name.to_string())
             && !self
                 .config
                 .force_disabled_screens
@@ -855,11 +859,16 @@ impl Blur {
     }
 
     /// MixinAbstractContainerScreen: blur gate + isInGameUi override.
-    pub fn container_gate(&mut self, first_stratum_after_blur: i32, original_is_in_game_ui: bool) -> (bool, bool) {
+    pub fn container_gate(
+        &mut self,
+        first_stratum_after_blur: i32,
+        original_is_in_game_ui: bool,
+    ) -> (bool, bool) {
         if self.config.reduce_in_game_blur {
             set_reduced_blur(true);
         }
-        let render_blurred = self.config.blur_containers && Blur::can_blur(first_stratum_after_blur);
+        let render_blurred =
+            self.config.blur_containers && Blur::can_blur(first_stratum_after_blur);
         let in_game_ui = if self.config.blur_containers {
             false
         } else {
@@ -964,8 +973,7 @@ impl Blur {
         let r = (((line_color >> 16) & 0xff) as f32 * 0.25) as i32;
         let g = (((line_color >> 8) & 0xff) as f32 * 0.25) as i32;
         let b = ((line_color & 0xff) as f32 * 0.25) as i32;
-        let bg_color =
-            (Blur::DEBUG_BACKGROUND_ALPHA << 24) | (r << 16) | (g << 8) | b;
+        let bg_color = (Blur::DEBUG_BACKGROUND_ALPHA << 24) | (r << 16) | (g << 8) | b;
         Some(DebugLineDraw {
             x1: line_x - 1,
             y1: line_y - 1,
@@ -1034,7 +1042,10 @@ mod tests {
     fn hex2_rgb_matches_midnightlib() {
         assert_eq!(hex2_rgb("#000000"), Color::black());
         let red = hex2_rgb("FF0000");
-        assert_eq!((red.red(), red.green(), red.blue(), red.alpha()), (255, 0, 0, 255));
+        assert_eq!(
+            (red.red(), red.green(), red.blue(), red.alpha()),
+            (255, 0, 0, 255)
+        );
         let translucent = hex2_rgb("#80FF0000");
         assert_eq!(translucent.alpha(), 128);
         assert_eq!(translucent.red(), 255);
@@ -1070,11 +1081,13 @@ mod tests {
         assert!(old.init());
         assert_eq!(old.config_version, 3);
         assert_eq!(old.force_enabled_screens.len(), 5);
-        assert!(old.force_enabled_screens.contains(&"mezz.jei.gui.recipes.RecipesGui".to_string()));
         assert!(
             old.force_enabled_screens
-                .contains(&"me.shedaniel.rei.impl.client.gui.screen.DefaultDisplayViewingScreen".to_string())
+                .contains(&"mezz.jei.gui.recipes.RecipesGui".to_string())
         );
+        assert!(old.force_enabled_screens.contains(
+            &"me.shedaniel.rei.impl.client.gui.screen.DefaultDisplayViewingScreen".to_string()
+        ));
         assert!(!old.init()); // runs once
     }
 
@@ -1101,7 +1114,8 @@ mod tests {
         let mut c = plain_config();
         c.fade_out_time_millis = 100;
         let mut b = Blur::new(c);
-        b.blur_radius_animation.set_target(BlurRadiusTarget::FadeOut);
+        b.blur_radius_animation
+            .set_target(BlurRadiusTarget::FadeOut);
         b.update_animations(0.1 * 20.0); // 1000*0.1/100 = 1.0
         assert_eq!(b.blur_radius_animation.anim.time_state(), 1.0);
         assert!((b.blur_radius_animation.current_value() - 0.0).abs() < 1e-6);
@@ -1187,7 +1201,8 @@ mod tests {
         // target, so derive the expected hue from the elapsed time.
         b.gradient_animation.set_target(GradientTarget::Rainbow);
         for _ in 0..4 {
-            b.gradient_animation.update_animation(0.1, Easing::Flat, &b.config);
+            b.gradient_animation
+                .update_animation(0.1, Easing::Flat, &b.config);
         } // 0.4s total: t clamps to 1
         assert!((b.gradient_animation.current_value() - 1.0).abs() < 1e-4);
         let first = b.gradient_animation.first_color(&b.config);
@@ -1206,7 +1221,8 @@ mod tests {
         c.gradient_rotation = 90;
         let mut b = Blur::new(c);
         b.gradient_animation.set_target(GradientTarget::Rainbow);
-        b.gradient_animation.update_animation(0.1, Easing::Flat, &b.config);
+        b.gradient_animation
+            .update_animation(0.1, Easing::Flat, &b.config);
         let cur = b.gradient_animation.current_value(); // 1/3
         // rotation drifted 0.1s * 20 deg/s = 2 deg, blended with config's 90
         let rot = b.gradient_animation.rotation(&b.config);
@@ -1298,7 +1314,10 @@ mod tests {
         assert!(b.is_processing_render_pass);
         b.on_render_end(0.1 * 20.0);
         assert!(!b.is_processing_render_pass);
-        assert_eq!(b.blur_radius_animation.target(), Some(BlurRadiusTarget::FadeIn));
+        assert_eq!(
+            b.blur_radius_animation.target(),
+            Some(BlurRadiusTarget::FadeIn)
+        );
         assert_eq!(
             b.background_alpha_animation.target(),
             Some(BackgroundAlphaTarget::FadeIn)
@@ -1314,11 +1333,15 @@ mod tests {
     fn on_render_end_force_disabled_screens_fade_out() {
         reset_globals();
         let mut b = Blur::new(plain_config());
-        b.current_screen_name = Some("net.irisshaders.iris.gui.screen.ShaderPackScreen".to_string());
+        b.current_screen_name =
+            Some("net.irisshaders.iris.gui.screen.ShaderPackScreen".to_string());
         b.blur_radius_animation.set_target(BlurRadiusTarget::FadeIn);
         b.on_render();
         b.on_render_end(0.1 * 20.0);
-        assert_eq!(b.blur_radius_animation.target(), Some(BlurRadiusTarget::FadeOut));
+        assert_eq!(
+            b.blur_radius_animation.target(),
+            Some(BlurRadiusTarget::FadeOut)
+        );
         assert_eq!(
             b.background_alpha_animation.target(),
             Some(BackgroundAlphaTarget::FadeOut)
@@ -1349,7 +1372,9 @@ mod tests {
         );
         // forceDisabledScreens never get the extra blurred background
         let mut b2 = Blur::new(plain_config());
-        assert!(!b2.on_screen_background("net.irisshaders.iris.gui.screen.ShaderPackScreen", i32::MAX));
+        assert!(
+            !b2.on_screen_background("net.irisshaders.iris.gui.screen.ShaderPackScreen", i32::MAX)
+        );
         // a screen not on either list: nothing forced
         let mut b3 = Blur::new(plain_config());
         assert!(!b3.on_screen_background("net.minecraft.client.gui.screens.TitleScreen", i32::MAX));
@@ -1360,7 +1385,10 @@ mod tests {
         let mut b5 = Blur::new(plain_config());
         b5.on_blurred_background_extracted();
         b5.update_animations(0.02); // applies the pending FadeIn
-        assert_eq!(b5.blur_radius_animation.target(), Some(BlurRadiusTarget::FadeIn));
+        assert_eq!(
+            b5.blur_radius_animation.target(),
+            Some(BlurRadiusTarget::FadeIn)
+        );
     }
 
     #[test]
@@ -1384,7 +1412,10 @@ mod tests {
         b.current_screen_name = None;
         b.in_level = false;
         b.force_rendered_background = false;
-        assert_eq!(b.before_render_screen_in_level(i32::MAX), (false, false, false));
+        assert_eq!(
+            b.before_render_screen_in_level(i32::MAX),
+            (false, false, false)
+        );
     }
 
     #[test]
@@ -1436,7 +1467,10 @@ mod tests {
         assert!(blur);
         assert!(menu_gradient); // useGradient default
         b.update_animations(0.02); // applies the pending FadeOut
-        assert_eq!(b.blur_radius_animation.target(), Some(BlurRadiusTarget::FadeOut));
+        assert_eq!(
+            b.blur_radius_animation.target(),
+            Some(BlurRadiusTarget::FadeOut)
+        );
         assert_eq!(
             b.background_alpha_animation.target(),
             Some(BackgroundAlphaTarget::FadeOut)
@@ -1447,7 +1481,10 @@ mod tests {
         b2.config.darken_title_screen = true;
         let _ = b2.title_gate(i32::MAX);
         b2.update_animations(0.02); // applies the pending FadeIn
-        assert_eq!(b2.blur_radius_animation.target(), Some(BlurRadiusTarget::FadeIn));
+        assert_eq!(
+            b2.blur_radius_animation.target(),
+            Some(BlurRadiusTarget::FadeIn)
+        );
         assert_eq!(
             b2.background_alpha_animation.target(),
             Some(BackgroundAlphaTarget::FadeIn)
@@ -1492,7 +1529,8 @@ mod tests {
         let line = Blur::render_debug_line("Hi", 100, 2, 10, None, false).unwrap();
         assert_eq!(line.text_x, 88);
         // custom color keeps its channels at 25% for the background
-        let line = Blur::render_debug_line("x", 100, 2, 4, Some(0xFF102030u32 as i32), true).unwrap();
+        let line =
+            Blur::render_debug_line("x", 100, 2, 4, Some(0xFF102030u32 as i32), true).unwrap();
         assert_eq!(line.bg_color as u32, 0x9004080c); // 0x10*0.25=4, 0x20*0.25=8, 0x30*0.25=12
         // empty text draws nothing
         assert!(Blur::render_debug_line("", 100, 2, 0, None, true).is_none());
