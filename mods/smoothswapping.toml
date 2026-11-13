@@ -1,0 +1,36 @@
+## Horizon registry entry for Smooth Swapping (exact 1:1 Rust translation of the LGPL-3.0-only mod).
+id = "smoothswapping"
+kind = "native-mod"
+name = "Smooth Swapping"
+summary = "Smooths inventory item movement: eased item-to-item, item-to-cursor and cursor-to-item swap animations with Catmull-Rom easing and a configurable animation set."
+description = """**A native Horizon mod**: the launcher builds it into the game (install it on the launcher's Mods page, then press Build there). Native mods are not sandboxed and run with your account's rights, so read the source before you build it. Pinned to the Horizon tree this was built against.
+
+An exact 1:1 Rust translation of [Smooth Swapping](https://modrinth.com/mod/smooth-swapping): the upstream Java by Schauweg ([Schauweg/Smooth-Swapping](https://github.com/Schauweg/Smooth-Swapping), branch 26.3/dev) translated code-for-code, carrying the upstream license and credit in full.
+
+All upstream modules are carried 1:1 as a Horizon client runtime splice, with crate:: mapped to super:: for the carrier:
+
+- **Swaps**: the InventorySwap base with quadrants and Catmull-Rom progress, plus ItemToItemInventorySwap and ItemToCursorInventorySwap behind an AnySwap enum matching upstream's Java list.
+- **SwapUtil**: the i2i/i2c swap assignment, hasArrived arrival logic, copy stacks and list bookkeeping, driven by the SmoothSwapping state object.
+- **Mixins**: all six upstream mixins (ItemStackAccessor, SimpleContainerAccessor, ServerboundContainerClickPacketMixin, AbstractContainerScreenMixin, AbstractRecipeBookScreenMixin, GuiGraphicsExtractorMixin) carried as plain modules against the same injection-site shapes and comments.
+- **Config**: the Gson config serialized with snake_case field naming and pretty printing (serde_json in place of Gson), plus the CatmullRomWidget config set.
+
+The fabric entrypoint `SmoothSwappingFabric` maps to the carrier's client-init hook; the ModMenu entrypoint joins the ConfigScreen batch later.
+
+Port of [Schauweg/Smooth-Swapping](https://github.com/Schauweg/Smooth-Swapping), copyright (c) Schauweg, LGPL-3.0-only: the license text ships with the source. 30 unit tests on the translated logic. Rust port by sparticle, upstream by Schauweg."""
+authors = ["sparticle62ops"]
+owners = ["sparticle62ops"]
+owner_ids = [209812745]
+license = "LGPL-3.0-only"
+source = "https://github.com/Sparticle62ops/horizon-smooth-swapping"
+categories = ["utility"]
+tags = ["inventory", "ui", "animation"]
+
+icon = "icons/smoothswapping.png"
+
+[[versions]]
+published = "2026-11-13"
+version = "1.0.0"
+game = "26.3"
+file = "smoothswapping-1.0.0.hnmod"
+sha256 = "43c6a6b2518ff05088ad8ba5daf553f97c12c99a233da01abb1abc70196d2f8f"
+changelog = "Exact 1:1 Rust translation of Smooth Swapping (LGPL-3.0-only) by Schauweg, license and upstream credit carried: the swaps trio, SwapUtil, the config set and all six upstream mixins."
