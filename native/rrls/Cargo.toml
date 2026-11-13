@@ -2,9 +2,9 @@
 name = "horizon-mod-rrls"
 version = "1.0.0"
 edition = "2024"
-license = "CC0-1.0"
+license = "OSL-3.0"
 publish = false
-description = "Background resource reloads: a Horizon behavioral port of Remove Reloading Screen (OSL-3.0, no upstream code)."
+description = "Background resource reloads: an exact 1:1 Rust translation of Remove Reloading Screen by dima_dencep (OSL-3.0)."
 
 [lib]
 path = "src/lib.rs"
