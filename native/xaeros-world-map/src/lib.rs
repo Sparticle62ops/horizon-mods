@@ -23,6 +23,10 @@ pub struct Config {
 
 impl Default for Config {
     fn default() -> Self {
-        Self { vanilla_maps_mode: false, terrain_shading: true, auto_world_detection: false }
+        Self {
+            vanilla_maps_mode: false,
+            terrain_shading: true,
+            auto_world_detection: false,
+        }
     }
 }

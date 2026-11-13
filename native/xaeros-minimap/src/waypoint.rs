@@ -31,7 +31,9 @@ pub struct WaypointStore {
 }
 
 impl WaypointStore {
-    pub fn new() -> Self { Self::default() }
+    pub fn new() -> Self {
+        Self::default()
+    }
 
     pub fn add(&mut self, key: MapKey, wp: Waypoint) {
         self.sets.entry(key).or_default().push(wp);
@@ -39,7 +41,11 @@ impl WaypointStore {
 
     pub fn remove(&mut self, key: &MapKey, index: usize) -> Option<Waypoint> {
         let set = self.sets.get_mut(key)?;
-        if index < set.len() { Some(set.remove(index)) } else { None }
+        if index < set.len() {
+            Some(set.remove(index))
+        } else {
+            None
+        }
     }
 
     pub fn set(&self, key: &MapKey) -> Option<&Vec<Waypoint>> {
@@ -63,14 +69,19 @@ impl WaypointStore {
 
     /// Death-position helper: a temporary waypoint at the death coordinates.
     pub fn add_death_waypoint(&mut self, key: MapKey, x: i32, y: i32, z: i32) {
-        self.add(key, Waypoint {
-            x, y, z,
-            name: "death".into(),
-            color: 0xFF0000,
-            symbol: 'X',
-            disabled: false,
-            temporary: true,
-        });
+        self.add(
+            key,
+            Waypoint {
+                x,
+                y,
+                z,
+                name: "death".into(),
+                color: 0xFF0000,
+                symbol: 'X',
+                disabled: false,
+                temporary: true,
+            },
+        );
     }
 }
 
@@ -79,18 +90,36 @@ mod tests {
     use super::*;
 
     fn key() -> MapKey {
-        MapKey { world: "server1".into(), dimension: "overworld".into() }
+        MapKey {
+            world: "server1".into(),
+            dimension: "overworld".into(),
+        }
     }
 
     fn wp(x: i32, z: i32) -> Waypoint {
-        Waypoint { x, y: 64, z, name: format!("wp{x}"), color: 0xFF00FF, symbol: 'A', disabled: false, temporary: false }
+        Waypoint {
+            x,
+            y: 64,
+            z,
+            name: format!("wp{x}"),
+            color: 0xFF00FF,
+            symbol: 'A',
+            disabled: false,
+            temporary: false,
+        }
     }
 
     #[test]
     fn add_and_list_per_world() {
         let mut s = WaypointStore::new();
         s.add(key(), wp(10, 10));
-        s.add(MapKey { world: "server2".into(), dimension: "overworld".into() }, wp(1, 1));
+        s.add(
+            MapKey {
+                world: "server2".into(),
+                dimension: "overworld".into(),
+            },
+            wp(1, 1),
+        );
         assert_eq!(s.set(&key()).unwrap().len(), 1);
     }
 

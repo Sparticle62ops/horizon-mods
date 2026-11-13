@@ -93,37 +93,72 @@ mod tests {
 
     #[test]
     fn vanilla_when_idle() {
-        let i = FrameInput { attack_strength: 1.0, breaking_progress: None, over_attackable: false };
+        let i = FrameInput {
+            attack_strength: 1.0,
+            breaking_progress: None,
+            over_attackable: false,
+        };
         assert_eq!(variant_for(&i, &Settings::default()), Variant::Vanilla);
     }
 
     #[test]
     fn attack_indicator_while_charging() {
-        let i = FrameInput { attack_strength: 0.5, breaking_progress: None, over_attackable: false };
-        assert_eq!(variant_for(&i, &Settings::default()), Variant::AttackIndicator);
+        let i = FrameInput {
+            attack_strength: 0.5,
+            breaking_progress: None,
+            over_attackable: false,
+        };
+        assert_eq!(
+            variant_for(&i, &Settings::default()),
+            Variant::AttackIndicator
+        );
         assert_eq!(arc_fill(&i, Variant::AttackIndicator), Some(0.5));
-        assert_eq!(arc_color(&i, Variant::AttackIndicator), Some(ArcColor::Charging));
+        assert_eq!(
+            arc_color(&i, Variant::AttackIndicator),
+            Some(ArcColor::Charging)
+        );
     }
 
     #[test]
     fn breaking_beats_attack() {
-        let i = FrameInput { attack_strength: 0.2, breaking_progress: Some(0.7), over_attackable: false };
-        assert_eq!(variant_for(&i, &Settings::default()), Variant::BreakingProgress);
+        let i = FrameInput {
+            attack_strength: 0.2,
+            breaking_progress: Some(0.7),
+            over_attackable: false,
+        };
+        assert_eq!(
+            variant_for(&i, &Settings::default()),
+            Variant::BreakingProgress
+        );
         assert_eq!(arc_fill(&i, Variant::BreakingProgress), Some(0.7));
     }
 
     #[test]
     fn target_circle_over_entities() {
-        let i = FrameInput { attack_strength: 1.0, breaking_progress: None, over_attackable: true };
-        assert_eq!(variant_for(&i, &Settings::default()), Variant::TargetAttackable);
-        assert_eq!(arc_color(&i, Variant::TargetAttackable), Some(ArcColor::Ready));
+        let i = FrameInput {
+            attack_strength: 1.0,
+            breaking_progress: None,
+            over_attackable: true,
+        };
+        assert_eq!(
+            variant_for(&i, &Settings::default()),
+            Variant::TargetAttackable
+        );
+        assert_eq!(
+            arc_color(&i, Variant::TargetAttackable),
+            Some(ArcColor::Ready)
+        );
     }
 
     #[test]
     fn settings_gates_turn_variants_off() {
         let mut s = Settings::default();
         s.breaking_progress = false;
-        let i = FrameInput { attack_strength: 1.0, breaking_progress: Some(0.7), over_attackable: false };
+        let i = FrameInput {
+            attack_strength: 1.0,
+            breaking_progress: Some(0.7),
+            over_attackable: false,
+        };
         assert_eq!(variant_for(&i, &s), Variant::Vanilla);
     }
 
@@ -131,7 +166,11 @@ mod tests {
     fn hide_cross_does_not_change_variant_pick() {
         let mut s = Settings::default();
         s.hide_vanilla_cross = true;
-        let i = FrameInput { attack_strength: 1.0, breaking_progress: None, over_attackable: false };
+        let i = FrameInput {
+            attack_strength: 1.0,
+            breaking_progress: None,
+            over_attackable: false,
+        };
         assert_eq!(variant_for(&i, &s), Variant::Vanilla);
     }
 }

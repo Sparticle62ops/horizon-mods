@@ -55,7 +55,10 @@ pub fn move_plan(grid: &Grid, by: SortBy, dir: Direction, layout: Layout) -> Vec
         if grid.stacks[slot] == target[slot] {
             continue;
         }
-        if let Some(dest) = target.iter().position(|t| t == &grid.stacks[slot] && !t.is_none()) {
+        if let Some(dest) = target
+            .iter()
+            .position(|t| t == &grid.stacks[slot] && !t.is_none())
+        {
             plan.push((slot, dest));
         }
     }
@@ -113,7 +116,13 @@ mod tests {
     fn g(width: usize, items: &[(&str, u32)]) -> Grid {
         let mut grid = Grid::new(width, 3);
         for (i, (name, count)) in items.iter().enumerate() {
-            grid.set(i, Some(Stack { name: name.to_string(), count: *count }));
+            grid.set(
+                i,
+                Some(Stack {
+                    name: name.to_string(),
+                    count: *count,
+                }),
+            );
         }
         grid
     }
@@ -121,10 +130,20 @@ mod tests {
     #[test]
     fn target_sorts_by_name_then_count_within_item() {
         let grid = g(3, &[("stone", 1), ("apple", 2), ("stone", 64), ("beef", 5)]);
-        let t = sorted_target(&grid, SortBy::NameThenCount, Direction::Ascending, Layout::Rows);
+        let t = sorted_target(
+            &grid,
+            SortBy::NameThenCount,
+            Direction::Ascending,
+            Layout::Rows,
+        );
         let names: Vec<&str> = t.iter().flatten().map(|s| s.name.as_str()).collect();
         assert_eq!(names, vec!["apple", "beef", "stone", "stone"]);
-        let stone_counts: Vec<u32> = t.iter().flatten().filter(|s| s.name == "stone").map(|s| s.count).collect();
+        let stone_counts: Vec<u32> = t
+            .iter()
+            .flatten()
+            .filter(|s| s.name == "stone")
+            .map(|s| s.count)
+            .collect();
         assert_eq!(stone_counts, vec![64, 1], "bigger stone stack first");
     }
 

@@ -16,7 +16,12 @@ pub struct Settings {
 
 impl Default for Settings {
     fn default() -> Self {
-        Settings { intensity: 1.0, duration: 5, repeats: 0, only_crit: false }
+        Settings {
+            intensity: 1.0,
+            duration: 5,
+            repeats: 0,
+            only_crit: false,
+        }
     }
 }
 
@@ -45,7 +50,14 @@ pub struct ShakeState {
 
 impl ShakeState {
     pub fn new() -> Self {
-        ShakeState { active: false, ticks_left: 0, repeats_left: 0, intensity: 0.0, phase: 0.0, started_duration: 0 }
+        ShakeState {
+            active: false,
+            ticks_left: 0,
+            repeats_left: 0,
+            intensity: 0.0,
+            phase: 0.0,
+            started_duration: 0,
+        }
     }
 }
 
@@ -106,12 +118,25 @@ mod tests {
     #[test]
     fn default_settings_match_upstream() {
         let s = Settings::default();
-        assert_eq!(s, Settings { intensity: 1.0, duration: 5, repeats: 0, only_crit: false });
+        assert_eq!(
+            s,
+            Settings {
+                intensity: 1.0,
+                duration: 5,
+                repeats: 0,
+                only_crit: false
+            }
+        );
     }
 
     #[test]
     fn validation_clamps_into_upstream_ranges() {
-        let mut s = Settings { intensity: 99.0, duration: -3, repeats: 50, only_crit: true };
+        let mut s = Settings {
+            intensity: 99.0,
+            duration: -3,
+            repeats: 50,
+            only_crit: true,
+        };
         s.validate();
         assert_eq!(s.intensity, 10.0);
         assert_eq!(s.duration, 0);
@@ -122,7 +147,10 @@ mod tests {
     fn only_crit_blocks_non_crit_hurts() {
         let s = Settings::default();
         assert!(should_shake(&s, false));
-        let s2 = Settings { only_crit: true, ..Settings::default() };
+        let s2 = Settings {
+            only_crit: true,
+            ..Settings::default()
+        };
         assert!(!should_shake(&s2, false));
         assert!(should_shake(&s2, true));
     }
@@ -139,13 +167,20 @@ mod tests {
                 offsets += 1;
             }
         }
-        assert_eq!(offsets, s.duration as usize, "shake runs exactly duration ticks");
+        assert_eq!(
+            offsets, s.duration as usize,
+            "shake runs exactly duration ticks"
+        );
         assert!(!st.active);
     }
 
     #[test]
     fn shake_with_repeats_plays_duration_x_repeats_plus_one() {
-        let mut s = Settings { duration: 3, repeats: 2, ..Settings::default() };
+        let mut s = Settings {
+            duration: 3,
+            repeats: 2,
+            ..Settings::default()
+        };
         s.validate();
         let mut st = ShakeState::new();
         start_shake(&s, &mut st);
@@ -160,7 +195,12 @@ mod tests {
 
     #[test]
     fn offsets_decay_toward_end() {
-        let mut s = Settings { intensity: 5.0, duration: 6, repeats: 0, only_crit: false };
+        let mut s = Settings {
+            intensity: 5.0,
+            duration: 6,
+            repeats: 0,
+            only_crit: false,
+        };
         s.validate();
         let mut st = ShakeState::new();
         start_shake(&s, &mut st);

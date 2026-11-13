@@ -33,6 +33,9 @@ mod tests {
         let pos = mcutil::get_coordinate_key(-57, 1203);
         assert_eq!(mcutil::chunk_pos_packed_x(pos), -57);
         assert_eq!(mcutil::chunk_pos_packed_z(pos), 1203);
-        assert_eq!(mcutil::get_coordinate_key(-57, 1203), mcutil::chunk_pos_as_long(-57, 1203));
+        assert_eq!(
+            mcutil::get_coordinate_key(-57, 1203),
+            mcutil::chunk_pos_as_long(-57, 1203)
+        );
     }
 }

@@ -70,7 +70,12 @@ impl<T> SimpleObjectPool<T> {
 mod tests {
     use super::*;
 
-    fn counting_pool(size: usize) -> (SimpleObjectPool<Vec<u32>>, std::rc::Rc<std::cell::Cell<usize>>) {
+    fn counting_pool(
+        size: usize,
+    ) -> (
+        SimpleObjectPool<Vec<u32>>,
+        std::rc::Rc<std::cell::Cell<usize>>,
+    ) {
         let constructed = std::rc::Rc::new(std::cell::Cell::new(0usize));
         let c = constructed.clone();
         let pool = SimpleObjectPool::new(

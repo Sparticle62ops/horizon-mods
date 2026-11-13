@@ -4,19 +4,34 @@
 
 /// Minimap shape: the two documented options.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum Shape { Square, Circle }
+pub enum Shape {
+    Square,
+    Circle,
+}
 
 /// Minimap size options, including the automatic one.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum MapSize { Small, Medium, Large, Automatic }
+pub enum MapSize {
+    Small,
+    Medium,
+    Large,
+    Automatic,
+}
 
 /// Block color mode: vanilla map colors, or accurate block-texture and biome colors.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum ColorMode { Vanilla, Accurate }
+pub enum ColorMode {
+    Vanilla,
+    Accurate,
+}
 
 /// Entity radar rendering: dots with a custom color, or icons (usually heads).
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum EntityDisplay { Off, Dots, Icons }
+pub enum EntityDisplay {
+    Off,
+    Dots,
+    Icons,
+}
 
 /// The config file model with its defaults.
 #[derive(Clone, Debug)]

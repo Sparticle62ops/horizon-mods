@@ -16,7 +16,11 @@ pub struct Settings {
 
 impl Default for Settings {
     fn default() -> Self {
-        Settings { columns: 4, rows: 3, sort: SortOrder::NewestFirst }
+        Settings {
+            columns: 4,
+            rows: 3,
+            sort: SortOrder::NewestFirst,
+        }
     }
 }
 
@@ -42,7 +46,11 @@ impl Gallery {
             SortOrder::NewestFirst => b.modified_epoch.cmp(&a.modified_epoch),
             SortOrder::OldestFirst => a.modified_epoch.cmp(&b.modified_epoch),
         });
-        Gallery { shots, page: 0, selected: None }
+        Gallery {
+            shots,
+            page: 0,
+            selected: None,
+        }
     }
 
     pub fn page_size(&self, s: &Settings) -> usize {
@@ -98,12 +106,18 @@ mod tests {
     use super::*;
 
     fn shot(n: &str, t: u64) -> Shot {
-        Shot { file_name: n.to_string(), modified_epoch: t }
+        Shot {
+            file_name: n.to_string(),
+            modified_epoch: t,
+        }
     }
 
     #[test]
     fn listing_sorts_newest_first_by_default() {
-        let g = Gallery::new(vec![shot("a", 100), shot("b", 300), shot("c", 200)], &Settings::default());
+        let g = Gallery::new(
+            vec![shot("a", 100), shot("b", 300), shot("c", 200)],
+            &Settings::default(),
+        );
         let names: Vec<&str> = g.shots.iter().map(|s| s.file_name.as_str()).collect();
         assert_eq!(names, vec!["b", "c", "a"]);
     }
@@ -151,7 +165,11 @@ mod tests {
         g.next_page(&s);
         g.select(Some(0), &s);
         let deleted = g.delete_selected(&s);
-        assert_eq!(deleted.as_deref(), Some("s0"), "page 1 holds only the oldest shot");
+        assert_eq!(
+            deleted.as_deref(),
+            Some("s0"),
+            "page 1 holds only the oldest shot"
+        );
         assert_eq!(g.page, 0, "page clamped back after the page emptied");
         assert_eq!(g.selected, None);
     }

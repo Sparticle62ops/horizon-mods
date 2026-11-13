@@ -4,8 +4,8 @@
 // the copy work runs on a background thread upstream. The clipboard write
 // itself is the sink seam here.
 
-use crate::macos_compat;
 use crate::ImageFormat;
+use crate::macos_compat;
 
 pub const MOD_ID: &str = "screenshotclipboard";
 
@@ -115,11 +115,7 @@ fn do_copy(image_data: &[u8], width: usize, height: usize, components: usize) ->
     for pixel in image_data.chunks_exact(components) {
         rgb.extend_from_slice(&pixel[..3]);
     }
-    ClipboardImage {
-        width,
-        height,
-        rgb,
-    }
+    ClipboardImage { width, height, rgb }
 }
 
 /// Upstream getTransferableImage: the transferable exposes exactly one
@@ -140,7 +136,11 @@ pub fn is_flavor_supported(flavor: &DataFlavor) -> bool {
 
 /// Upstream macOS flow: the mixin injects after the file is saved and
 /// hands the absolute path to MacOSCompat.doCopyMacOS.
-pub fn handle_saved_file_macos(path: &str, is_mac: bool, pasteboard: &mut dyn macos_compat::Pasteboard) {
+pub fn handle_saved_file_macos(
+    path: &str,
+    is_mac: bool,
+    pasteboard: &mut dyn macos_compat::Pasteboard,
+) {
     macos_compat::do_copy_mac_os(path, is_mac, pasteboard);
 }
 

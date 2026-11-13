@@ -14,7 +14,9 @@ pub fn awt_hack(
 ) -> Result<Option<&'static str>, std::convert::Infallible> {
     if !os_name.to_lowercase().contains("mac") {
         set_headless(false);
-        Ok(Some("[Screenshot to Clipboard] Setting java.awt.headless to false"))
+        Ok(Some(
+            "[Screenshot to Clipboard] Setting java.awt.headless to false",
+        ))
     } else {
         Ok(None)
     }
@@ -39,7 +41,10 @@ mod tests {
         let forced = Cell::new(true);
         let printed = awt_hack("Windows 11", &mut |v| forced.set(v)).unwrap();
         assert!(!forced.get());
-        assert_eq!(printed, Some("[Screenshot to Clipboard] Setting java.awt.headless to false"));
+        assert_eq!(
+            printed,
+            Some("[Screenshot to Clipboard] Setting java.awt.headless to false")
+        );
     }
 
     #[test]
@@ -52,7 +57,10 @@ mod tests {
 
     #[test]
     fn init_warns_only_off_mac_without_a_clipboard() {
-        assert_eq!(init(false, false), Some("java.awt.headless property was not set properly!"));
+        assert_eq!(
+            init(false, false),
+            Some("java.awt.headless property was not set properly!")
+        );
         assert_eq!(init(false, true), None);
         assert_eq!(init(true, false), None); // mac skips the AWT check
     }

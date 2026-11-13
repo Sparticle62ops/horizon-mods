@@ -34,7 +34,10 @@ pub struct NewRecipes {
 
 impl Default for NewRecipes {
     fn default() -> Self {
-        Self { unlock_all: true, enable_bounce: false }
+        Self {
+            unlock_all: true,
+            enable_bounce: false,
+        }
     }
 }
 
@@ -48,7 +51,10 @@ pub struct InstantCraft {
 
 impl Default for InstantCraft {
     fn default() -> Self {
-        Self { show_button: true, enabled: false }
+        Self {
+            show_button: true,
+            enabled: false,
+        }
     }
 }
 
@@ -62,7 +68,10 @@ pub struct AlternativeRecipes {
 
 impl Default for AlternativeRecipes {
     fn default() -> Self {
-        Self { on_hover: true, no_grouped: false }
+        Self {
+            on_hover: true,
+            no_grouped: false,
+        }
     }
 }
 
@@ -76,7 +85,10 @@ pub struct Scrolling {
 
 impl Default for Scrolling {
     fn default() -> Self {
-        Self { enable_scrolling: true, scroll_around: false }
+        Self {
+            enable_scrolling: true,
+            scroll_around: false,
+        }
     }
 }
 
@@ -148,7 +160,11 @@ pub struct InstantCraftingManager {
 
 impl InstantCraftingManager {
     pub fn new(enabled: bool) -> Self {
-        Self { enabled, last_container_id: -1, ..Default::default() }
+        Self {
+            enabled,
+            last_container_id: -1,
+            ..Default::default()
+        }
     }
 
     // upstream recipeClicked(recipe, registryAccess)
@@ -189,7 +205,9 @@ impl InstantCraftingManager {
         if !self.enabled || !game_mode_present || !screen_is_container {
             return false;
         }
-        let Some(last) = &self.last_craft_result else { return false };
+        let Some(last) = &self.last_craft_result else {
+            return false;
+        };
         if *last != *stack || self.last_container_id != container_id {
             return false;
         }
@@ -257,7 +275,9 @@ impl PinnedRecipeManager {
 
     // upstream has(target): true when any pinned id is in the pinnable's ids.
     pub fn has(&self, target_recipe_ids: &[String]) -> bool {
-        self.pinned.iter().any(|id| target_recipe_ids.iter().any(|r| r == id))
+        self.pinned
+            .iter()
+            .any(|id| target_recipe_ids.iter().any(|r| r == id))
     }
 }
 
@@ -270,10 +290,34 @@ mod tests {
         let c = Config::default();
         assert!(c.enable_pinning);
         assert!(!c.keep_centered);
-        assert_eq!(c.new_recipes, NewRecipes { unlock_all: true, enable_bounce: false });
-        assert_eq!(c.instant_craft, InstantCraft { show_button: true, enabled: false });
-        assert_eq!(c.alternative_recipes, AlternativeRecipes { on_hover: true, no_grouped: false });
-        assert_eq!(c.scrolling, Scrolling { enable_scrolling: true, scroll_around: false });
+        assert_eq!(
+            c.new_recipes,
+            NewRecipes {
+                unlock_all: true,
+                enable_bounce: false
+            }
+        );
+        assert_eq!(
+            c.instant_craft,
+            InstantCraft {
+                show_button: true,
+                enabled: false
+            }
+        );
+        assert_eq!(
+            c.alternative_recipes,
+            AlternativeRecipes {
+                on_hover: true,
+                no_grouped: false
+            }
+        );
+        assert_eq!(
+            c.scrolling,
+            Scrolling {
+                enable_scrolling: true,
+                scroll_around: false
+            }
+        );
         assert!(c.settings_button);
         assert!(c.enable_book);
     }
@@ -300,8 +344,19 @@ mod tests {
     #[test]
     fn instant_craft_disabled_clears_pending_result() {
         let mut m = InstantCraftingManager::new(false);
-        m.last_craft_result = Some(CraftResult { item: "minecraft:stick".into(), components: String::new() });
-        m.recipe_clicked("minecraft:x", CraftResult { item: "a".into(), components: String::new() }, 7, true);
+        m.last_craft_result = Some(CraftResult {
+            item: "minecraft:stick".into(),
+            components: String::new(),
+        });
+        m.recipe_clicked(
+            "minecraft:x",
+            CraftResult {
+                item: "a".into(),
+                components: String::new(),
+            },
+            7,
+            true,
+        );
         assert!(m.last_craft_result.is_none());
         assert!(m.last_clicked_recipe.is_none());
     }
@@ -309,7 +364,15 @@ mod tests {
     #[test]
     fn instant_craft_requires_container_screen() {
         let mut m = InstantCraftingManager::new(true);
-        m.recipe_clicked("minecraft:x", CraftResult { item: "a".into(), components: String::new() }, 7, false);
+        m.recipe_clicked(
+            "minecraft:x",
+            CraftResult {
+                item: "a".into(),
+                components: String::new(),
+            },
+            7,
+            false,
+        );
         assert!(m.last_clicked_recipe.is_none());
         assert!(m.last_craft_result.is_none());
         assert_eq!(m.last_container_id, -1);
@@ -318,7 +381,10 @@ mod tests {
     #[test]
     fn instant_craft_stores_state_on_click() {
         let mut m = InstantCraftingManager::new(true);
-        let r = CraftResult { item: "minecraft:stick".into(), components: "".into() };
+        let r = CraftResult {
+            item: "minecraft:stick".into(),
+            components: "".into(),
+        };
         m.recipe_clicked("minecraft:planks", r.clone(), 7, true);
         assert_eq!(m.last_clicked_recipe.as_deref(), Some("minecraft:planks"));
         assert_eq!(m.last_craft_result, Some(r));
@@ -328,7 +394,10 @@ mod tests {
     #[test]
     fn result_update_clicks_when_matching() {
         let mut m = InstantCraftingManager::new(true);
-        let r = CraftResult { item: "minecraft:stick".into(), components: "".into() };
+        let r = CraftResult {
+            item: "minecraft:stick".into(),
+            components: "".into(),
+        };
         m.recipe_clicked("minecraft:planks", r.clone(), 7, true);
         assert!(m.on_result_slot_updated(&r, 7, true, true));
         assert!(m.last_craft_result.is_none());
@@ -337,7 +406,10 @@ mod tests {
     #[test]
     fn result_update_ignores_other_container_id() {
         let mut m = InstantCraftingManager::new(true);
-        let r = CraftResult { item: "minecraft:stick".into(), components: "".into() };
+        let r = CraftResult {
+            item: "minecraft:stick".into(),
+            components: "".into(),
+        };
         m.recipe_clicked("minecraft:planks", r.clone(), 7, true);
         assert!(!m.on_result_slot_updated(&r, 9, true, true));
         assert_eq!(m.last_craft_result, Some(r));
@@ -346,20 +418,43 @@ mod tests {
     #[test]
     fn result_update_requires_same_item_and_components() {
         let mut m = InstantCraftingManager::new(true);
-        m.recipe_clicked("minecraft:planks", CraftResult { item: "minecraft:stick".into(), components: "".into() }, 7, true);
+        m.recipe_clicked(
+            "minecraft:planks",
+            CraftResult {
+                item: "minecraft:stick".into(),
+                components: "".into(),
+            },
+            7,
+            true,
+        );
         // different components on the same item: not the same stack
         assert!(!m.on_result_slot_updated(
-            &CraftResult { item: "minecraft:stick".into(), components: "{a:1}".into() },
-            7, true, true,
+            &CraftResult {
+                item: "minecraft:stick".into(),
+                components: "{a:1}".into()
+            },
+            7,
+            true,
+            true,
         ));
         // same item and components but no game mode: upstream returns early
         assert!(!m.on_result_slot_updated(
-            &CraftResult { item: "minecraft:stick".into(), components: "".into() },
-            7, false, true,
+            &CraftResult {
+                item: "minecraft:stick".into(),
+                components: "".into()
+            },
+            7,
+            false,
+            true,
         ));
         assert!(m.on_result_slot_updated(
-            &CraftResult { item: "minecraft:stick".into(), components: "".into() },
-            7, true, true,
+            &CraftResult {
+                item: "minecraft:stick".into(),
+                components: "".into()
+            },
+            7,
+            true,
+            true,
         ));
     }
 
@@ -375,7 +470,8 @@ mod tests {
     #[test]
     fn pins_read_valid_array() {
         let mut p = PinnedRecipeManager::default();
-        p.read_from_str("[\"minecraft:stick\",\"minecraft:apple\"]").unwrap();
+        p.read_from_str("[\"minecraft:stick\",\"minecraft:apple\"]")
+            .unwrap();
         assert_eq!(p.pinned.len(), 2);
         assert!(p.pinned.contains("minecraft:stick"));
     }
@@ -414,7 +510,10 @@ mod tests {
         // second call on a matching collection unpins exactly the matched id;
         // the other recipe stays pinned, so the collection is still has()-ed
         assert!(p.add_or_remove_favourite(&ids));
-        assert_eq!(p.pinned, ["minecraft:apple".to_string()].into_iter().collect());
+        assert_eq!(
+            p.pinned,
+            ["minecraft:apple".to_string()].into_iter().collect()
+        );
         assert!(p.has(&ids));
     }
 

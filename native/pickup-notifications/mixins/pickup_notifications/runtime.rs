@@ -119,8 +119,7 @@ pub enum AlignmentY {
     Bottom,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[derive(Default)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize, Default)]
 #[repr(u8)]
 pub enum GuiAlignment {
     #[default]
@@ -396,7 +395,11 @@ pub struct ItemPickupS2C {
 pub struct ServerNetworking;
 
 impl ServerNetworking {
-    pub fn send_experience_pickup(can_send: bool, player: &str, amount: i32) -> Option<ExperiencePickupS2C> {
+    pub fn send_experience_pickup(
+        can_send: bool,
+        player: &str,
+        amount: i32,
+    ) -> Option<ExperiencePickupS2C> {
         if !can_send {
             return None;
         }
@@ -404,7 +407,11 @@ impl ServerNetworking {
         Some(ExperiencePickupS2C { amount })
     }
 
-    pub fn send_item_pickup(can_send: bool, player: &str, stack: &ItemStack) -> Option<ItemPickupS2C> {
+    pub fn send_item_pickup(
+        can_send: bool,
+        player: &str,
+        stack: &ItemStack,
+    ) -> Option<ItemPickupS2C> {
         if !can_send {
             return None;
         }
@@ -560,7 +567,11 @@ pub trait PickupNotificationBase {
             return 0.0;
         }
 
-        let partial_tick = mth_clamp((now_millis - self.last_tick_millis()) as f32 / 50.0, 0.0, 1.0);
+        let partial_tick = mth_clamp(
+            (now_millis - self.last_tick_millis()) as f32 / 50.0,
+            0.0,
+            1.0,
+        );
         let partial_time_remaining = self.time_remaining() as f32 - partial_tick;
 
         if self.original_time_remaining() > ANIM_IN_FINISH_TIME {
@@ -605,8 +616,10 @@ pub trait PickupNotificationBase {
         let offset = config.gui_offset;
         let scale = config.gui_scale;
 
-        let mut x = alignment.get_pos_x(screen_width) + offset.x as f32 * alignment.get_offset_multiplier_x();
-        let mut y = alignment.get_pos_y(screen_height) + offset.y as f32 * alignment.get_offset_multiplier_y();
+        let mut x = alignment.get_pos_x(screen_width)
+            + offset.x as f32 * alignment.get_offset_multiplier_x();
+        let mut y = alignment.get_pos_y(screen_height)
+            + offset.y as f32 * alignment.get_offset_multiplier_y();
 
         let line_height = FONT_LINE_HEIGHT;
         let text_width = render.text_width;
@@ -623,7 +636,9 @@ pub trait PickupNotificationBase {
             y_adjust = -(line_height as f32) - 2.0;
         }
 
-        x_adjust -= full_width as f32 * self.get_x_offset_percent(now_millis) * alignment.get_offset_multiplier_x();
+        x_adjust -= full_width as f32
+            * self.get_x_offset_percent(now_millis)
+            * alignment.get_offset_multiplier_x();
         y_adjust += idx as f32 * (line_height as f32 + 2.0) * alignment.get_offset_multiplier_y();
 
         x += x_adjust * scale;
@@ -1004,7 +1019,9 @@ impl Hud {
         if !merged_into_existing {
             let mut notification: Box<dyn PickupNotificationBase + Send> = match addition.clone() {
                 PickupValue::Item(stack) => Box::new(ItemPickupNotification::new(stack)),
-                PickupValue::Experience(amount) => Box::new(ExperiencePickupNotification::new(amount)),
+                PickupValue::Experience(amount) => {
+                    Box::new(ExperiencePickupNotification::new(amount))
+                }
             };
             if self.notification_queue.is_empty() && self.has_room_for_new_notification(config) {
                 notification.pop();
@@ -1104,7 +1121,10 @@ mod tests {
         assert_eq!(IconAlignment::Outside.id(), "outside");
         assert_eq!(IconAlignment::Right.get_next(), IconAlignment::Outside);
         assert_eq!(IconAlignment::Outside.get_prev(), IconAlignment::Right);
-        assert_eq!(IconAlignment::Left.i18n_key(), "pickupnotifications.iconAlignment.left");
+        assert_eq!(
+            IconAlignment::Left.i18n_key(),
+            "pickupnotifications.iconAlignment.left"
+        );
     }
 
     #[test]
@@ -1167,7 +1187,10 @@ mod tests {
         n.tick(0);
         assert!(n.is_expired());
         // attemptAdd on an expired notification is rejected.
-        assert!(!n.attempt_add(&PickupValue::Item(ItemStack::new("dirt", 1)), &Config::new()));
+        assert!(!n.attempt_add(
+            &PickupValue::Item(ItemStack::new("dirt", 1)),
+            &Config::new()
+        ));
     }
 
     #[test]
@@ -1215,7 +1238,10 @@ mod tests {
         n.set_last_tick_millis(0);
         // 500ms after the last tick clamps to one partial tick: partialTimeRemaining
         // = 120 - 1 = 119, anim-in time 5 of 6, percent (5/6)^2.
-        assert!((n.get_x_offset_percent(500) - 25.0 / 36.0).abs() < 1e-6, "partial tick clamped to 1");
+        assert!(
+            (n.get_x_offset_percent(500) - 25.0 / 36.0).abs() < 1e-6,
+            "partial tick clamped to 1"
+        );
     }
 
     #[test]
@@ -1235,7 +1261,9 @@ mod tests {
         assert!(!n.attempt_add(&PickupValue::Experience(3), &Config::new()));
         // Empty stacks are not mergeable.
         let empty = ItemStack::new("", 0);
-        assert!(!ItemPickupNotification::are_item_stacks_mergeable(&empty, &empty));
+        assert!(!ItemPickupNotification::are_item_stacks_mergeable(
+            &empty, &empty
+        ));
     }
 
     #[test]
@@ -1255,7 +1283,10 @@ mod tests {
         let mut n = ExperiencePickupNotification::new(5);
         assert!(n.attempt_add(&PickupValue::Experience(7), &Config::new()));
         assert_eq!(n.amount, 12);
-        assert!(!n.attempt_add(&PickupValue::Item(ItemStack::new("apple", 1)), &Config::new()));
+        assert!(!n.attempt_add(
+            &PickupValue::Item(ItemStack::new("apple", 1)),
+            &Config::new()
+        ));
         n.tick(0);
         n.tick(0);
         assert_eq!(n.age, 2);
@@ -1389,7 +1420,11 @@ mod tests {
         let mut hud = Hud::new();
         hud.handle_pickup(PickupValue::Experience(1), &Config::new(), 0);
         hud.tick(&config, 0);
-        assert_eq!(hud.currently_shown_notifications.len(), 1, "disabled tick leaves state untouched");
+        assert_eq!(
+            hud.currently_shown_notifications.len(),
+            1,
+            "disabled tick leaves state untouched"
+        );
         let mut hud2 = Hud::new();
         hud2.tick(&Config::new(), 0);
         assert!(hud2.currently_shown_notifications.is_empty());
@@ -1411,7 +1446,10 @@ mod tests {
         // subtracts the full box width from the anchor.
         assert!((specs[0].x - (4.0 - specs[0].full_width as f32)).abs() < 1e-6);
         assert!((specs[1].y - (specs[0].y + 11.0)).abs() < 1e-6);
-        assert!(specs[0].background.is_some(), "renderBackground default true");
+        assert!(
+            specs[0].background.is_some(),
+            "renderBackground default true"
+        );
 
         // Hidden HUD gate.
         assert!(hud.render_specs(&config, true, 427, 240, 0).is_empty());
@@ -1432,8 +1470,8 @@ mod tests {
         // slide-out (+fullWidth at percent 1) cancelling at tick 0.
         assert!((spec.x - (427.0 - 4.0)).abs() < 1e-6);
         // Right-aligned icon anchor: full_width - LEFT_PADDING - height + 0.25.
-        let expected_anchor = spec.full_width as f32 - LEFT_PADDING as f32
-            - (FONT_LINE_HEIGHT + 1) as f32 + 0.25;
+        let expected_anchor =
+            spec.full_width as f32 - LEFT_PADDING as f32 - (FONT_LINE_HEIGHT + 1) as f32 + 0.25;
         assert!((spec.icon_spec.anchor_x - expected_anchor).abs() < 0.01);
     }
 

@@ -52,7 +52,11 @@ mod tests {
 
     #[test]
     fn non_mac_is_a_no_op() {
-        let mut pb = FakePasteboard { clear_calls: 0, write_result: true, last_path: None };
+        let mut pb = FakePasteboard {
+            clear_calls: 0,
+            write_result: true,
+            last_path: None,
+        };
         assert!(do_copy_mac_os("/tmp/shot.png", false, &mut pb).is_ok());
         assert_eq!(pb.clear_calls, 0);
         assert!(pb.last_path.is_none());
@@ -60,7 +64,11 @@ mod tests {
 
     #[test]
     fn mac_flow_clears_then_writes_the_file() {
-        let mut pb = FakePasteboard { clear_calls: 0, write_result: true, last_path: None };
+        let mut pb = FakePasteboard {
+            clear_calls: 0,
+            write_result: true,
+            last_path: None,
+        };
         assert!(do_copy_mac_os("/screenshots/2026-11-06.png", true, &mut pb).is_ok());
         assert_eq!(pb.clear_calls, 1);
         assert_eq!(pb.last_path.as_deref(), Some("/screenshots/2026-11-06.png"));
@@ -68,7 +76,11 @@ mod tests {
 
     #[test]
     fn failed_write_reports_the_upstream_error() {
-        let mut pb = FakePasteboard { clear_calls: 0, write_result: false, last_path: None };
+        let mut pb = FakePasteboard {
+            clear_calls: 0,
+            write_result: false,
+            last_path: None,
+        };
         assert_eq!(
             do_copy_mac_os("/screenshots/shot.png", true, &mut pb),
             Err("Failed to write image to pasteboard!")

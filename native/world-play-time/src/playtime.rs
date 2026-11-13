@@ -41,7 +41,11 @@ impl PlayTimeStore {
             if !first {
                 out.push(',');
             }
-            out.push_str(&format!("\"{}\":{}", k.replace('\\', "\\\\").replace('"', "\\\""), v));
+            out.push_str(&format!(
+                "\"{}\":{}",
+                k.replace('\\', "\\\\").replace('"', "\\\""),
+                v
+            ));
             first = false;
         }
         out.push_str("}}");
@@ -113,7 +117,11 @@ impl PlayTimeStore {
             if i == digits_start {
                 return Err(format!("non-integer seconds for {key}"));
             }
-            let secs: u64 = bytes[digits_start..i].iter().collect::<String>().parse::<u64>().map_err(|e| e.to_string())?;
+            let secs: u64 = bytes[digits_start..i]
+                .iter()
+                .collect::<String>()
+                .parse::<u64>()
+                .map_err(|e| e.to_string())?;
             store.worlds.insert(key, secs);
         }
         Ok(store)

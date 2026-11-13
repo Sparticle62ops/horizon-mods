@@ -71,9 +71,8 @@ impl<'a, T: Eq + Hash + Clone + std::fmt::Debug> AreaMap<'a, T> {
 
         let mut add_listener = self.add_listener.take();
         if self.sort_listener_calls && add_listener.is_some() {
-            let mut keys: Vec<i64> = Vec::with_capacity(
-                ((2 * view_distance + 1) * (2 * view_distance + 1)) as usize,
-            );
+            let mut keys: Vec<i64> =
+                Vec::with_capacity(((2 * view_distance + 1) * (2 * view_distance + 1)) as usize);
             for xx in (x - view_distance)..=(x + view_distance) {
                 for zz in (z - view_distance)..=(z + view_distance) {
                     self.add0(xx, zz, &object, false, &mut add_listener);
@@ -102,9 +101,8 @@ impl<'a, T: Eq + Hash + Clone + std::fmt::Debug> AreaMap<'a, T> {
 
         let mut remove_listener = self.remove_listener.take();
         if self.sort_listener_calls && remove_listener.is_some() {
-            let mut keys: Vec<i64> = Vec::with_capacity(
-                ((2 * view_distance + 1) * (2 * view_distance + 1)) as usize,
-            );
+            let mut keys: Vec<i64> =
+                Vec::with_capacity(((2 * view_distance + 1) * (2 * view_distance + 1)) as usize);
             for xx in (x - view_distance)..=(x + view_distance) {
                 for zz in (z - view_distance)..=(z + view_distance) {
                     self.remove0(xx, zz, object, false, &mut remove_listener);
@@ -284,11 +282,20 @@ impl<'a, T: Eq + Hash + Clone + std::fmt::Debug> AreaMap<'a, T> {
         keys: &mut [i64],
     ) {
         keys.sort_by_key(|pos| {
-            chebyshev_distance(x, z, mcutil::get_coordinate_x(*pos), mcutil::get_coordinate_z(*pos))
+            chebyshev_distance(
+                x,
+                z,
+                mcutil::get_coordinate_x(*pos),
+                mcutil::get_coordinate_z(*pos),
+            )
         });
         for &pos in keys.iter() {
             if let Some(l) = listener {
-                l(object, mcutil::get_coordinate_x(pos), mcutil::get_coordinate_z(pos));
+                l(
+                    object,
+                    mcutil::get_coordinate_x(pos),
+                    mcutil::get_coordinate_z(pos),
+                );
             }
         }
     }
@@ -372,7 +379,10 @@ mod tests {
         );
         map.add(1, 0, 0, 2);
         let calls = calls.borrow();
-        let distances: Vec<i32> = calls.iter().map(|(x, z)| chebyshev_distance(0, 0, *x, *z)).collect();
+        let distances: Vec<i32> = calls
+            .iter()
+            .map(|(x, z)| chebyshev_distance(0, 0, *x, *z))
+            .collect();
         let mut sorted = distances.clone();
         sorted.sort();
         assert_eq!(distances, sorted);

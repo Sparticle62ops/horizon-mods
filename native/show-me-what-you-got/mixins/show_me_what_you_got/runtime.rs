@@ -127,7 +127,10 @@ impl NbtCompound {
     // after the closing brace is ignored. Returns Err when the leading value
     // is not a well-formed compound.
     pub fn parse_snbt(s: &str) -> Result<NbtCompound, ()> {
-        let mut p = SnbtParser { s: s.as_bytes(), i: 0 };
+        let mut p = SnbtParser {
+            s: s.as_bytes(),
+            i: 0,
+        };
         p.skip_ws();
         p.parse_compound()
     }
@@ -136,8 +139,15 @@ impl NbtCompound {
 fn write_snbt_key(out: &mut String, key: &str) {
     if key.is_empty()
         || key.bytes().any(|b| {
-            b == b'"' || b == b'\'' || b == b'{' || b == b'}' || b == b'[' || b == b']' || b == b','
-                || b == b':' || b <= b' '
+            b == b'"'
+                || b == b'\''
+                || b == b'{'
+                || b == b'}'
+                || b == b'['
+                || b == b']'
+                || b == b','
+                || b == b':'
+                || b <= b' '
         })
     {
         write_quoted(out, key, '"');
@@ -369,7 +379,12 @@ impl<'a> SnbtParser<'a> {
         let start = self.i;
         while self.i < self.s.len() {
             let c = self.s[self.i];
-            if c == b',' || c == b'}' || c == b']' || c == b'{' || c == b'[' || c == b':'
+            if c == b','
+                || c == b'}'
+                || c == b']'
+                || c == b'{'
+                || c == b'['
+                || c == b':'
                 || (c as char).is_whitespace()
             {
                 break;
@@ -621,22 +636,38 @@ fn write_binary_string(out: &mut Vec<u8>, s: &str) {
     out.extend_from_slice(s.as_bytes());
 }
 
-
 fn read_i16_at(bytes: &[u8], pos: usize) -> Result<i16, ()> {
-    if bytes.len() < pos + 2 { return Err(()); }
+    if bytes.len() < pos + 2 {
+        return Err(());
+    }
     Ok(i16::from_be_bytes([bytes[pos], bytes[pos + 1]]))
 }
 
 fn read_i32_at(bytes: &[u8], pos: usize) -> Result<i32, ()> {
-    if bytes.len() < pos + 4 { return Err(()); }
-    Ok(i32::from_be_bytes([bytes[pos], bytes[pos + 1], bytes[pos + 2], bytes[pos + 3]]))
+    if bytes.len() < pos + 4 {
+        return Err(());
+    }
+    Ok(i32::from_be_bytes([
+        bytes[pos],
+        bytes[pos + 1],
+        bytes[pos + 2],
+        bytes[pos + 3],
+    ]))
 }
 
 fn read_i64_at(bytes: &[u8], pos: usize) -> Result<i64, ()> {
-    if bytes.len() < pos + 8 { return Err(()); }
+    if bytes.len() < pos + 8 {
+        return Err(());
+    }
     Ok(i64::from_be_bytes([
-        bytes[pos], bytes[pos + 1], bytes[pos + 2], bytes[pos + 3],
-        bytes[pos + 4], bytes[pos + 5], bytes[pos + 6], bytes[pos + 7],
+        bytes[pos],
+        bytes[pos + 1],
+        bytes[pos + 2],
+        bytes[pos + 3],
+        bytes[pos + 4],
+        bytes[pos + 5],
+        bytes[pos + 6],
+        bytes[pos + 7],
     ]))
 }
 
@@ -750,18 +781,30 @@ fn read_binary_payload(bytes: &[u8], pos: usize, kind: u8) -> Result<(NbtValue, 
             }
             Ok((
                 match kind {
-                    7 => NbtValue::ByteArray(xs.into_iter().map(|v| match v {
-                        NbtValue::Byte(b) => b,
-                        _ => unreachable!(),
-                    }).collect()),
-                    11 => NbtValue::IntArray(xs.into_iter().map(|v| match v {
-                        NbtValue::Int(i) => i,
-                        _ => unreachable!(),
-                    }).collect()),
-                    _ => NbtValue::LongArray(xs.into_iter().map(|v| match v {
-                        NbtValue::Long(l) => l,
-                        _ => unreachable!(),
-                    }).collect()),
+                    7 => NbtValue::ByteArray(
+                        xs.into_iter()
+                            .map(|v| match v {
+                                NbtValue::Byte(b) => b,
+                                _ => unreachable!(),
+                            })
+                            .collect(),
+                    ),
+                    11 => NbtValue::IntArray(
+                        xs.into_iter()
+                            .map(|v| match v {
+                                NbtValue::Int(i) => i,
+                                _ => unreachable!(),
+                            })
+                            .collect(),
+                    ),
+                    _ => NbtValue::LongArray(
+                        xs.into_iter()
+                            .map(|v| match v {
+                                NbtValue::Long(l) => l,
+                                _ => unreachable!(),
+                            })
+                            .collect(),
+                    ),
                 },
                 p - pos,
             ))
@@ -937,7 +980,11 @@ pub struct SmwygItemMatch {
 // following position until a start yields a match. Indices are char indices
 // (Java's are UTF-16 code units; identical for BMP text, which is what chat
 // strings carry).
-fn find_tag_in_line(line: &str, line_start: usize, open_abs: usize) -> Option<(usize, usize, String)> {
+fn find_tag_in_line(
+    line: &str,
+    line_start: usize,
+    open_abs: usize,
+) -> Option<(usize, usize, String)> {
     let item_from = open_abs - line_start + TAG_OPEN.len();
     let rest = &line[item_from.min(line.len())..];
     // last occurrence of "]]"
@@ -950,7 +997,8 @@ fn find_tag_in_line(line: &str, line_start: usize, open_abs: usize) -> Option<(u
     }
     let last = last?;
     let item: String = rb[..last].iter().collect();
-    let end_abs = open_abs + TAG_OPEN.len() + rb[..last + 2].iter().map(|c| c.len_utf8()).sum::<usize>();
+    let end_abs =
+        open_abs + TAG_OPEN.len() + rb[..last + 2].iter().map(|c| c.len_utf8()).sum::<usize>();
     Some((open_abs, end_abs, item))
 }
 
@@ -964,7 +1012,10 @@ fn find_tag(text: &str) -> Option<(usize, usize, String)> {
         };
         // Determine the line containing the opening tag.
         let line_start = text[..off].rfind('\n').map(|i| i + 1).unwrap_or(0);
-        let line_end = text[off..].find('\n').map(|i| off + i).unwrap_or(text.len());
+        let line_end = text[off..]
+            .find('\n')
+            .map(|i| off + i)
+            .unwrap_or(text.len());
         if let Some((s, e, item)) = find_tag_in_line(&text[line_start..line_end], line_start, off) {
             return Some((s, e, item));
         }
@@ -984,7 +1035,11 @@ pub fn extract_item(text: &str) -> Option<SmwygItemMatch> {
     let stack = NbtCompound::parse_snbt(&item_nbt)
         .ok()
         .and_then(|nbt| ItemStack::from_nbt(&nbt));
-    Some(SmwygItemMatch { stack, start: start as i32, end: end as i32 })
+    Some(SmwygItemMatch {
+        stack,
+        start: start as i32,
+        end: end as i32,
+    })
 }
 
 // decorateMessage: message.getString() with the [start, end) span replaced by
@@ -999,8 +1054,15 @@ pub fn decorate_message(message: &str, item_match: Option<&SmwygItemMatch>) -> T
     let mut out = String::new();
     out.push_str(&slice_chars(message, 0, item_match.start as usize));
     out.push_str(&stack.to_hoverable_text_string());
-    out.push_str(&slice_chars(message, item_match.end as usize, i32::MAX as usize));
-    Text { plain: out, hover: None }
+    out.push_str(&slice_chars(
+        message,
+        item_match.end as usize,
+        i32::MAX as usize,
+    ));
+    Text {
+        plain: out,
+        hover: None,
+    }
 }
 
 // Java String.substring on char (UTF-16) indices; ports slice by chars.
@@ -1071,7 +1133,10 @@ pub struct PacketBuf {
 
 impl PacketBuf {
     pub fn new() -> Self {
-        PacketBuf { bytes: Vec::new(), pos: 0 }
+        PacketBuf {
+            bytes: Vec::new(),
+            pos: 0,
+        }
     }
 
     pub fn from_bytes(bytes: Vec<u8>) -> Self {
@@ -1239,10 +1304,7 @@ pub fn client_tick(state: &mut ClientState, s: TickSnapshot) -> TickOutcome {
 // ChatScreen.init inject: apply the pending sharing item to the field and
 // clear it, before the field's setText runs (handle_item_setting then passes
 // the text through because the stack is already set).
-pub fn chat_screen_init(
-    client: &mut ClientState,
-    field: &mut ItemSharingTextFieldWidget,
-) -> bool {
+pub fn chat_screen_init(client: &mut ClientState, field: &mut ItemSharingTextFieldWidget) -> bool {
     if let Some(stack) = client.sharing_item.take() {
         field.set_stack(stack);
         true
@@ -1258,7 +1320,9 @@ pub fn chat_screen_set_chat_from_history(field: &mut ItemSharingTextFieldWidget)
 }
 
 pub enum SendMessageOutcome {
-    Normal { add_to_history: bool },
+    Normal {
+        add_to_history: bool,
+    },
     Shared {
         // The original field text still goes through vanilla sendMessage.
         sent_text: String,
@@ -1282,7 +1346,11 @@ pub fn chat_send_message(
     };
     let before = field.get_text_before(chat_text);
     let after = field.get_text_after(chat_text);
-    let packet = send_item_sharing_message(field.get_insertion_start(), field.get_insertion_end(), stack);
+    let packet = send_item_sharing_message(
+        field.get_insertion_start(),
+        field.get_insertion_end(),
+        stack,
+    );
     let stack_string = format!("{}{}{}", TAG_OPEN, stack.write_nbt().to_snbt(), TAG_CLOSE);
     SendMessageOutcome::Shared {
         sent_text: chat_text.to_string(),
@@ -1392,7 +1460,9 @@ impl ItemSharingTextFieldWidget {
             let chars: Vec<char> = text.chars().collect();
             let total = chars.len() as i32;
             let from = self.inserted_index.max(0).min(total);
-            let to = (self.inserted_index + self.inserted_length).max(0).min(total);
+            let to = (self.inserted_index + self.inserted_length)
+                .max(0)
+                .min(total);
             let new_text: String = chars[..from as usize]
                 .iter()
                 .chain(chars[to as usize..].iter())
@@ -1520,7 +1590,11 @@ mod tests {
     }
 
     fn plain_stack(id: &str, count: i32) -> ItemStack {
-        ItemStack { id: id.to_string(), count, tag: None }
+        ItemStack {
+            id: id.to_string(),
+            count,
+            tag: None,
+        }
     }
 
     #[test]
@@ -1545,7 +1619,8 @@ mod tests {
 
     #[test]
     fn test_snbt_scalar_semantics() {
-        let nbt = NbtCompound::parse_snbt("{a:true,b:false,c:1.5,d:9223372036854775807,e:hi}").unwrap();
+        let nbt =
+            NbtCompound::parse_snbt("{a:true,b:false,c:1.5,d:9223372036854775807,e:hi}").unwrap();
         assert_eq!(nbt.get_boolean("a"), true);
         assert_eq!(nbt.get_boolean("b"), false);
         assert!(matches!(nbt.get("c"), Some(NbtValue::Double(_))));
@@ -1569,12 +1644,16 @@ mod tests {
     #[test]
     fn test_display_name_prefers_component() {
         assert_eq!(sword_stack(1).display_name(), "Cool Sword");
-        assert_eq!(plain_stack("minecraft:golden_apple", 1).display_name(), "Golden Apple");
+        assert_eq!(
+            plain_stack("minecraft:golden_apple", 1).display_name(),
+            "Golden Apple"
+        );
     }
 
     #[test]
     fn test_find_tag_greedy() {
-        let text = "hey [[smwyg:{id:\"minecraft:stone\"}]] and [[smwyg:{id:\"minecraft:dirt\"}]] lol";
+        let text =
+            "hey [[smwyg:{id:\"minecraft:stone\"}]] and [[smwyg:{id:\"minecraft:dirt\"}]] lol";
         let m = extract_item(text).unwrap();
         assert_eq!(m.start, 4);
         // greedy .* backtracks to the LAST "]]" on the line
@@ -1614,7 +1693,11 @@ mod tests {
     #[test]
     fn test_message_list_take_and_clear() {
         let mut list = MessageItemList::new();
-        let m1 = SmwygItemMatch { stack: Some(plain_stack("minecraft:stone", 1)), start: 0, end: 1 };
+        let m1 = SmwygItemMatch {
+            stack: Some(plain_stack("minecraft:stone", 1)),
+            start: 0,
+            end: 1,
+        };
         list.add(7, m1.clone());
         assert_eq!(list.take(7).unwrap(), m1);
         assert_eq!(list.take(7), None); // take-on-read like upstream get()
@@ -1626,7 +1709,11 @@ mod tests {
     #[test]
     fn test_packet_roundtrip() {
         let mut buf = PacketBuf::new();
-        buf.write_packet(&ShareItemPacket { start: 12, end: 40, stack: sword_stack(2) });
+        buf.write_packet(&ShareItemPacket {
+            start: 12,
+            end: 40,
+            stack: sword_stack(2),
+        });
         let mut read = PacketBuf::from_bytes(buf.bytes.clone());
         let p = read.read_packet().unwrap();
         assert_eq!(p.start, 12);
@@ -1639,7 +1726,11 @@ mod tests {
         let mut server = Server::default();
         let mut list = MessageItemList::new();
         let mut buf = PacketBuf::new();
-        buf.write_packet(&ShareItemPacket { start: 0, end: 10, stack: sword_stack(1) });
+        buf.write_packet(&ShareItemPacket {
+            start: 0,
+            end: 10,
+            stack: sword_stack(1),
+        });
         receive_share_item_packet(&mut server, 42, &mut buf).unwrap();
         // nothing lands until the server executes its task queue
         assert_eq!(list.take(42), None);
@@ -1662,21 +1753,39 @@ mod tests {
             chat_key_pressed: true,
         };
         // press with a focused slot opens the chat and latches
-        let out = client_tick(&mut state, base(Some(SlotSnapshot { has_stack: true, stack: sword_stack(1) })));
+        let out = client_tick(
+            &mut state,
+            base(Some(SlotSnapshot {
+                has_stack: true,
+                stack: sword_stack(1),
+            })),
+        );
         assert_eq!(out.open_chat_with.as_deref(), Some("Cool Sword"));
         assert!(state.sharing_item.is_some());
         assert!(out.shared_stack);
         // still pressed: no second open
-        let out = client_tick(&mut state, base(Some(SlotSnapshot { has_stack: true, stack: sword_stack(1) })));
+        let out = client_tick(
+            &mut state,
+            base(Some(SlotSnapshot {
+                has_stack: true,
+                stack: sword_stack(1),
+            })),
+        );
         assert!(out.open_chat_with.is_none());
         // release resets the latch
-        let mut s = base(Some(SlotSnapshot { has_stack: true, stack: sword_stack(1) }));
+        let mut s = base(Some(SlotSnapshot {
+            has_stack: true,
+            stack: sword_stack(1),
+        }));
         s.left_control_pressed = false;
         let out = client_tick(&mut state, s);
         assert!(out.open_chat_with.is_none());
         assert!(!out.shared_stack);
         // press with a non-empty cursor latches but does not open
-        let mut s = base(Some(SlotSnapshot { has_stack: true, stack: sword_stack(1) }));
+        let mut s = base(Some(SlotSnapshot {
+            has_stack: true,
+            stack: sword_stack(1),
+        }));
         s.cursor_stack_empty = false;
         let out = client_tick(&mut state, s);
         assert!(out.open_chat_with.is_none());
@@ -1689,7 +1798,10 @@ mod tests {
         field.set_stack(sword_stack(1));
         assert!(field.has_stack());
         assert_eq!(field.get_insertion_start(), 0);
-        assert_eq!(field.get_insertion_end(), "Cool Sword".chars().count() as i32);
+        assert_eq!(
+            field.get_insertion_end(),
+            "Cool Sword".chars().count() as i32
+        );
         let text = "Cool Sword now";
         assert_eq!(field.get_text_before(text), "");
         assert_eq!(field.get_text_after(text), " now");
@@ -1771,7 +1883,10 @@ mod tests {
         // stale link
         let mut field2 = ItemSharingTextFieldWidget::new();
         let stale = "[[smwyg:{not:nbt]] tail";
-        assert_eq!(field2.handle_item_setting(stale), format!("{}{} tail", STALE_LINK_TEXT, ""));
+        assert_eq!(
+            field2.handle_item_setting(stale),
+            format!("{}{} tail", STALE_LINK_TEXT, "")
+        );
         assert!(!field2.has_stack());
     }
 
@@ -1792,7 +1907,9 @@ mod tests {
         let mut field = ItemSharingTextFieldWidget::new();
         assert!(matches!(
             chat_send_message(&field, "hi", true),
-            SendMessageOutcome::Normal { add_to_history: true }
+            SendMessageOutcome::Normal {
+                add_to_history: true
+            }
         ));
         client.sharing_item = Some(sword_stack(1));
         assert!(chat_screen_init(&mut client, &mut field));
@@ -1802,7 +1919,11 @@ mod tests {
         let text = "Cool Sword!";
         let out = chat_send_message(&field, text, true);
         match out {
-            SendMessageOutcome::Shared { history_text, packet, .. } => {
+            SendMessageOutcome::Shared {
+                history_text,
+                packet,
+                ..
+            } => {
                 assert!(history_text.starts_with("[[smwyg:{"));
                 assert!(history_text.ends_with("]]!"));
                 let mut read = PacketBuf::from_bytes(packet.bytes);
@@ -1820,7 +1941,11 @@ mod tests {
     fn test_hide_stack_predicate() {
         let mut stack = sword_stack(1);
         assert!(!should_hide_stack(&stack));
-        stack.tag.as_mut().unwrap().put("smwyg:hide_stack", NbtValue::Byte(1));
+        stack
+            .tag
+            .as_mut()
+            .unwrap()
+            .put("smwyg:hide_stack", NbtValue::Byte(1));
         assert!(should_hide_stack(&stack));
     }
 }

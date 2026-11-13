@@ -385,8 +385,7 @@ impl JukeboxTracker {
     /// noJukeboxesInRange(): true when the feature is off or no tracked
     /// jukebox is marked playing-in-range.
     pub fn no_jukeboxes_in_range(&self, config: &Config) -> bool {
-        !config.stop_music_on_jukebox_use
-            || self.jukeboxes.values().all(|&playing| !playing)
+        !config.stop_music_on_jukebox_use || self.jukeboxes.values().all(|&playing| !playing)
     }
 }
 
@@ -915,14 +914,20 @@ mod tests {
     #[test]
     fn no_jukeboxes_in_range_follows_tracker_and_config() {
         let mut smc = Smc::default();
-        assert!(smc.jukeboxes.no_jukeboxes_in_range(&smc.config), "empty map");
+        assert!(
+            smc.jukeboxes.no_jukeboxes_in_range(&smc.config),
+            "empty map"
+        );
         smc.jukeboxes.jukeboxes.insert([0, 0, 0], true);
         assert!(!smc.jukeboxes.no_jukeboxes_in_range(&smc.config));
         smc.jukeboxes.jukeboxes.insert([0, 0, 0], false);
         assert!(smc.jukeboxes.no_jukeboxes_in_range(&smc.config));
         smc.config.stop_music_on_jukebox_use = false;
         smc.jukeboxes.jukeboxes.insert([1, 1, 1], true);
-        assert!(smc.jukeboxes.no_jukeboxes_in_range(&smc.config), "feature off");
+        assert!(
+            smc.jukeboxes.no_jukeboxes_in_range(&smc.config),
+            "feature off"
+        );
     }
 
     #[test]
@@ -1088,9 +1093,18 @@ mod tests {
         let mut engine = SoundEngine {
             loaded: true,
             channels: vec![
-                Channel { source: SoundSource::Music, paused: false },
-                Channel { source: SoundSource::Other, paused: false },
-                Channel { source: SoundSource::Music, paused: false },
+                Channel {
+                    source: SoundSource::Music,
+                    paused: false,
+                },
+                Channel {
+                    source: SoundSource::Other,
+                    paused: false,
+                },
+                Channel {
+                    source: SoundSource::Music,
+                    paused: false,
+                },
             ],
         };
         let config = Config::default();
@@ -1106,7 +1120,10 @@ mod tests {
     fn sound_engine_ignores_pause_requests_before_load() {
         let mut engine = SoundEngine {
             loaded: false,
-            channels: vec![Channel { source: SoundSource::Music, paused: false }],
+            channels: vec![Channel {
+                source: SoundSource::Music,
+                paused: false,
+            }],
         };
         let config = Config::default();
         engine.smc_set_music_paused(true, &config, false);
@@ -1117,14 +1134,20 @@ mod tests {
     fn sound_engine_unpause_blocked_while_client_paused_without_config() {
         let mut engine = SoundEngine {
             loaded: true,
-            channels: vec![Channel { source: SoundSource::Music, paused: true }],
+            channels: vec![Channel {
+                source: SoundSource::Music,
+                paused: true,
+            }],
         };
         let mut config = Config::default();
         config.play_music_when_paused = false;
         engine.smc_set_music_paused(false, &config, true);
         assert!(engine.channels[0].paused, "unpause refused");
         engine.smc_set_music_paused(false, &config, false);
-        assert!(!engine.channels[0].paused, "unpause allowed when not paused");
+        assert!(
+            !engine.channels[0].paused,
+            "unpause allowed when not paused"
+        );
     }
 
     #[test]
@@ -1132,30 +1155,48 @@ mod tests {
         let mut engine = SoundEngine {
             loaded: true,
             channels: vec![
-                Channel { source: SoundSource::Music, paused: false },
-                Channel { source: SoundSource::Other, paused: false },
+                Channel {
+                    source: SoundSource::Music,
+                    paused: false,
+                },
+                Channel {
+                    source: SoundSource::Other,
+                    paused: false,
+                },
             ],
         };
         let mut config = Config::default();
         config.play_music_when_paused = false;
         engine.pause_all_except(&[SoundSource::Music], &config);
-        assert!(engine.channels[0].paused, "music paused despite being ignored");
+        assert!(
+            engine.channels[0].paused,
+            "music paused despite being ignored"
+        );
         assert!(engine.channels[1].paused);
         // With playMusicWhenPaused true, MUSIC stays in the ignored list.
         let mut engine = SoundEngine {
             loaded: true,
-            channels: vec![Channel { source: SoundSource::Music, paused: false }],
+            channels: vec![Channel {
+                source: SoundSource::Music,
+                paused: false,
+            }],
         };
         config.play_music_when_paused = true;
         engine.pause_all_except(&[SoundSource::Music], &config);
-        assert!(!engine.channels[0].paused, "music left playing when ignored");
+        assert!(
+            !engine.channels[0].paused,
+            "music left playing when ignored"
+        );
     }
 
     #[test]
     fn situational_picker_disabled_returns_none() {
         let smc = Smc::default();
         let mut rng = ScriptedRng::new(vec![0.0]);
-        let player = PlayerCtx { dimension: Dimension::Overworld, creative: false };
+        let player = PlayerCtx {
+            dimension: Dimension::Overworld,
+            creative: false,
+        };
         assert_eq!(
             smc.pick_random_situational_music(&player, &mut rng),
             None,
@@ -1168,8 +1209,13 @@ mod tests {
         let mut smc = Smc::default();
         smc.config.unlock_situational_music = true;
         let mut rng = ScriptedRng::new(vec![0.0, 0.5]); // situational, mid-list pick
-        let player = PlayerCtx { dimension: Dimension::Overworld, creative: false };
-        let picked = smc.pick_random_situational_music(&player, &mut rng).unwrap();
+        let player = PlayerCtx {
+            dimension: Dimension::Overworld,
+            creative: false,
+        };
+        let picked = smc
+            .pick_random_situational_music(&player, &mut rng)
+            .unwrap();
         assert!(overworld_situational_music().contains(&picked));
     }
 
@@ -1178,7 +1224,10 @@ mod tests {
         let mut smc = Smc::default();
         smc.config.unlock_situational_music = true;
         let mut rng = ScriptedRng::new(vec![0.99]); // >= chance
-        let player = PlayerCtx { dimension: Dimension::Overworld, creative: true };
+        let player = PlayerCtx {
+            dimension: Dimension::Overworld,
+            creative: true,
+        };
         assert_eq!(
             smc.pick_random_situational_music(&player, &mut rng),
             Some(MusicId::CREATIVE)
@@ -1190,7 +1239,10 @@ mod tests {
         let mut smc = Smc::default();
         smc.config.unlock_situational_music = true;
         let mut rng = ScriptedRng::new(vec![0.99]);
-        let player = PlayerCtx { dimension: Dimension::Overworld, creative: false };
+        let player = PlayerCtx {
+            dimension: Dimension::Overworld,
+            creative: false,
+        };
         assert_eq!(
             smc.pick_random_situational_music(&player, &mut rng),
             Some(MusicId::CREATIVE),
@@ -1208,9 +1260,14 @@ mod tests {
     fn situational_nether_paths() {
         let mut smc = Smc::default();
         smc.config.unlock_situational_music = true;
-        let player = PlayerCtx { dimension: Dimension::Nether, creative: false };
+        let player = PlayerCtx {
+            dimension: Dimension::Nether,
+            creative: false,
+        };
         let mut rng = ScriptedRng::new(vec![0.0, 0.9]);
-        let picked = smc.pick_random_situational_music(&player, &mut rng).unwrap();
+        let picked = smc
+            .pick_random_situational_music(&player, &mut rng)
+            .unwrap();
         assert!(nether_situational_music().contains(&picked));
         let mut rng = ScriptedRng::new(vec![0.99]); // not situational
         assert_eq!(smc.pick_random_situational_music(&player, &mut rng), None);
@@ -1220,7 +1277,10 @@ mod tests {
     fn situational_other_dimension_never_picks() {
         let mut smc = Smc::default();
         smc.config.unlock_situational_music = true;
-        let player = PlayerCtx { dimension: Dimension::Other, creative: true };
+        let player = PlayerCtx {
+            dimension: Dimension::Other,
+            creative: true,
+        };
         let mut rng = ScriptedRng::new(vec![0.0]);
         assert_eq!(smc.pick_random_situational_music(&player, &mut rng), None);
     }
@@ -1230,14 +1290,26 @@ mod tests {
         let mut notes = MusicNoteColorManager::default();
         assert_eq!(notes.music_note_color, -1);
         notes.tick_music_notes(true, 0);
-        assert_eq!(notes.music_note_color_tick(), 0, "first tick at t=0 no-ops (0 > 0+25 false)");
+        assert_eq!(
+            notes.music_note_color_tick(),
+            0,
+            "first tick at t=0 no-ops (0 > 0+25 false)"
+        );
         notes.tick_music_notes(true, 24);
         assert_eq!(notes.music_note_color_tick(), 0, "inside the 25ms window");
         notes.tick_music_notes(true, 26);
-        assert_eq!(notes.music_note_color_tick(), 1, "past the window advances once");
+        assert_eq!(
+            notes.music_note_color_tick(),
+            1,
+            "past the window advances once"
+        );
         assert_eq!(notes.music_note_color, get_lerped_color(1.0));
         notes.tick_music_notes(true, 30);
-        assert_eq!(notes.music_note_color_tick(), 1, "still inside the next window");
+        assert_eq!(
+            notes.music_note_color_tick(),
+            1,
+            "still inside the next window"
+        );
         notes.tick_music_notes(true, 60);
         assert_eq!(notes.music_note_color_tick(), 2);
     }

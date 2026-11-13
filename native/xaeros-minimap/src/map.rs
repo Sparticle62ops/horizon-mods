@@ -1,7 +1,7 @@
 //! Minimap frame and rendering math: the square and circle shapes, zoom,
 //! rotation lock with the direction arrow, and the enlarge keybind behaviors.
 
-use crate::config::{map_size_pixels, Config, Shape};
+use crate::config::{Config, Shape, map_size_pixels};
 
 /// A point on the map canvas, in world-block coordinates relative to the map center.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -13,7 +13,14 @@ pub struct MapPoint {
 /// Which world-block a screen pixel inside the map widget samples, given zoom.
 /// `zoom_level` follows the mod's multiple zoom options: each step doubles the
 /// world blocks the widget covers.
-pub fn sample_block(cfg: &Config, widget_size: u32, px: i32, pz: i32, screen_px: i32, screen_pz: i32) -> Option<MapPoint> {
+pub fn sample_block(
+    cfg: &Config,
+    widget_size: u32,
+    px: i32,
+    pz: i32,
+    screen_px: i32,
+    screen_pz: i32,
+) -> Option<MapPoint> {
     let size = widget_size as i32;
     let half = size as f64 / 2.0;
     if cfg.shape == Shape::Circle {
@@ -28,7 +35,10 @@ pub fn sample_block(cfg: &Config, widget_size: u32, px: i32, pz: i32, screen_px:
     let blocks_per_pixel = (1usize << cfg.zoom) as f64;
     let rel_x = (screen_px - size / 2) as f64 * blocks_per_pixel;
     let rel_z = (screen_pz - size / 2) as f64 * blocks_per_pixel;
-    Some(MapPoint { x: px as f64 + rel_x, z: pz as f64 + rel_z })
+    Some(MapPoint {
+        x: px as f64 + rel_x,
+        z: pz as f64 + rel_z,
+    })
 }
 
 /// The player marker's angle on the map, in radians clockwise from map-up.
@@ -36,11 +46,7 @@ pub fn sample_block(cfg: &Config, widget_size: u32, px: i32, pz: i32, screen_px:
 /// the marker angle is the player's yaw; without it the map rotates under the
 /// player, so the marker always points up.
 pub fn player_marker_angle(cfg: &Config, yaw_radians: f64) -> f64 {
-    if cfg.lock_north {
-        yaw_radians
-    } else {
-        0.0
-    }
+    if cfg.lock_north { yaw_radians } else { 0.0 }
 }
 
 /// The on-screen position of the widget's top-left corner, from the config
@@ -58,7 +64,11 @@ pub fn enlarged_state(cfg: &Config, screen_w: u32, screen_h: u32, normal_size: u
     if cfg.enlarge_centered {
         size = map_minimum_for(screen_w, screen_h);
     }
-    let zoom = if cfg.enlarge_full_zoom_out { u8::MAX } else { cfg.zoom };
+    let zoom = if cfg.enlarge_full_zoom_out {
+        u8::MAX
+    } else {
+        cfg.zoom
+    };
     (size, zoom)
 }
 
@@ -72,7 +82,10 @@ mod tests {
     use crate::config::MapSize;
 
     fn cfg(shape: Shape) -> Config {
-        Config { shape, ..Config::default() }
+        Config {
+            shape,
+            ..Config::default()
+        }
     }
 
     #[test]
@@ -95,14 +108,35 @@ mod tests {
         let c = cfg(Shape::Square);
         assert!(sample_block(&c, 128, 0, 0, 200, 64).is_none());
         let circle = cfg(Shape::Circle);
-        assert!(sample_block(&circle, 128, 0, 0, 0, 0).is_none(), "corner of a circle map is outside");
+        assert!(
+            sample_block(&circle, 128, 0, 0, 0, 0).is_none(),
+            "corner of a circle map is outside"
+        );
         assert!(sample_block(&circle, 128, 0, 0, 64, 64).is_some());
     }
 
     #[test]
     fn lock_north_shows_facing_yaw_otherwise_marker_points_up() {
-        assert_eq!(player_marker_angle(&Config { lock_north: true, ..Config::default() }, 1.25), 1.25);
-        assert_eq!(player_marker_angle(&Config { lock_north: false, ..Config::default() }, 1.25), 0.0);
+        assert_eq!(
+            player_marker_angle(
+                &Config {
+                    lock_north: true,
+                    ..Config::default()
+                },
+                1.25
+            ),
+            1.25
+        );
+        assert_eq!(
+            player_marker_angle(
+                &Config {
+                    lock_north: false,
+                    ..Config::default()
+                },
+                1.25
+            ),
+            0.0
+        );
     }
 
     #[test]
@@ -115,20 +149,29 @@ mod tests {
 
     #[test]
     fn automatic_size_scales_with_screen() {
-        let c = Config { size: MapSize::Automatic, ..Config::default() };
+        let c = Config {
+            size: MapSize::Automatic,
+            ..Config::default()
+        };
         assert_eq!(map_size_pixels(&c, 1920, 1080), 432);
     }
 
     #[test]
     fn enlarge_full_zoom_out_pushes_zoom_to_max() {
-        let c = Config { enlarge_full_zoom_out: true, ..Config::default() };
+        let c = Config {
+            enlarge_full_zoom_out: true,
+            ..Config::default()
+        };
         let (_, zoom) = enlarged_state(&c, 1920, 1080, 192);
         assert_eq!(zoom, u8::MAX);
     }
 
     #[test]
     fn enlarge_centered_grows_widget() {
-        let c = Config { enlarge_centered: true, ..Config::default() };
+        let c = Config {
+            enlarge_centered: true,
+            ..Config::default()
+        };
         let (size, zoom) = enlarged_state(&c, 1920, 1080, 192);
         assert!(size > 192);
         assert_eq!(zoom, c.zoom);

@@ -70,16 +70,93 @@ impl Config {
 
         let mut config = Config::default();
 
-        config.target_chunk_send_rate = get_int(&entries, "target_chunk_send_rate", TARGET_CHUNK_SEND_RATE_DEFAULT, &mut normalized);
-        config.use_async_logging = get_boolean(&entries, "use_async_logging", true, incompatibilities, ignore_incompatible, &mut normalized, &mut warnings);
-        config.use_optimized_entity_tracking = get_boolean(&entries, "use_optimized_entity_tracking", true, incompatibilities, ignore_incompatible, &mut normalized, &mut warnings);
-        config.optimized_entity_tracking_use_staging_area = get_boolean(&entries, "optimized_entity_tracking_use_staging_area", true, incompatibilities, ignore_incompatible, &mut normalized, &mut warnings);
-        config.use_multiple_netty_event_loops = get_boolean(&entries, "use_multiple_netty_event_loops", true, incompatibilities, ignore_incompatible, &mut normalized, &mut warnings);
-        config.use_async_portals = get_boolean(&entries, "use_async_portals", true, incompatibilities, ignore_incompatible, &mut normalized, &mut warnings);
-        config.use_async_chunks_on_login = get_boolean(&entries, "use_async_chunks_on_login_v2", true, incompatibilities, ignore_incompatible, &mut normalized, &mut warnings);
-        config.use_async_chunks_on_some_commands = get_boolean(&entries, "use_async_chunks_on_some_commands", false, incompatibilities, ignore_incompatible, &mut normalized, &mut warnings);
-        config.show_async_loading_messages = get_boolean(&entries, "show_async_loading_messages", true, incompatibilities, ignore_incompatible, &mut normalized, &mut warnings);
-        config.show_chunk_tracking_messages = get_boolean(&entries, "show_chunk_tracking_messages", true, incompatibilities, ignore_incompatible, &mut normalized, &mut warnings);
+        config.target_chunk_send_rate = get_int(
+            &entries,
+            "target_chunk_send_rate",
+            TARGET_CHUNK_SEND_RATE_DEFAULT,
+            &mut normalized,
+        );
+        config.use_async_logging = get_boolean(
+            &entries,
+            "use_async_logging",
+            true,
+            incompatibilities,
+            ignore_incompatible,
+            &mut normalized,
+            &mut warnings,
+        );
+        config.use_optimized_entity_tracking = get_boolean(
+            &entries,
+            "use_optimized_entity_tracking",
+            true,
+            incompatibilities,
+            ignore_incompatible,
+            &mut normalized,
+            &mut warnings,
+        );
+        config.optimized_entity_tracking_use_staging_area = get_boolean(
+            &entries,
+            "optimized_entity_tracking_use_staging_area",
+            true,
+            incompatibilities,
+            ignore_incompatible,
+            &mut normalized,
+            &mut warnings,
+        );
+        config.use_multiple_netty_event_loops = get_boolean(
+            &entries,
+            "use_multiple_netty_event_loops",
+            true,
+            incompatibilities,
+            ignore_incompatible,
+            &mut normalized,
+            &mut warnings,
+        );
+        config.use_async_portals = get_boolean(
+            &entries,
+            "use_async_portals",
+            true,
+            incompatibilities,
+            ignore_incompatible,
+            &mut normalized,
+            &mut warnings,
+        );
+        config.use_async_chunks_on_login = get_boolean(
+            &entries,
+            "use_async_chunks_on_login_v2",
+            true,
+            incompatibilities,
+            ignore_incompatible,
+            &mut normalized,
+            &mut warnings,
+        );
+        config.use_async_chunks_on_some_commands = get_boolean(
+            &entries,
+            "use_async_chunks_on_some_commands",
+            false,
+            incompatibilities,
+            ignore_incompatible,
+            &mut normalized,
+            &mut warnings,
+        );
+        config.show_async_loading_messages = get_boolean(
+            &entries,
+            "show_async_loading_messages",
+            true,
+            incompatibilities,
+            ignore_incompatible,
+            &mut normalized,
+            &mut warnings,
+        );
+        config.show_chunk_tracking_messages = get_boolean(
+            &entries,
+            "show_chunk_tracking_messages",
+            true,
+            incompatibilities,
+            ignore_incompatible,
+            &mut normalized,
+            &mut warnings,
+        );
 
         let mut normalized_properties = String::from("#Configuration file for VMP\n");
         for (key, value) in &normalized {
@@ -296,13 +373,20 @@ mod tests {
     #[test]
     fn normalized_write_back_lists_every_key() {
         let result = Config::load("# manual edit\ntarget_chunk_send_rate=5\n", &[], false);
-        assert!(result.normalized_properties.starts_with("#Configuration file for VMP\n"));
+        assert!(
+            result
+                .normalized_properties
+                .starts_with("#Configuration file for VMP\n")
+        );
         for key in [
             "target_chunk_send_rate",
             "use_async_logging",
             "use_async_chunks_on_login_v2",
         ] {
-            assert!(result.normalized_properties.contains(&format!("{key}=")), "{key} missing");
+            assert!(
+                result.normalized_properties.contains(&format!("{key}=")),
+                "{key} missing"
+            );
         }
     }
 
@@ -320,7 +404,11 @@ mod tests {
 
     #[test]
     fn last_assignment_wins_like_java_properties() {
-        let result = Config::load("target_chunk_send_rate=1\ntarget_chunk_send_rate=2\n", &[], false);
+        let result = Config::load(
+            "target_chunk_send_rate=1\ntarget_chunk_send_rate=2\n",
+            &[],
+            false,
+        );
         assert_eq!(result.config.target_chunk_send_rate, 2);
     }
 
@@ -333,7 +421,11 @@ mod tests {
             vec!["Forcing use_async_portals in vmp.properties to be disabled (defined in othermod@1.2.3) (you may override this with -Dvmp.ignoreIncompatibleConfig=true)".to_string()]
         );
         // the write-back keeps the parsed value, as upstream does
-        assert!(result.normalized_properties.contains("use_async_portals=true"));
+        assert!(
+            result
+                .normalized_properties
+                .contains("use_async_portals=true")
+        );
     }
 
     #[test]
@@ -342,14 +434,23 @@ mod tests {
         assert!(result.config.use_async_portals);
         assert_eq!(
             result.warnings,
-            vec!["Ignoring incompatibility of use_async_portals (defined in othermod@1.2.3)".to_string()]
+            vec![
+                "Ignoring incompatibility of use_async_portals (defined in othermod@1.2.3)"
+                    .to_string()
+            ]
         );
     }
 
     #[test]
     fn properties_reader_handles_separators_and_comments() {
-        let entries = parse_properties("a=1\n! comment\n# comment\n  b : 2\n\tc 3\nd=spaced value\n");
-        let find = |k: &str| entries.iter().find(|(key, _)| key == k).map(|(_, v)| v.clone());
+        let entries =
+            parse_properties("a=1\n! comment\n# comment\n  b : 2\n\tc 3\nd=spaced value\n");
+        let find = |k: &str| {
+            entries
+                .iter()
+                .find(|(key, _)| key == k)
+                .map(|(_, v)| v.clone())
+        };
         assert_eq!(find("a").as_deref(), Some("1"));
         assert_eq!(find("b").as_deref(), Some("2"));
         assert_eq!(find("c").as_deref(), Some("3"));
@@ -360,7 +461,12 @@ mod tests {
     #[test]
     fn escapes_and_continuations_parse() {
         let entries = parse_properties("path=C\\:\\\\dir\nmulti=one\\\n  two\n");
-        let find = |k: &str| entries.iter().find(|(key, _)| key == k).map(|(_, v)| v.clone());
+        let find = |k: &str| {
+            entries
+                .iter()
+                .find(|(key, _)| key == k)
+                .map(|(_, v)| v.clone())
+        };
         assert_eq!(find("path").as_deref(), Some("C:\\dir"));
         assert_eq!(find("multi").as_deref(), Some("onetwo"));
     }

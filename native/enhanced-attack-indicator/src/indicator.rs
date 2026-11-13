@@ -18,7 +18,10 @@ pub struct Settings {
 
 impl Default for Settings {
     fn default() -> Self {
-        Settings { variant: Variant::Circumferential, hide_when_charged_after_ticks: 10 }
+        Settings {
+            variant: Variant::Circumferential,
+            hide_when_charged_after_ticks: 10,
+        }
     }
 }
 
@@ -78,7 +81,12 @@ impl Default for IndicatorState {
     }
 }
 
-pub fn should_draw(input: &FrameInput, variant: Variant, state: &mut IndicatorState, s: &Settings) -> bool {
+pub fn should_draw(
+    input: &FrameInput,
+    variant: Variant,
+    state: &mut IndicatorState,
+    s: &Settings,
+) -> bool {
     if variant == Variant::Off {
         return false;
     }
@@ -96,52 +104,92 @@ mod tests {
 
     #[test]
     fn off_variant_draws_nothing() {
-        let i = FrameInput { attack_strength: 0.5, cooldown_active: true };
+        let i = FrameInput {
+            attack_strength: 0.5,
+            cooldown_active: true,
+        };
         assert_eq!(fill(&i, Variant::Off), None);
-        assert!(!should_draw(&i, Variant::Off, &mut IndicatorState::new(), &Settings::default()));
+        assert!(!should_draw(
+            &i,
+            Variant::Off,
+            &mut IndicatorState::new(),
+            &Settings::default()
+        ));
     }
 
     #[test]
     fn fill_tracks_cooldown_for_both_visible_variants() {
-        let i = FrameInput { attack_strength: 0.7, cooldown_active: true };
+        let i = FrameInput {
+            attack_strength: 0.7,
+            cooldown_active: true,
+        };
         assert_eq!(fill(&i, Variant::Horizontal), Some(0.7));
         assert_eq!(fill(&i, Variant::Circumferential), Some(0.7));
-        assert_eq!(charge_state(&i, Variant::Horizontal), Some(ChargeState::Charging));
+        assert_eq!(
+            charge_state(&i, Variant::Horizontal),
+            Some(ChargeState::Charging)
+        );
     }
 
     #[test]
     fn charged_color_at_full_strength() {
-        let i = FrameInput { attack_strength: 1.0, cooldown_active: false };
-        assert_eq!(charge_state(&i, Variant::Circumferential), Some(ChargeState::Charged));
+        let i = FrameInput {
+            attack_strength: 1.0,
+            cooldown_active: false,
+        };
+        assert_eq!(
+            charge_state(&i, Variant::Circumferential),
+            Some(ChargeState::Charged)
+        );
     }
 
     #[test]
     fn indicator_hides_after_linger_ticks() {
         let mut s = Settings::default();
         let mut st = IndicatorState::new();
-        let full = FrameInput { attack_strength: 1.0, cooldown_active: false };
+        let full = FrameInput {
+            attack_strength: 1.0,
+            cooldown_active: false,
+        };
         for _ in 0..s.hide_when_charged_after_ticks {
             assert!(should_draw(&full, Variant::Circumferential, &mut st, &s));
         }
-        assert!(!should_draw(&full, Variant::Circumferential, &mut st, &s), "hides after linger expires");
+        assert!(
+            !should_draw(&full, Variant::Circumferential, &mut st, &s),
+            "hides after linger expires"
+        );
     }
 
     #[test]
     fn mid_cooldown_resets_linger() {
         let mut s = Settings::default();
         let mut st = IndicatorState::new();
-        let full = FrameInput { attack_strength: 1.0, cooldown_active: false };
+        let full = FrameInput {
+            attack_strength: 1.0,
+            cooldown_active: false,
+        };
         for _ in 0..5 {
             should_draw(&full, Variant::Circumferential, &mut st, &s);
         }
-        let charging = FrameInput { attack_strength: 0.5, cooldown_active: true };
-        assert!(should_draw(&charging, Variant::Circumferential, &mut st, &s));
+        let charging = FrameInput {
+            attack_strength: 0.5,
+            cooldown_active: true,
+        };
+        assert!(should_draw(
+            &charging,
+            Variant::Circumferential,
+            &mut st,
+            &s
+        ));
         assert_eq!(st.charged_ticks, 0, "a new swing resets the linger counter");
     }
 
     #[test]
     fn fill_is_clamped() {
-        let i = FrameInput { attack_strength: 5.0, cooldown_active: true };
+        let i = FrameInput {
+            attack_strength: 5.0,
+            cooldown_active: true,
+        };
         assert_eq!(fill(&i, Variant::Horizontal), Some(1.0));
     }
 }

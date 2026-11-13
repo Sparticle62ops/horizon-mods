@@ -39,11 +39,7 @@ pub const IDENTITY: Pose = [1.0, 0.0, 0.0, 1.0, 0.0, 0.0];
 /// `f32::round`, which rounds away from zero).
 pub fn java_round(x: f32) -> i32 {
     let r = (x + 0.5).floor();
-    if r.is_nan() {
-        0
-    } else {
-        r as i32
-    }
+    if r.is_nan() { 0 } else { r as i32 }
 }
 
 /// The upstream quarter-pixel quantisation applied to the crosshair anchor:
@@ -64,7 +60,12 @@ pub struct ScreenRect {
 
 impl ScreenRect {
     pub fn new(x: i32, y: i32, width: i32, height: i32) -> Self {
-        Self { x, y, width, height }
+        Self {
+            x,
+            y,
+            width,
+            height,
+        }
     }
 
     /// Vanilla `ScreenRectangle.intersection`: empty (None) when the edges
@@ -170,7 +171,14 @@ impl SubpixelTexturedQuad {
     /// Upstream `createBounds`: `ScreenRectangle(round(x1), round(y1),
     /// round(x2-x1), round(y2-y1)).transformMaxBounds(pose)` intersected with
     /// the scissor area, or the plain rect when no scissor is active.
-    pub fn create_bounds(x1: f32, y1: f32, x2: f32, y2: f32, pose: &Pose, scissor: Option<ScreenRect>) -> Option<ScreenRect> {
+    pub fn create_bounds(
+        x1: f32,
+        y1: f32,
+        x2: f32,
+        y2: f32,
+        pose: &Pose,
+        scissor: Option<ScreenRect>,
+    ) -> Option<ScreenRect> {
         let rect = ScreenRect::new(
             java_round(x1),
             java_round(y1),
@@ -220,7 +228,14 @@ pub fn subpixel_blit_sprite(
         v2: sprite_uv.v1 - HALF_TEXEL,
         // Upstream passes `-1` (an ARGB int), i.e. fully opaque white.
         color: 0xFFFF_FFFF,
-        bounds: SubpixelTexturedQuad::create_bounds(x, y, x + width as f32, y + height as f32, pose, scissor),
+        bounds: SubpixelTexturedQuad::create_bounds(
+            x,
+            y,
+            x + width as f32,
+            y + height as f32,
+            pose,
+            scissor,
+        ),
     };
     Some(quad)
 }
@@ -245,7 +260,17 @@ pub fn centered_crosshair_draw(
     let scaled_center_y = (window_height as f32 / gui_scale) / 2.0;
     let x = quantize_quarter(scaled_center_x);
     let y = quantize_quarter(scaled_center_y);
-    subpixel_blit_sprite("pipeline/crosshair", "textures/gui/sprites/hud/crosshair", sprite_uv, x, y, 15, 15, pose, scissor)
+    subpixel_blit_sprite(
+        "pipeline/crosshair",
+        "textures/gui/sprites/hud/crosshair",
+        sprite_uv,
+        x,
+        y,
+        15,
+        15,
+        pose,
+        scissor,
+    )
 }
 
 /// Vanilla's integer crosshair anchor for comparison
@@ -262,7 +287,12 @@ mod tests {
 
     fn sprite_uv() -> SpriteUv {
         // 15x15 sprite in a 256x256 atlas at slot (32, 32): u = 32/256 ...
-        SpriteUv { u0: 0.125, u1: 0.18359375, v0: 0.125, v1: 0.18359375 }
+        SpriteUv {
+            u0: 0.125,
+            u1: 0.18359375,
+            v0: 0.125,
+            v1: 0.18359375,
+        }
     }
 
     #[test]
@@ -299,15 +329,65 @@ mod tests {
     #[test]
     fn zero_sized_sprite_draws_nothing() {
         let uv = sprite_uv();
-        assert!(subpixel_blit_sprite("pipeline/crosshair", "tex", &uv, 1.0, 1.0, 0, 15, &IDENTITY, None).is_none());
-        assert!(subpixel_blit_sprite("pipeline/crosshair", "tex", &uv, 1.0, 1.0, 15, 0, &IDENTITY, None).is_none());
-        assert!(subpixel_blit_sprite("pipeline/crosshair", "tex", &uv, 1.0, 1.0, 0, 0, &IDENTITY, None).is_none());
+        assert!(
+            subpixel_blit_sprite(
+                "pipeline/crosshair",
+                "tex",
+                &uv,
+                1.0,
+                1.0,
+                0,
+                15,
+                &IDENTITY,
+                None
+            )
+            .is_none()
+        );
+        assert!(
+            subpixel_blit_sprite(
+                "pipeline/crosshair",
+                "tex",
+                &uv,
+                1.0,
+                1.0,
+                15,
+                0,
+                &IDENTITY,
+                None
+            )
+            .is_none()
+        );
+        assert!(
+            subpixel_blit_sprite(
+                "pipeline/crosshair",
+                "tex",
+                &uv,
+                1.0,
+                1.0,
+                0,
+                0,
+                &IDENTITY,
+                None
+            )
+            .is_none()
+        );
     }
 
     #[test]
     fn blit_nudges_uv_by_half_texel_and_sets_opaque_white() {
         let uv = sprite_uv();
-        let quad = subpixel_blit_sprite("pipeline/crosshair", "tex", &uv, 10.0, 20.0, 15, 15, &IDENTITY, None).unwrap();
+        let quad = subpixel_blit_sprite(
+            "pipeline/crosshair",
+            "tex",
+            &uv,
+            10.0,
+            20.0,
+            15,
+            15,
+            &IDENTITY,
+            None,
+        )
+        .unwrap();
         assert_eq!(quad.u1, uv.u0 + HALF_TEXEL);
         assert_eq!(quad.u2, uv.u1 + HALF_TEXEL);
         assert_eq!(quad.v1, uv.v0 - HALF_TEXEL);
@@ -348,7 +428,8 @@ mod tests {
 
     #[test]
     fn create_bounds_is_the_rounded_rect_under_identity_pose() {
-        let b = SubpixelTexturedQuad::create_bounds(10.25, 20.5, 25.25, 35.5, &IDENTITY, None).unwrap();
+        let b =
+            SubpixelTexturedQuad::create_bounds(10.25, 20.5, 25.25, 35.5, &IDENTITY, None).unwrap();
         assert_eq!(b, ScreenRect::new(10, 21, 15, 15));
     }
 
@@ -366,10 +447,22 @@ mod tests {
         let scissor = ScreenRect::new(0, 0, 20, 20);
         // Quad (10..25, 20..35) clipped to (10..20, 20..20): y-overlap empty
         // height 0 still crosses (`k >= i && l >= j`), so Some with height 0.
-        let b = SubpixelTexturedQuad::create_bounds(10.0, 20.0, 25.0, 35.0, &IDENTITY, Some(scissor)).unwrap();
+        let b =
+            SubpixelTexturedQuad::create_bounds(10.0, 20.0, 25.0, 35.0, &IDENTITY, Some(scissor))
+                .unwrap();
         assert_eq!(b, ScreenRect::new(10, 20, 10, 0));
         // Fully outside: None.
-        assert!(SubpixelTexturedQuad::create_bounds(100.0, 100.0, 115.0, 115.0, &IDENTITY, Some(scissor)).is_none());
+        assert!(
+            SubpixelTexturedQuad::create_bounds(
+                100.0,
+                100.0,
+                115.0,
+                115.0,
+                &IDENTITY,
+                Some(scissor)
+            )
+            .is_none()
+        );
     }
 
     #[test]

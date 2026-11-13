@@ -75,7 +75,10 @@ mod tests {
     #[test]
     fn clear_path_has_no_occlusion() {
         let w = world(&[]);
-        assert_eq!(direct_occlusion(&w, (0.5, 64.0, 0.5), (10.5, 64.0, 0.5)), 0.0);
+        assert_eq!(
+            direct_occlusion(&w, (0.5, 64.0, 0.5), (10.5, 64.0, 0.5)),
+            0.0
+        );
     }
 
     #[test]

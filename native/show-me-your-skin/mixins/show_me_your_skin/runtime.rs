@@ -24,7 +24,10 @@ pub struct PieceConfig {
 
 impl Default for PieceConfig {
     fn default() -> Self {
-        Self { base: true, glint: true }
+        Self {
+            base: true,
+            glint: true,
+        }
     }
 }
 
@@ -56,7 +59,11 @@ pub struct ArmorPieceConfig {
 
 impl Default for ArmorPieceConfig {
     fn default() -> Self {
-        Self { base: true, glint: true, trim: true }
+        Self {
+            base: true,
+            glint: true,
+            trim: true,
+        }
     }
 }
 
@@ -103,15 +110,27 @@ pub trait PieceAccess {
 }
 
 impl PieceAccess for PieceConfig {
-    fn base(&self) -> bool { self.base }
-    fn glint(&self) -> bool { self.glint }
-    fn trim(&self) -> bool { true }
+    fn base(&self) -> bool {
+        self.base
+    }
+    fn glint(&self) -> bool {
+        self.glint
+    }
+    fn trim(&self) -> bool {
+        true
+    }
 }
 
 impl PieceAccess for ArmorPieceConfig {
-    fn base(&self) -> bool { self.base }
-    fn glint(&self) -> bool { self.glint }
-    fn trim(&self) -> bool { self.trim }
+    fn base(&self) -> bool {
+        self.base
+    }
+    fn glint(&self) -> bool {
+        self.glint
+    }
+    fn trim(&self) -> bool {
+        self.trim
+    }
 }
 
 pub fn vanilla_values() -> ArmorConfig {
@@ -171,7 +190,15 @@ pub enum HideableEquipment {
 impl HideableEquipment {
     /// Upstream id = name().toLowerCase() (Java enum order kept).
     pub fn all() -> [HideableEquipment; 7] {
-        [Self::Head, Self::Chest, Self::Legs, Self::Feet, Self::Elytra, Self::Shield, Self::Hat]
+        [
+            Self::Head,
+            Self::Chest,
+            Self::Legs,
+            Self::Feet,
+            Self::Elytra,
+            Self::Shield,
+            Self::Hat,
+        ]
     }
 
     pub fn id(self) -> &'static str {
@@ -296,7 +323,11 @@ pub struct CombatLogger {
 impl CombatLogger {
     pub fn is_in_combat(&self, uuid: &str, config: &ModConfig, now_millis: i64) -> bool {
         match self.in_combat.get(uuid) {
-            Some(last_trigger) if *last_trigger > now_millis - (config.combat_cooldown * 1000.0) as i64 => true,
+            Some(last_trigger)
+                if *last_trigger > now_millis - (config.combat_cooldown * 1000.0) as i64 =>
+            {
+                true
+            }
             Some(_) => false,
             None => false,
         }
@@ -305,8 +336,8 @@ impl CombatLogger {
     pub fn get_fade(&self, uuid: &str, config: &ModConfig, now_millis: i64) -> f32 {
         match self.in_combat.get(uuid) {
             Some(last_trigger) => {
-                let fade_start =
-                    *last_trigger + (config.combat_cooldown * 1000.0) as i64 - (config.fade_out_time * 1000.0) as i64;
+                let fade_start = *last_trigger + (config.combat_cooldown * 1000.0) as i64
+                    - (config.fade_out_time * 1000.0) as i64;
                 let time_since_combat = now_millis - fade_start;
                 // Upstream: Mth.clamp(1 - (timeSinceCombat / 1000f) / fadeOutTime, 0, 1)
                 (1.0 - (time_since_combat as f32 / 1000.0) / config.fade_out_time).clamp(0.0, 1.0)
@@ -380,14 +411,23 @@ mod tests {
         for s in HideableEquipment::all() {
             assert_eq!(HideableEquipment::from_id(s.id()), Some(s));
         }
-        assert_eq!(HideableEquipment::from_id("elytra"), Some(HideableEquipment::Elytra));
-        assert_eq!(HideableEquipment::from_id("hat"), Some(HideableEquipment::Hat));
+        assert_eq!(
+            HideableEquipment::from_id("elytra"),
+            Some(HideableEquipment::Elytra)
+        );
+        assert_eq!(
+            HideableEquipment::from_id("hat"),
+            Some(HideableEquipment::Hat)
+        );
         assert_eq!(HideableEquipment::from_id("nope"), None);
     }
 
     #[test]
     fn slot_mapping_matches_upstream() {
-        assert_eq!(HideableEquipment::from_slot(EquipmentSlot::Head), Some(HideableEquipment::Head));
+        assert_eq!(
+            HideableEquipment::from_slot(EquipmentSlot::Head),
+            Some(HideableEquipment::Head)
+        );
         assert_eq!(HideableEquipment::from_slot(EquipmentSlot::Offhand), None);
         assert_eq!(HideableEquipment::Elytra.to_slot(), None);
         assert_eq!(HideableEquipment::Head.to_slot(), Some(EquipmentSlot::Head));
@@ -421,7 +461,14 @@ mod tests {
         let uuid = "player-1";
 
         // Global applies when no override.
-        let app = get_applicable(&config, false, None::<fn(&str) -> bool>, &CombatLogger::default(), uuid, 0);
+        let app = get_applicable(
+            &config,
+            false,
+            None::<fn(&str) -> bool>,
+            &CombatLogger::default(),
+            uuid,
+            0,
+        );
         assert_eq!(app, config.global);
 
         // Override beats global.
@@ -429,19 +476,43 @@ mod tests {
         ov.head = ArmorPieceConfig::new(false, false, false);
         config.overrides.insert(
             uuid.to_string(),
-            LocalOverride { title: "me".into(), config: ov.clone() },
+            LocalOverride {
+                title: "me".into(),
+                config: ov.clone(),
+            },
         );
-        let app = get_applicable(&config, false, None::<fn(&str) -> bool>, &CombatLogger::default(), uuid, 0);
+        let app = get_applicable(
+            &config,
+            false,
+            None::<fn(&str) -> bool>,
+            &CombatLogger::default(),
+            uuid,
+            0,
+        );
         assert_eq!(app, ov);
 
         // Server mode without client overrides falls back to vanilla values.
         config.overrides_enabled_in_server_mode = false;
-        let app = get_applicable(&config, true, None::<fn(&str) -> bool>, &CombatLogger::default(), uuid, 0);
+        let app = get_applicable(
+            &config,
+            true,
+            None::<fn(&str) -> bool>,
+            &CombatLogger::default(),
+            uuid,
+            0,
+        );
         assert_eq!(app, vanilla_values());
 
         // globalEnabled = false always yields vanilla values.
         config.global_enabled = false;
-        let app = get_applicable(&config, false, None::<fn(&str) -> bool>, &CombatLogger::default(), uuid, 0);
+        let app = get_applicable(
+            &config,
+            false,
+            None::<fn(&str) -> bool>,
+            &CombatLogger::default(),
+            uuid,
+            0,
+        );
         assert_eq!(app, vanilla_values());
     }
 
@@ -489,10 +560,24 @@ mod tests {
         let c = vanilla_values();
         let json = serde_json::to_string(&c).unwrap();
         for key in [
-            "head", "chest", "legs", "feet", "elytra", "shield", "hat",
-            "show_in_combat", "show_name_tag", "force_elytra_when_flying", "base", "glint", "trim",
+            "head",
+            "chest",
+            "legs",
+            "feet",
+            "elytra",
+            "shield",
+            "hat",
+            "show_in_combat",
+            "show_name_tag",
+            "force_elytra_when_flying",
+            "base",
+            "glint",
+            "trim",
         ] {
-            assert!(json.contains(&format!("\"{key}\"")), "missing {key} in {json}");
+            assert!(
+                json.contains(&format!("\"{key}\"")),
+                "missing {key} in {json}"
+            );
         }
         let back: ArmorConfig = serde_json::from_str(&json).unwrap();
         assert_eq!(back, c);
@@ -544,11 +629,17 @@ pub struct SyncedModConfig {
     pub allow_not_force_elytra_when_flying: bool,
 }
 
-fn d_true() -> bool { true }
+fn d_true() -> bool {
+    true
+}
 
 impl Default for SyncedModConfig {
     fn default() -> Self {
-        Self { allow_not_show_in_combat: true, allow_not_show_name_tag: true, allow_not_force_elytra_when_flying: true }
+        Self {
+            allow_not_show_in_combat: true,
+            allow_not_show_name_tag: true,
+            allow_not_force_elytra_when_flying: true,
+        }
     }
 }
 
@@ -569,7 +660,13 @@ pub struct ModConfigServer {
 
 impl ModConfigServer {
     pub fn new() -> Self {
-        Self { synced: SyncedModConfig { allow_not_show_in_combat: false, allow_not_show_name_tag: false, allow_not_force_elytra_when_flying: false } }
+        Self {
+            synced: SyncedModConfig {
+                allow_not_show_in_combat: false,
+                allow_not_show_name_tag: false,
+                allow_not_force_elytra_when_flying: false,
+            },
+        }
     }
 }
 
@@ -588,12 +685,20 @@ impl ModConfig {
     /// title or config (modeled here as empty strings are kept, missing keys
     /// cannot occur), then persist. Saving is the file-seam; callers save.
     pub fn ensure_valid(&mut self) {
-        if self.combat_cooldown < 0.0 { self.combat_cooldown = 0.0; }
-        if self.fade_out_time < 0.0 { self.fade_out_time = 0.0; }
-        if self.fade_out_time > self.combat_cooldown { self.fade_out_time = self.combat_cooldown; }
+        if self.combat_cooldown < 0.0 {
+            self.combat_cooldown = 0.0;
+        }
+        if self.fade_out_time < 0.0 {
+            self.fade_out_time = 0.0;
+        }
+        if self.fade_out_time > self.combat_cooldown {
+            self.fade_out_time = self.combat_cooldown;
+        }
         self.global.ensure_valid();
         self.overrides.retain(|_, o| !o.title.is_empty());
-        self.overrides.values_mut().for_each(|o| o.config.ensure_valid());
+        self.overrides
+            .values_mut()
+            .for_each(|o| o.config.ensure_valid());
     }
 
     pub fn to_json(&self) -> String {
@@ -613,9 +718,14 @@ mod sync_tests {
     #[test]
     fn synced_config_defaults_and_optional_fields() {
         let d = SyncedModConfig::default();
-        assert!(d.allow_not_show_in_combat && d.allow_not_show_name_tag && d.allow_not_force_elytra_when_flying);
+        assert!(
+            d.allow_not_show_in_combat
+                && d.allow_not_show_name_tag
+                && d.allow_not_force_elytra_when_flying
+        );
         // Partial JSON: optionalFieldOf defaults fill missing keys with true.
-        let partial: SyncedModConfig = serde_json::from_str("{\"allow_not_show_in_combat\":false}").unwrap();
+        let partial: SyncedModConfig =
+            serde_json::from_str("{\"allow_not_show_in_combat\":false}").unwrap();
         assert!(!partial.allow_not_show_in_combat);
         assert!(partial.allow_not_show_name_tag && partial.allow_not_force_elytra_when_flying);
     }
@@ -658,13 +768,25 @@ mod sync_tests {
         let mut c = ModConfig::default();
         c.combat_cooldown = -1.0;
         c.fade_out_time = 9.0;
-        c.overrides.insert("x".into(), LocalOverride { title: String::new(), config: vanilla_values() });
+        c.overrides.insert(
+            "x".into(),
+            LocalOverride {
+                title: String::new(),
+                config: vanilla_values(),
+            },
+        );
         c.ensure_valid();
         assert_eq!(c.combat_cooldown, 0.0);
         assert_eq!(c.fade_out_time, 0.0);
         assert!(c.overrides.is_empty());
         // A well-formed override survives.
-        c.overrides.insert("y".into(), LocalOverride { title: "me".into(), config: vanilla_values() });
+        c.overrides.insert(
+            "y".into(),
+            LocalOverride {
+                title: "me".into(),
+                config: vanilla_values(),
+            },
+        );
         c.ensure_valid();
         assert!(c.overrides.contains_key("y"));
     }

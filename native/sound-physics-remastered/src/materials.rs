@@ -12,21 +12,47 @@ pub struct Material {
     pub reflectivity: f32,
 }
 
-pub const AIR: Material = Material { absorption: 0.0, reflectivity: 0.0 };
-pub const STONE: Material = Material { absorption: 0.2, reflectivity: 0.8 };
-pub const WOOL: Material = Material { absorption: 1.0, reflectivity: 0.1 };
-pub const WOOD: Material = Material { absorption: 0.5, reflectivity: 0.4 };
-pub const GLASS: Material = Material { absorption: 0.1, reflectivity: 0.7 };
-pub const DIRT: Material = Material { absorption: 0.7, reflectivity: 0.3 };
-pub const WATER: Material = Material { absorption: 0.3, reflectivity: 0.5 };
+pub const AIR: Material = Material {
+    absorption: 0.0,
+    reflectivity: 0.0,
+};
+pub const STONE: Material = Material {
+    absorption: 0.2,
+    reflectivity: 0.8,
+};
+pub const WOOL: Material = Material {
+    absorption: 1.0,
+    reflectivity: 0.1,
+};
+pub const WOOD: Material = Material {
+    absorption: 0.5,
+    reflectivity: 0.4,
+};
+pub const GLASS: Material = Material {
+    absorption: 0.1,
+    reflectivity: 0.7,
+};
+pub const DIRT: Material = Material {
+    absorption: 0.7,
+    reflectivity: 0.3,
+};
+pub const WATER: Material = Material {
+    absorption: 0.3,
+    reflectivity: 0.5,
+};
 
 /// Map a block name to its material, the lookup SPR does from the block's
 /// sound type. Names are the `minecraft:` ids the client reports.
 pub fn material_for(block: &str) -> Material {
     match block {
         "minecraft:air" | "minecraft:cave_air" | "minecraft:void_air" => AIR,
-        "minecraft:stone" | "minecraft:cobblestone" | "minecraft:obsidian" | "minecraft:bricks" => STONE,
-        "minecraft:white_wool" | "minecraft:orange_wool" | "minecraft:black_wool" | "minecraft:carpet" => WOOL,
+        "minecraft:stone" | "minecraft:cobblestone" | "minecraft:obsidian" | "minecraft:bricks" => {
+            STONE
+        }
+        "minecraft:white_wool"
+        | "minecraft:orange_wool"
+        | "minecraft:black_wool"
+        | "minecraft:carpet" => WOOL,
         "minecraft:oak_planks" | "minecraft:spruce_planks" | "minecraft:oak_log" => WOOD,
         "minecraft:glass" | "minecraft:glass_pane" => GLASS,
         "minecraft:dirt" | "minecraft:grass_block" | "minecraft:sand" => DIRT,

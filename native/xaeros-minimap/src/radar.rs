@@ -13,7 +13,11 @@ pub struct Entity {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum EntityKind { Player, Mob, Item }
+pub enum EntityKind {
+    Player,
+    Mob,
+    Item,
+}
 
 /// The dot color per category, the radar's "custom color" defaults.
 pub fn dot_color(kind: EntityKind) -> (u8, u8, u8) {
@@ -46,13 +50,19 @@ pub fn visible(cfg: &Config, all: &[Entity], widget_size: u32) -> Vec<Entity> {
 mod tests {
     use super::*;
 
-    fn cfg() -> Config { Config::default() }
+    fn cfg() -> Config {
+        Config::default()
+    }
 
     #[test]
     fn off_radar_hides_everything() {
         let mut c = cfg();
         c.entity_radar = EntityDisplay::Off;
-        let es = [Entity { kind: EntityKind::Player, dx: 1.0, dz: 1.0 }];
+        let es = [Entity {
+            kind: EntityKind::Player,
+            dx: 1.0,
+            dz: 1.0,
+        }];
         assert!(visible(&c, &es, 128).is_empty());
     }
 
@@ -61,8 +71,16 @@ mod tests {
         let mut c = cfg();
         c.radar_items = false;
         let es = [
-            Entity { kind: EntityKind::Player, dx: 1.0, dz: 1.0 },
-            Entity { kind: EntityKind::Item, dx: 2.0, dz: 2.0 },
+            Entity {
+                kind: EntityKind::Player,
+                dx: 1.0,
+                dz: 1.0,
+            },
+            Entity {
+                kind: EntityKind::Item,
+                dx: 2.0,
+                dz: 2.0,
+            },
         ];
         let v = visible(&c, &es, 128);
         assert_eq!(v.len(), 1);
@@ -71,7 +89,11 @@ mod tests {
 
     #[test]
     fn entities_outside_widget_do_not_draw() {
-        let es = [Entity { kind: EntityKind::Mob, dx: 500.0, dz: 0.0 }];
+        let es = [Entity {
+            kind: EntityKind::Mob,
+            dx: 500.0,
+            dz: 0.0,
+        }];
         assert!(visible(&cfg(), &es, 128).is_empty());
     }
 

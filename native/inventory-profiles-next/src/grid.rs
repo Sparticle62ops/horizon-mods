@@ -16,10 +16,15 @@ pub struct Grid {
 
 impl Grid {
     pub fn new(width: usize, height: usize) -> Self {
-        Self { width, stacks: vec![None; width * height] }
+        Self {
+            width,
+            stacks: vec![None; width * height],
+        }
     }
 
-    pub fn len(&self) -> usize { self.stacks.len() }
+    pub fn len(&self) -> usize {
+        self.stacks.len()
+    }
 
     pub fn get(&self, slot: usize) -> Option<&Option<Stack>> {
         self.stacks.get(slot)
@@ -33,12 +38,19 @@ impl Grid {
 
     /// Slots that hold a stack, ascending.
     pub fn filled(&self) -> Vec<usize> {
-        (0..self.stacks.len()).filter(|i| self.stacks[*i].is_some()).collect()
+        (0..self.stacks.len())
+            .filter(|i| self.stacks[*i].is_some())
+            .collect()
     }
 
     /// Total stack count of one item name across the grid.
     pub fn total_of(&self, name: &str) -> u32 {
-        self.stacks.iter().flatten().filter(|s| s.name == name).map(|s| s.count).sum()
+        self.stacks
+            .iter()
+            .flatten()
+            .filter(|s| s.name == name)
+            .map(|s| s.count)
+            .sum()
     }
 }
 
@@ -47,7 +59,10 @@ mod tests {
     use super::*;
 
     fn st(name: &str, count: u32) -> Option<Stack> {
-        Some(Stack { name: name.into(), count })
+        Some(Stack {
+            name: name.into(),
+            count,
+        })
     }
 
     #[test]
@@ -55,7 +70,10 @@ mod tests {
         let mut g = Grid::new(3, 2);
         assert_eq!(g.len(), 6);
         g.set(1, st("minecraft:diamond", 3));
-        assert_eq!(g.get(1).unwrap().as_ref().unwrap().name, "minecraft:diamond");
+        assert_eq!(
+            g.get(1).unwrap().as_ref().unwrap().name,
+            "minecraft:diamond"
+        );
         assert!(g.get(0).unwrap().is_none());
         assert!(g.get(6).is_none(), "out of bounds is None, not a panic");
     }

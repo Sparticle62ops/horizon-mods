@@ -13,7 +13,12 @@ pub struct Settings {
 
 impl Default for Settings {
     fn default() -> Self {
-        Settings { duration: 5, slide_px: 16.0, fade: 0.5, animate_close: true }
+        Settings {
+            duration: 5,
+            slide_px: 16.0,
+            fade: 0.5,
+            animate_close: true,
+        }
     }
 }
 
@@ -41,7 +46,10 @@ pub struct Anim {
 
 impl Anim {
     pub fn new() -> Self {
-        Anim { state: AnimState::Closed, elapsed: 0 }
+        Anim {
+            state: AnimState::Closed,
+            elapsed: 0,
+        }
     }
 }
 
@@ -137,12 +145,25 @@ mod tests {
 
     #[test]
     fn default_settings_match_upstream() {
-        assert_eq!(Settings::default(), Settings { duration: 5, slide_px: 16.0, fade: 0.5, animate_close: true });
+        assert_eq!(
+            Settings::default(),
+            Settings {
+                duration: 5,
+                slide_px: 16.0,
+                fade: 0.5,
+                animate_close: true
+            }
+        );
     }
 
     #[test]
     fn validation_clamps_ranges() {
-        let mut s = Settings { duration: 100, slide_px: 999.0, fade: 5.0, animate_close: false };
+        let mut s = Settings {
+            duration: 100,
+            slide_px: 999.0,
+            fade: 5.0,
+            animate_close: false,
+        };
         s.validate();
         assert_eq!(s.duration, 40);
         assert_eq!(s.slide_px, 256.0);
@@ -151,7 +172,10 @@ mod tests {
 
     #[test]
     fn zero_duration_opens_instantly() {
-        let s = Settings { duration: 0, ..Settings::default() };
+        let s = Settings {
+            duration: 0,
+            ..Settings::default()
+        };
         let mut a = Anim::new();
         a.open(&s);
         assert_eq!(a.state, AnimState::Open);
@@ -197,11 +221,18 @@ mod tests {
         assert!(a.progress(&s) < 1.0, "closing starts below full progress");
         a.cancel();
         assert_eq!(a.state, AnimState::Closed);
-        let mut s2 = Settings { animate_close: false, ..s };
+        let mut s2 = Settings {
+            animate_close: false,
+            ..s
+        };
         s2.validate();
         let mut b = Anim::new();
         b.open(&s2);
         b.close(&s2);
-        assert_eq!(b.state, AnimState::Closed, "animate_close off closes instantly");
+        assert_eq!(
+            b.state,
+            AnimState::Closed,
+            "animate_close off closes instantly"
+        );
     }
 }

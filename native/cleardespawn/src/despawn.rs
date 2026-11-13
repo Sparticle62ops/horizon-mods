@@ -8,7 +8,9 @@ pub struct Settings {
 
 impl Default for Settings {
     fn default() -> Self {
-        Settings { ignore_list: Vec::new() }
+        Settings {
+            ignore_list: Vec::new(),
+        }
     }
 }
 
@@ -24,7 +26,9 @@ impl Settings {
     }
 
     pub fn ignores(&self, entity_id: &str) -> bool {
-        self.ignore_list.iter().any(|e| e == &entity_id.to_ascii_lowercase())
+        self.ignore_list
+            .iter()
+            .any(|e| e == &entity_id.to_ascii_lowercase())
     }
 }
 
@@ -47,15 +51,22 @@ mod tests {
 
     #[test]
     fn ignored_entities_keep_their_particles() {
-        let mut s = Settings { ignore_list: vec!["minecraft:shulker_bullet".into()] };
+        let mut s = Settings {
+            ignore_list: vec!["minecraft:shulker_bullet".into()],
+        };
         s.normalize();
-        assert!(!should_clear_despawn_particles(&s, "minecraft:shulker_bullet"));
+        assert!(!should_clear_despawn_particles(
+            &s,
+            "minecraft:shulker_bullet"
+        ));
         assert!(should_clear_despawn_particles(&s, "minecraft:item"));
     }
 
     #[test]
     fn matching_is_case_insensitive_like_upstream_storage() {
-        let mut s = Settings { ignore_list: vec!["MINECRAFT:ITEM".into()] };
+        let mut s = Settings {
+            ignore_list: vec!["MINECRAFT:ITEM".into()],
+        };
         s.normalize();
         assert_eq!(s.ignore_list, vec!["minecraft:item"]);
         assert!(s.ignores("minecraft:ITEM"));
@@ -63,7 +74,9 @@ mod tests {
 
     #[test]
     fn normalize_drops_blank_lines() {
-        let mut s = Settings { ignore_list: vec!["  ".into(), "a".into(), "".into()] };
+        let mut s = Settings {
+            ignore_list: vec!["  ".into(), "a".into(), "".into()],
+        };
         s.normalize();
         assert_eq!(s.ignore_list, vec!["a"]);
     }

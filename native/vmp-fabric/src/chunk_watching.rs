@@ -21,7 +21,8 @@ use crate::mcutil;
 /// against the target server surface when that lands.
 pub const GENERAL_PLAYER_AREA_MAP_DISTANCE: i32 = general_player_area_map_distance(&[
     96, // Monster
-    64, 64, 64, 64, 64, 64, 64, // Creature, Ambient, Axolotls, UndergroundWaterCreature, WaterCreature, WaterAmbient, Misc
+    64, 64, 64, 64, 64, 64,
+    64, // Creature, Ambient, Axolotls, UndergroundWaterCreature, WaterCreature, WaterAmbient, Misc
 ]);
 
 pub const fn general_player_area_map_distance(immediate_despawn_ranges: &[i32]) -> i32 {
@@ -71,11 +72,13 @@ impl<'a, T: Eq + Hash + Clone + std::fmt::Debug + 'a> AreaPlayerChunkWatchingMan
         let z = mcutil::chunk_pos_packed_z(pos);
         let view_distance = (self.view_distance_of)(&player);
 
-        self.player_area_map.add(player.clone(), x, z, view_distance);
+        self.player_area_map
+            .add(player.clone(), x, z, view_distance);
         self.general_player_area_map
             .add(player.clone(), x, z, GENERAL_PLAYER_AREA_MAP_DISTANCE);
 
-        self.positions.insert(player, mcutil::get_coordinate_key(x, z));
+        self.positions
+            .insert(player, mcutil::get_coordinate_key(x, z));
     }
 
     pub fn remove(&mut self, player: &T) {
@@ -125,7 +128,8 @@ impl<'a, T: Eq + Hash + Clone + std::fmt::Debug + 'a> AreaPlayerChunkWatchingMan
     }
 
     pub fn get_players_watching_chunk_array(&self, coordinate_key: i64) -> Vec<T> {
-        self.player_area_map.get_objects_in_range_array(coordinate_key)
+        self.player_area_map
+            .get_objects_in_range_array(coordinate_key)
     }
 
     pub fn get_players_in_general_area_map(&self, coordinate_key: i64) -> Vec<T> {
@@ -149,8 +153,14 @@ mod tests {
         m.add(1, pos);
         assert!(m.get_players_watching_chunk(pos).unwrap().contains(&1));
         // general map covers 6 around the player chunk
-        assert!(m.get_players_in_general_area_map(mcutil::get_coordinate_key(5 + 6, -3)).contains(&1));
-        assert!(m.get_players_in_general_area_map(mcutil::get_coordinate_key(5 + 7, -3)).is_empty());
+        assert!(
+            m.get_players_in_general_area_map(mcutil::get_coordinate_key(5 + 6, -3))
+                .contains(&1)
+        );
+        assert!(
+            m.get_players_in_general_area_map(mcutil::get_coordinate_key(5 + 7, -3))
+                .is_empty()
+        );
     }
 
     #[test]
@@ -158,9 +168,19 @@ mod tests {
         let mut m = manager();
         m.add(1, mcutil::get_coordinate_key(0, 0));
         m.move_player(mcutil::get_coordinate_key(10, 0), &1);
-        assert!(m.get_players_watching_chunk(mcutil::get_coordinate_key(0, 0)).is_none());
-        assert!(m.get_players_watching_chunk(mcutil::get_coordinate_key(10, 0)).unwrap().contains(&1));
-        assert!(m.get_players_in_general_area_map(mcutil::get_coordinate_key(3, 0)).is_empty());
+        assert!(
+            m.get_players_watching_chunk(mcutil::get_coordinate_key(0, 0))
+                .is_none()
+        );
+        assert!(
+            m.get_players_watching_chunk(mcutil::get_coordinate_key(10, 0))
+                .unwrap()
+                .contains(&1)
+        );
+        assert!(
+            m.get_players_in_general_area_map(mcutil::get_coordinate_key(3, 0))
+                .is_empty()
+        );
     }
 
     #[test]
@@ -168,8 +188,14 @@ mod tests {
         let mut m = manager();
         m.add(1, mcutil::get_coordinate_key(0, 0));
         m.remove(&1);
-        assert!(m.get_players_watching_chunk(mcutil::get_coordinate_key(0, 0)).is_none());
-        assert!(m.get_players_in_general_area_map(mcutil::get_coordinate_key(0, 0)).is_empty());
+        assert!(
+            m.get_players_watching_chunk(mcutil::get_coordinate_key(0, 0))
+                .is_none()
+        );
+        assert!(
+            m.get_players_in_general_area_map(mcutil::get_coordinate_key(0, 0))
+                .is_empty()
+        );
     }
 
     #[test]
@@ -177,10 +203,14 @@ mod tests {
         let mut m = manager();
         m.add(1, mcutil::get_coordinate_key(0, 0));
         m.add(2, mcutil::get_coordinate_key(1, 0));
-        let watching = m.get_players_watching_chunk(mcutil::get_coordinate_key(1, 0)).unwrap();
+        let watching = m
+            .get_players_watching_chunk(mcutil::get_coordinate_key(1, 0))
+            .unwrap();
         assert!(watching.contains(&1) && watching.contains(&2));
         m.remove(&1);
-        let left = m.get_players_watching_chunk(mcutil::get_coordinate_key(1, 0)).unwrap();
+        let left = m
+            .get_players_watching_chunk(mcutil::get_coordinate_key(1, 0))
+            .unwrap();
         assert!(left.contains(&2) && !left.contains(&1));
     }
 
@@ -194,8 +224,15 @@ mod tests {
         vd.set(2);
         m.on_watch_distance_change();
         // view distance now 2: still watching own chunk, no longer 3 away
-        assert!(m.get_players_watching_chunk(mcutil::get_coordinate_key(0, 0)).unwrap().contains(&1));
-        assert!(m.get_players_watching_chunk(mcutil::get_coordinate_key(3, 0)).is_none());
+        assert!(
+            m.get_players_watching_chunk(mcutil::get_coordinate_key(0, 0))
+                .unwrap()
+                .contains(&1)
+        );
+        assert!(
+            m.get_players_watching_chunk(mcutil::get_coordinate_key(3, 0))
+                .is_none()
+        );
     }
 
     #[test]

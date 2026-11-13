@@ -21,7 +21,8 @@ use std::collections::HashMap;
 pub const MOD_ID: &str = "emojiful";
 pub const ASSETS_BASE: &str =
     "https://raw.githubusercontent.com/InnovativeOnlineIndustries/emojiful-assets/master/";
-pub const TWEMOJI_DATA_URL: &str = "https://raw.githubusercontent.com/iamcal/emoji-data/master/emoji.json";
+pub const TWEMOJI_DATA_URL: &str =
+    "https://raw.githubusercontent.com/iamcal/emoji-data/master/emoji.json";
 pub const CATEGORIES_URL: &str = "https://raw.githubusercontent.com/InnovativeOnlineIndustries/emojiful-assets/master/Categories.yml";
 /// Upstream constant: the mod never ships a dedicated error texture, it reuses no-signal (26d4) for both.
 pub const LOADING_TEXTURE: &str = "emojiful:textures/gui/26a0.png";
@@ -106,7 +107,10 @@ pub struct EmojiCategory {
 
 impl EmojiCategory {
     pub fn new(name: &str, world_based: bool) -> Self {
-        Self { name: name.to_string(), world_based }
+        Self {
+            name: name.to_string(),
+            world_based,
+        }
     }
 }
 
@@ -202,7 +206,11 @@ impl Emoji {
     /// the consuming regex engine is a game-side seam (Rust's `regex` crate
     /// has no lookbehind, so the game side matches this with its own engine).
     pub fn text_regex(&self) -> String {
-        let processed: Vec<String> = self.texts.iter().map(|t| clean_string_for_regex(t)).collect();
+        let processed: Vec<String> = self
+            .texts
+            .iter()
+            .map(|t| clean_string_for_regex(t))
+            .collect();
         format!("(?<=^|\\s)({})(?=$|\\s)", processed.join("|"))
     }
 
@@ -223,7 +231,9 @@ impl Emoji {
         self.name
             .to_lowercase()
             .chars()
-            .filter(|c| c.is_ascii_lowercase() || c.is_ascii_digit() || matches!(c, '/' | '.' | '_' | '-'))
+            .filter(|c| {
+                c.is_ascii_lowercase() || c.is_ascii_digit() || matches!(c, '/' | '.' | '_' | '-')
+            })
             .collect()
     }
 }
@@ -296,8 +306,7 @@ pub struct ProfanityFilter {
 
 /// Upstream loads from the fixed Google-Sheets CSV export; the HTTP fetch is a
 /// game-side seam, the CSV parsing below is 1:1.
-pub const PROFANITY_CSV_URL: &str =
-    "https://docs.google.com/spreadsheets/d/1Ufoero85kpr4caXLLaPpcgwB4tX44GgoGJ4F-bVfdI8/export?format=csv";
+pub const PROFANITY_CSV_URL: &str = "https://docs.google.com/spreadsheets/d/1Ufoero85kpr4caXLLaPpcgwB4tX44GgoGJ4F-bVfdI8/export?format=csv";
 
 impl ProfanityFilter {
     /// Returns the number of CSV lines read (upstream's counter), loading
@@ -314,17 +323,19 @@ impl ProfanityFilter {
             let mut ignore_in_combination_with_words: Vec<String> = Vec::new();
             if content.len() > 1 {
                 ignore_in_combination_with_words = {
-                let mut parts: Vec<String> = content[1].split('_').map(|s| s.to_string()).collect();
-                while parts.last().map(|p| p.is_empty()).unwrap_or(false) {
-                    parts.pop();
-                }
-                parts
-            };
+                    let mut parts: Vec<String> =
+                        content[1].split('_').map(|s| s.to_string()).collect();
+                    while parts.last().map(|p| p.is_empty()).unwrap_or(false) {
+                        parts.pop();
+                    }
+                    parts
+                };
             }
             if word.chars().count() > self.largest_word_length {
                 self.largest_word_length = word.chars().count();
             }
-            self.words.insert(word.replace(' ', ""), ignore_in_combination_with_words);
+            self.words
+                .insert(word.replace(' ', ""), ignore_in_combination_with_words);
         }
         counter
     }
@@ -348,8 +359,12 @@ impl ProfanityFilter {
                     if word.is_char_boundary(start) && word.is_char_boundary(end) {
                         let substring: String = chars[start..end].iter().collect();
                         if let Some(original) = word.get(start..end) {
-                            if self.words.contains_key(&normalize_profanity_key(&substring)) {
-                                let ignore_check = &self.words[&normalize_profanity_key(&substring)];
+                            if self
+                                .words
+                                .contains_key(&normalize_profanity_key(&substring))
+                            {
+                                let ignore_check =
+                                    &self.words[&normalize_profanity_key(&substring)];
                                 let ignore = ignore_check.iter().any(|w| input.contains(w));
                                 if !ignore {
                                     bad_words.push(original.to_string());
@@ -413,7 +428,9 @@ pub fn yaml_list_of_strings(text: &str) -> Vec<String> {
     let mut out = Vec::new();
     for line in text.lines() {
         let trimmed = line.trim();
-        let Some(item) = trimmed.strip_prefix("- ") else { continue };
+        let Some(item) = trimmed.strip_prefix("- ") else {
+            continue;
+        };
         out.push(item.trim().trim_matches('"').trim_matches('\'').to_string());
     }
     out
@@ -551,12 +568,20 @@ impl ClientEmojiHandler {
     }
 
     pub fn index_emojis(&mut self) {
-        self.all_emojis = self.emoji_list.iter().flat_map(|e| e.strings.clone()).collect();
+        self.all_emojis = self
+            .emoji_list
+            .iter()
+            .flat_map(|e| e.strings.clone())
+            .collect();
         self.sorted_emojis_for_selection = Vec::new();
         self.line_amount = 0;
         for category in &self.categories {
             self.line_amount += 1;
-            let emojis = self.emoji_map.get(&category.name).cloned().unwrap_or_default();
+            let emojis = self
+                .emoji_map
+                .get(&category.name)
+                .cloned()
+                .unwrap_or_default();
             let mut rows: Vec<Vec<Option<Emoji>>> = Vec::new();
             let mut array: Vec<Option<Emoji>> = vec![None; SELECTOR_COLUMNS];
             let mut i = 0usize;
@@ -634,14 +659,27 @@ impl ClientEmojiHandler {
             return;
         };
         for element in &entries {
-            let Some(obj) = element.as_object() else { continue };
-            let has_img_twitter = obj.get("has_img_twitter").and_then(Json::as_bool).unwrap_or(false);
+            let Some(obj) = element.as_object() else {
+                continue;
+            };
+            let has_img_twitter = obj
+                .get("has_img_twitter")
+                .and_then(Json::as_bool)
+                .unwrap_or(false);
             if !has_img_twitter {
                 continue;
             }
             let mut emoji = Emoji::default();
-            emoji.name = obj.get("short_name").and_then(Json::as_str).unwrap_or("").to_string();
-            emoji.location = obj.get("image").and_then(Json::as_str).unwrap_or("").to_string();
+            emoji.name = obj
+                .get("short_name")
+                .and_then(Json::as_str)
+                .unwrap_or("")
+                .to_string();
+            emoji.location = obj
+                .get("image")
+                .and_then(Json::as_str)
+                .unwrap_or("")
+                .to_string();
             emoji.sort = obj.get("sort_order").and_then(Json::as_i64).unwrap_or(0);
             if let Some(Json::Array(short_names)) = obj.get("short_names") {
                 for name in short_names {
@@ -650,7 +688,10 @@ impl ClientEmojiHandler {
                     }
                 }
             }
-            if emoji.strings.contains(&":face_with_symbols_on_mouth:".to_string()) {
+            if emoji
+                .strings
+                .contains(&":face_with_symbols_on_mouth:".to_string())
+            {
                 emoji.strings.push(":swear:".to_string());
             }
             if let Some(texts) = obj.get("texts") {
@@ -664,14 +705,22 @@ impl ClientEmojiHandler {
                     }
                 }
             }
-            let category = obj.get("category").and_then(Json::as_str).unwrap_or("").to_string();
-            self.emoji_map.entry(category).or_default().push(emoji.clone());
+            let category = obj
+                .get("category")
+                .and_then(Json::as_str)
+                .unwrap_or("")
+                .to_string();
+            self.emoji_map
+                .entry(category)
+                .or_default()
+                .push(emoji.clone());
             self.emoji_list.push(emoji.clone());
             if !emoji.texts.is_empty() {
                 self.emoji_with_texts.push(self.emoji_list.len() - 1);
             }
         }
-        self.emoji_with_texts.sort_by_key(|idx| self.emoji_list[*idx].sort);
+        self.emoji_with_texts
+            .sort_by_key(|idx| self.emoji_list[*idx].sort);
         for emojis in self.emoji_map.values_mut() {
             emojis.sort_by_key(|e| e.sort);
         }
@@ -690,7 +739,9 @@ impl ClientEmojiHandler {
                 emoji.strings = vec![format!(":{}:", recipe.name)];
                 emoji.location = recipe.name.clone();
                 emoji.world_based = true;
-                emoji.source = EmojiSource::Github { url: recipe.url.clone() };
+                emoji.source = EmojiSource::Github {
+                    url: recipe.url.clone(),
+                };
                 self.emoji_map
                     .entry(recipe.category.clone())
                     .or_default()
@@ -754,7 +805,10 @@ mod tests {
 
     #[test]
     fn emoji_test_is_case_insensitive_over_strings() {
-        let emoji = Emoji { strings: vec![":Pog:".into(), ":pog2:".into()], ..Default::default() };
+        let emoji = Emoji {
+            strings: vec![":Pog:".into(), ":pog2:".into()],
+            ..Default::default()
+        };
         assert!(emoji.test(":pog:"));
         assert!(emoji.test(":POG:"));
         assert!(!emoji.test(":pog3:"));
@@ -762,7 +816,15 @@ mod tests {
 
     #[test]
     fn shorter_string_takes_first_of_equal_length() {
-        let emoji = Emoji { strings: vec![":abcd:".into(), ":ab:".into(), ":abc:".into(), ":ab2:".into()], ..Default::default() };
+        let emoji = Emoji {
+            strings: vec![
+                ":abcd:".into(),
+                ":ab:".into(),
+                ":abc:".into(),
+                ":ab2:".into(),
+            ],
+            ..Default::default()
+        };
         assert_eq!(emoji.shorter_string(), ":ab:");
     }
 
@@ -788,8 +850,13 @@ mod tests {
     fn github_source_url_overrides_default() {
         let mut emoji = Emoji::default();
         emoji.location = "assets/discord/thonk.png".into();
-        assert_eq!(emoji.url(), format!("{}assets/discord/thonk.png", ASSETS_BASE));
-        emoji.source = EmojiSource::Github { url: "https://example.com/a.png".into() };
+        assert_eq!(
+            emoji.url(),
+            format!("{}assets/discord/thonk.png", ASSETS_BASE)
+        );
+        emoji.source = EmojiSource::Github {
+            url: "https://example.com/a.png".into(),
+        };
         assert_eq!(emoji.url(), "https://example.com/a.png");
     }
 
@@ -810,8 +877,16 @@ mod tests {
     #[test]
     fn gif_frame_strip_repeats_by_delay() {
         let frames = vec![
-            GifFrame { width: 16, height: 16, delay: 3 },
-            GifFrame { width: 16, height: 16, delay: 1 },
+            GifFrame {
+                width: 16,
+                height: 16,
+                delay: 3,
+            },
+            GifFrame {
+                width: 16,
+                height: 16,
+                delay: 1,
+            },
         ];
         assert_eq!(gif_frame_strip(&frames), vec![0, 0, 0, 1]);
     }
@@ -860,7 +935,10 @@ mod tests {
     fn profanity_filter_text_replaces_each_bad_word() {
         let mut filter = ProfanityFilter::default();
         filter.load_from_csv("motherfucker\nshit\nass\n");
-        assert_eq!(filter.filter_text("that shit is ass", ":swear:"), "that :swear: is :swear:");
+        assert_eq!(
+            filter.filter_text("that shit is ass", ":swear:"),
+            "that :swear: is :swear:"
+        );
         assert_eq!(filter.filter_text("clean text", ":swear:"), "clean text");
     }
 
@@ -903,9 +981,16 @@ mod tests {
         ]"#;
         let mut handler = ClientEmojiHandler::default();
         handler.load_twemojis(json);
-        assert!(handler.emoji_list[0].strings.contains(&":swear:".to_string()));
+        assert!(
+            handler.emoji_list[0]
+                .strings
+                .contains(&":swear:".to_string())
+        );
         // category sorted by sort_order descending-first? upstream sort ascending:
-        let names: Vec<&str> = handler.emoji_map["Smileys & Emotion"].iter().map(|e| e.name.as_str()).collect();
+        let names: Vec<&str> = handler.emoji_map["Smileys & Emotion"]
+            .iter()
+            .map(|e| e.name.as_str())
+            .collect();
         assert_eq!(names, vec!["grinning", "face_with_symbols_on_mouth"]);
     }
 
@@ -930,11 +1015,23 @@ mod tests {
                 strings: vec![format!(":e{}:", i)],
                 ..Default::default()
             };
-            handler.emoji_map.entry("Smileys & Emotion".into()).or_default().push(emoji.clone());
+            handler
+                .emoji_map
+                .entry("Smileys & Emotion".into())
+                .or_default()
+                .push(emoji.clone());
             handler.emoji_list.push(emoji);
         }
-        let obj = Emoji { name: "o0".into(), strings: vec![":o0:".into()], ..Default::default() };
-        handler.emoji_map.entry("Objects".into()).or_default().push(obj.clone());
+        let obj = Emoji {
+            name: "o0".into(),
+            strings: vec![":o0:".into()],
+            ..Default::default()
+        };
+        handler
+            .emoji_map
+            .entry("Objects".into())
+            .or_default()
+            .push(obj.clone());
         handler.emoji_list.push(obj);
         handler.index_emojis();
         assert_eq!(handler.all_emojis.len(), 11);
@@ -986,8 +1083,14 @@ mod tests {
         let mut handler = ClientEmojiHandler::default();
         handler.config.load_datapack = true;
         // pre-existing world-based state is dropped first
-        handler.categories.push(EmojiCategory::new("OldWorld", true));
-        handler.emoji_list.push(Emoji { name: "old".into(), world_based: true, ..Default::default() });
+        handler
+            .categories
+            .push(EmojiCategory::new("OldWorld", true));
+        handler.emoji_list.push(Emoji {
+            name: "old".into(),
+            world_based: true,
+            ..Default::default()
+        });
         let recipes = vec![EmojiRecipe {
             recipe_name: "myserver:custom".into(),
             category: "MyServer".into(),
@@ -1002,7 +1105,11 @@ mod tests {
         assert_eq!(emoji.strings, vec![":custom:"]);
         assert!(emoji.world_based);
         assert_eq!(emoji.url(), "https://example.com/custom.png");
-        assert!(handler.categories.contains(&EmojiCategory::new("MyServer", true)));
+        assert!(
+            handler
+                .categories
+                .contains(&EmojiCategory::new("MyServer", true))
+        );
         assert!(!handler.all_emojis.is_empty());
     }
 

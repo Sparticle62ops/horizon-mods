@@ -31,7 +31,11 @@ impl Region {
     pub const SIZE: usize = 512;
 
     pub fn new(origin_x: i32, origin_z: i32) -> Self {
-        Self { origin_x, origin_z, pixels: vec![0u8; Self::SIZE * Self::SIZE] }
+        Self {
+            origin_x,
+            origin_z,
+            pixels: vec![0u8; Self::SIZE * Self::SIZE],
+        }
     }
 
     pub fn set(&mut self, world_x: i32, world_z: i32, color: u8) {
@@ -55,7 +59,10 @@ impl Region {
 
 #[derive(Clone, Debug, Default)]
 pub struct WorldMapStore {
-    maps: std::collections::HashMap<(MapId, DimensionKey), std::collections::HashMap<(i32, i32), Region>>,
+    maps: std::collections::HashMap<
+        (MapId, DimensionKey),
+        std::collections::HashMap<(i32, i32), Region>,
+    >,
     /// How new worlds are picked: manual switching, or automatic world detection.
     pub auto_world_detection: bool,
 }
@@ -63,7 +70,14 @@ pub struct WorldMapStore {
 impl WorldMapStore {
     /// Ingest one chunk of map colors (16x16 blocks at chunk origin), the
     /// "self-writing" behavior.
-    pub fn write_chunk(&mut self, id: &MapId, dim: &DimensionKey, chunk_x: i32, chunk_z: i32, colors: &[u8; 256]) {
+    pub fn write_chunk(
+        &mut self,
+        id: &MapId,
+        dim: &DimensionKey,
+        chunk_x: i32,
+        chunk_z: i32,
+        colors: &[u8; 256],
+    ) {
         let region_origin = |c: i32| (c * 16).div_euclid(512) * 512;
         let rx = region_origin(chunk_x);
         let rz = region_origin(chunk_z);
@@ -98,10 +112,21 @@ impl WorldMapStore {
 mod tests {
     use super::*;
 
-    fn id() -> MapId { MapId { server_address: "s1".into(), map_slot: 0 } }
-    fn dim() -> DimensionKey { DimensionKey { name: "overworld".into() } }
+    fn id() -> MapId {
+        MapId {
+            server_address: "s1".into(),
+            map_slot: 0,
+        }
+    }
+    fn dim() -> DimensionKey {
+        DimensionKey {
+            name: "overworld".into(),
+        }
+    }
 
-    fn chunk_colors(c: u8) -> [u8; 256] { [c; 256] }
+    fn chunk_colors(c: u8) -> [u8; 256] {
+        [c; 256]
+    }
 
     #[test]
     fn chunk_write_reaches_region_pixels() {
@@ -118,13 +143,19 @@ mod tests {
         s.write_chunk(&id(), &dim(), -1, -1, &chunk_colors(3));
         let r = s.region(&id(), &dim(), -512, -512).unwrap();
         assert_eq!(r.get(-5, -5), Some(3), "inside chunk (-1,-1)");
-        assert_eq!(r.get(-20, -20), Some(0), "block -20 lives in chunk -2, not written");
+        assert_eq!(
+            r.get(-20, -20),
+            Some(0),
+            "block -20 lives in chunk -2, not written"
+        );
     }
 
     #[test]
     fn dimensions_are_separate_layers() {
         let mut s = WorldMapStore::default();
-        let nether = DimensionKey { name: "the_nether".into() };
+        let nether = DimensionKey {
+            name: "the_nether".into(),
+        };
         s.write_chunk(&id(), &dim(), 0, 0, &chunk_colors(1));
         s.write_chunk(&id(), &nether, 0, 0, &chunk_colors(2));
         assert_eq!(s.region(&id(), &dim(), 0, 0).unwrap().get(0, 0), Some(1));
@@ -134,7 +165,10 @@ mod tests {
     #[test]
     fn map_slots_are_separate_maps() {
         let mut s = WorldMapStore::default();
-        let other = MapId { server_address: "s1".into(), map_slot: 1 };
+        let other = MapId {
+            server_address: "s1".into(),
+            map_slot: 1,
+        };
         s.write_chunk(&id(), &dim(), 0, 0, &chunk_colors(1));
         assert!(!s.has_data_near(&other, &dim(), 8, 8));
         assert!(s.has_data_near(&id(), &dim(), 8, 8));

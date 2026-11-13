@@ -14,7 +14,11 @@
 
 /// Upstream tooltip style: the config file's `style` value.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum TooltipStyle { Numbers, Bar, Text }
+pub enum TooltipStyle {
+    Numbers,
+    Bar,
+    Text,
+}
 
 /// One item's durability as the tooltip logic needs it.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -49,7 +53,11 @@ pub struct Config {
 
 impl Default for Config {
     fn default() -> Self {
-        Self { enabled: true, style: TooltipStyle::Numbers, only_when_damaged: true }
+        Self {
+            enabled: true,
+            style: TooltipStyle::Numbers,
+            only_when_damaged: true,
+        }
     }
 }
 
@@ -96,9 +104,17 @@ pub fn tooltip_line(cfg: &Config, d: Durability) -> Option<Line> {
         return None;
     }
     Some(match cfg.style {
-        TooltipStyle::Numbers => Line::Numbers { remaining: d.remaining, max: d.max },
-        TooltipStyle::Bar => Line::Bar { fill: ratio.clamp(0.0, 1.0), color: bar_color(ratio) },
-        TooltipStyle::Text => Line::Text { percent: (ratio * 100.0).round() as i32 },
+        TooltipStyle::Numbers => Line::Numbers {
+            remaining: d.remaining,
+            max: d.max,
+        },
+        TooltipStyle::Bar => Line::Bar {
+            fill: ratio.clamp(0.0, 1.0),
+            color: bar_color(ratio),
+        },
+        TooltipStyle::Text => Line::Text {
+            percent: (ratio * 100.0).round() as i32,
+        },
     })
 }
 
@@ -118,12 +134,19 @@ mod tests {
     use super::*;
 
     fn cfg(style: TooltipStyle) -> Config {
-        Config { enabled: true, style, only_when_damaged: true }
+        Config {
+            enabled: true,
+            style,
+            only_when_damaged: true,
+        }
     }
 
     #[test]
     fn full_durability_hidden_by_default() {
-        let d = Durability { remaining: 59, max: 59 };
+        let d = Durability {
+            remaining: 59,
+            max: 59,
+        };
         assert_eq!(tooltip_line(&cfg(TooltipStyle::Numbers), d), None);
     }
 
@@ -131,41 +154,74 @@ mod tests {
     fn full_durability_shown_when_not_restricted() {
         let mut c = cfg(TooltipStyle::Numbers);
         c.only_when_damaged = false;
-        let d = Durability { remaining: 59, max: 59 };
-        assert_eq!(tooltip_line(&c, d), Some(Line::Numbers { remaining: 59, max: 59 }));
+        let d = Durability {
+            remaining: 59,
+            max: 59,
+        };
+        assert_eq!(
+            tooltip_line(&c, d),
+            Some(Line::Numbers {
+                remaining: 59,
+                max: 59
+            })
+        );
     }
 
     #[test]
     fn no_durability_items_get_no_line() {
-        let d = Durability { remaining: 0, max: 0 };
+        let d = Durability {
+            remaining: 0,
+            max: 0,
+        };
         assert_eq!(tooltip_line(&cfg(TooltipStyle::Bar), d), None);
     }
 
     #[test]
     fn disabled_config_gets_no_line() {
-        let c = Config { enabled: false, ..Config::default() };
-        let d = Durability { remaining: 10, max: 59 };
+        let c = Config {
+            enabled: false,
+            ..Config::default()
+        };
+        let d = Durability {
+            remaining: 10,
+            max: 59,
+        };
         assert_eq!(tooltip_line(&c, d), None);
     }
 
     #[test]
     fn numbers_style_reports_both_ends() {
-        let d = Durability { remaining: 156, max: 271 };
+        let d = Durability {
+            remaining: 156,
+            max: 271,
+        };
         assert_eq!(
             tooltip_line(&cfg(TooltipStyle::Numbers), d),
-            Some(Line::Numbers { remaining: 156, max: 271 })
+            Some(Line::Numbers {
+                remaining: 156,
+                max: 271
+            })
         );
     }
 
     #[test]
     fn text_style_rounds_to_whole_percent() {
-        let d = Durability { remaining: 1, max: 3 };
-        assert_eq!(tooltip_line(&cfg(TooltipStyle::Text), d), Some(Line::Text { percent: 33 }));
+        let d = Durability {
+            remaining: 1,
+            max: 3,
+        };
+        assert_eq!(
+            tooltip_line(&cfg(TooltipStyle::Text), d),
+            Some(Line::Text { percent: 33 })
+        );
     }
 
     #[test]
     fn bar_fills_to_ratio() {
-        let d = Durability { remaining: 271, max: 542 };
+        let d = Durability {
+            remaining: 271,
+            max: 542,
+        };
         match tooltip_line(&cfg(TooltipStyle::Bar), d) {
             Some(Line::Bar { fill, .. }) => assert!((fill - 0.5).abs() < 1e-9),
             other => panic!("expected bar, got {other:?}"),
@@ -183,12 +239,18 @@ mod tests {
     #[test]
     fn mid_bar_is_yellowish() {
         let (r, g, _) = bar_color(0.5);
-        assert!(r > 120 && g > 120, "mid bar should be yellow-ish, got {r} {g}");
+        assert!(
+            r > 120 && g > 120,
+            "mid bar should be yellow-ish, got {r} {g}"
+        );
     }
 
     #[test]
     fn ratio_clamps() {
-        let d = Durability { remaining: 900, max: 100 };
+        let d = Durability {
+            remaining: 900,
+            max: 100,
+        };
         match tooltip_line(&cfg(TooltipStyle::Bar), d) {
             Some(Line::Bar { fill, .. }) => assert_eq!(fill, 1.0),
             other => panic!("expected bar, got {other:?}"),

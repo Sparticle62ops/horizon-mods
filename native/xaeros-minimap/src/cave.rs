@@ -9,14 +9,22 @@ pub trait WorldColumns {
     /// is solid. Out-of-world reads are not solid.
     fn is_solid_above(&self, x: i32, z: i32, y: u16) -> bool;
     /// How many blocks above the player to search for the roof.
-    fn search_depth(&self) -> u16 { 32 }
+    fn search_depth(&self) -> u16 {
+        32
+    }
 }
 
 /// Whether cave mode activates for a player at (px, pz) with the configured
 /// roof size `n` (odd; 1, 3, 5...). The search requires every column of the
 /// n-by-n footprint centered on the player to have a solid roof block within
 /// the search depth above.
-pub fn cave_mode_active(world: &impl WorldColumns, px: i32, pz: i32, roof_size: u8, _slope_shading: bool) -> bool {
+pub fn cave_mode_active(
+    world: &impl WorldColumns,
+    px: i32,
+    pz: i32,
+    roof_size: u8,
+    _slope_shading: bool,
+) -> bool {
     let n = roof_size.max(1) as i32;
     let half = n / 2;
     for dx in -half..=half {
@@ -67,7 +75,15 @@ mod tests {
 
     #[test]
     fn open_sky_never_activates() {
-        assert!(!cave_mode_active(&Grid { solid: HashSet::new() }, 0, 0, 3, false));
+        assert!(!cave_mode_active(
+            &Grid {
+                solid: HashSet::new()
+            },
+            0,
+            0,
+            3,
+            false
+        ));
     }
 
     #[test]

@@ -4,9 +4,9 @@
 //! that algorithm with a deterministic LCG instead of a global RNG so tests
 //! and replays are reproducible.
 
+use crate::materials::material_for;
 use crate::materials::{AIR, Material};
 use crate::occlusion::VoxelWorld;
-use crate::materials::material_for;
 
 pub struct ReverbSettings {
     /// Rays cast from the listener (SPR's ray count).
@@ -21,17 +21,38 @@ pub struct ReverbSettings {
 
 impl Default for ReverbSettings {
     fn default() -> Self {
-        Self { ray_count: 64, max_bounces: 6, max_ray_distance: 256.0, bounce_energy: 0.55 }
+        Self {
+            ray_count: 64,
+            max_bounces: 6,
+            max_ray_distance: 256.0,
+            bounce_energy: 0.55,
+        }
     }
 }
 
 #[derive(Clone, Copy, Debug)]
-struct Vec3 { x: f64, y: f64, z: f64 }
+struct Vec3 {
+    x: f64,
+    y: f64,
+    z: f64,
+}
 
 impl Vec3 {
     fn normalized(self) -> Vec3 {
         let l = (self.x * self.x + self.y * self.y + self.z * self.z).sqrt();
-        if l == 0.0 { Vec3 { x: 0.0, y: 1.0, z: 0.0 } } else { Vec3 { x: self.x / l, y: self.y / l, z: self.z / l } }
+        if l == 0.0 {
+            Vec3 {
+                x: 0.0,
+                y: 1.0,
+                z: 0.0,
+            }
+        } else {
+            Vec3 {
+                x: self.x / l,
+                y: self.y / l,
+                z: self.z / l,
+            }
+        }
     }
 }
 
@@ -48,7 +69,10 @@ pub struct RayResult {
 struct Lcg(u64);
 impl Lcg {
     fn next_f64(&mut self) -> f64 {
-        self.0 = self.0.wrapping_mul(6364136223846793005).wrapping_add(1442695040888963407);
+        self.0 = self
+            .0
+            .wrapping_mul(6364136223846793005)
+            .wrapping_add(1442695040888963407);
         ((self.0 >> 33) as f64) / ((1u64 << 31) as f64)
     }
     /// A uniformly random direction on the sphere.
@@ -59,7 +83,12 @@ impl Lcg {
             let r2 = a * a + b * b;
             if r2 < 1.0 {
                 let f = (1.0 - r2).sqrt();
-                return Vec3 { x: 2.0 * a * f, y: 2.0 * b * f, z: 1.0 - 2.0 * r2 }.normalized();
+                return Vec3 {
+                    x: 2.0 * a * f,
+                    y: 2.0 * b * f,
+                    z: 1.0 - 2.0 * r2,
+                }
+                .normalized();
             }
         }
     }
@@ -78,7 +107,11 @@ pub fn cast_ray(
     let mut t = step;
     let mut last: Option<(i32, i32, i32)> = None;
     while t <= max {
-        let p = (origin.0 + dir.x * t, origin.1 + dir.y * t, origin.2 + dir.z * t);
+        let p = (
+            origin.0 + dir.x * t,
+            origin.1 + dir.y * t,
+            origin.2 + dir.z * t,
+        );
         let voxel = (p.0.floor() as i32, p.1.floor() as i32, p.2.floor() as i32);
         if Some(voxel) != last {
             let m = blocks(voxel.0, voxel.1, voxel.2);
@@ -129,7 +162,9 @@ pub fn reverb_estimate(
         let mut bounces = 0u32;
         let mut energy = 1.0f32;
         for _ in 0..settings.max_bounces {
-            if let Some((hit, leg, m)) = cast_ray(world, blocks, pos, dir, settings.max_ray_distance - dist) {
+            if let Some((hit, leg, m)) =
+                cast_ray(world, blocks, pos, dir, settings.max_ray_distance - dist)
+            {
                 dist += leg;
                 bounces += 1;
                 energy *= m.reflectivity * settings.bounce_energy;
@@ -156,8 +191,17 @@ pub fn reverb_estimate(
 }
 
 /// The block-material lookup wired to a table world.
-pub fn table_blocks(table: &std::collections::HashMap<(i32, i32, i32), String>) -> impl Fn(i32, i32, i32) -> Material + '_ {
-    move |x, y, z| material_for(table.get(&(x, y, z)).map(String::as_str).unwrap_or("minecraft:air"))
+pub fn table_blocks(
+    table: &std::collections::HashMap<(i32, i32, i32), String>,
+) -> impl Fn(i32, i32, i32) -> Material + '_ {
+    move |x, y, z| {
+        material_for(
+            table
+                .get(&(x, y, z))
+                .map(String::as_str)
+                .unwrap_or("minecraft:air"),
+        )
+    }
 }
 
 #[cfg(test)]
@@ -180,13 +224,34 @@ mod tests {
     #[test]
     fn ray_hits_a_wall_at_the_right_distance() {
         let w = TableWorld(HashMap::new());
-        let hit = cast_ray(&w, &blocks_of(&w), (0.5, 64.5, 0.5), Vec3 { x: 1.0, y: 0.0, z: 0.0 }, 100.0);
+        let hit = cast_ray(
+            &w,
+            &blocks_of(&w),
+            (0.5, 64.5, 0.5),
+            Vec3 {
+                x: 1.0,
+                y: 0.0,
+                z: 0.0,
+            },
+            100.0,
+        );
         assert!(hit.is_none(), "empty world, nothing to hit");
 
         let mut m = HashMap::new();
         m.insert((10, 64, 0), 1.0);
         let w2 = TableWorld(m);
-        let (_, dist, _) = cast_ray(&w2, &blocks_of(&w2), (0.5, 64.5, 0.5), Vec3 { x: 1.0, y: 0.0, z: 0.0 }, 100.0).unwrap();
+        let (_, dist, _) = cast_ray(
+            &w2,
+            &blocks_of(&w2),
+            (0.5, 64.5, 0.5),
+            Vec3 {
+                x: 1.0,
+                y: 0.0,
+                z: 0.0,
+            },
+            100.0,
+        )
+        .unwrap();
         assert!((dist - 9.5).abs() < 1.0, "hit ~10 blocks out, got {dist}");
     }
 
@@ -205,11 +270,21 @@ mod tests {
             }
         }
         let room = TableWorld(m);
-        let (_, room_bounces) = reverb_estimate(&room, &blocks_of(&room), (0.5, 64.5, 0.5), &ReverbSettings::default());
+        let (_, room_bounces) = reverb_estimate(
+            &room,
+            &blocks_of(&room),
+            (0.5, 64.5, 0.5),
+            &ReverbSettings::default(),
+        );
         assert!(room_bounces > 0, "rays in a closed room must bounce, got 0");
 
         let empty = TableWorld(HashMap::new());
-        let (_, open_bounces) = reverb_estimate(&empty, &blocks_of(&empty), (0.5, 64.5, 0.5), &ReverbSettings::default());
+        let (_, open_bounces) = reverb_estimate(
+            &empty,
+            &blocks_of(&empty),
+            (0.5, 64.5, 0.5),
+            &ReverbSettings::default(),
+        );
         assert_eq!(open_bounces, 0, "rays in open air must not bounce");
     }
 
@@ -220,7 +295,8 @@ mod tests {
             for x in -half..=half {
                 for z in -half..=half {
                     for y in 63..=67 {
-                        if x == -half || x == half || z == -half || z == half || y == 63 || y == 67 {
+                        if x == -half || x == half || z == -half || z == half || y == 63 || y == 67
+                        {
                             m.insert((x, y, z), 1.0);
                         }
                     }
@@ -228,17 +304,33 @@ mod tests {
             }
             TableWorld(m)
         };
-        let s = ReverbSettings { ray_count: 128, ..Default::default() };
+        let s = ReverbSettings {
+            ray_count: 128,
+            ..Default::default()
+        };
         let small = reverb_estimate(&build(2), &blocks_of(&build(2)), (0.5, 64.5, 0.5), &s).0;
         let big = reverb_estimate(&build(12), &blocks_of(&build(12)), (0.5, 64.5, 0.5), &s).0;
-        assert!(small < big, "small room {small} should reverb shorter than big room {big}");
+        assert!(
+            small < big,
+            "small room {small} should reverb shorter than big room {big}"
+        );
     }
 
     #[test]
     fn estimate_is_deterministic() {
         let empty = TableWorld(HashMap::new());
-        let a = reverb_estimate(&empty, &blocks_of(&empty), (1.0, 1.0, 1.0), &ReverbSettings::default());
-        let b = reverb_estimate(&empty, &blocks_of(&empty), (1.0, 1.0, 1.0), &ReverbSettings::default());
+        let a = reverb_estimate(
+            &empty,
+            &blocks_of(&empty),
+            (1.0, 1.0, 1.0),
+            &ReverbSettings::default(),
+        );
+        let b = reverb_estimate(
+            &empty,
+            &blocks_of(&empty),
+            (1.0, 1.0, 1.0),
+            &ReverbSettings::default(),
+        );
         assert_eq!(a, b);
     }
 
@@ -258,9 +350,21 @@ mod tests {
             let blocks = move |_: i32, _: i32, _: i32| mat;
             (TableWorld(m), blocks)
         };
-        let s = ReverbSettings { ray_count: 128, ..Default::default() };
-        let (d_stone, _) = { let (w, b) = build(STONE); reverb_estimate(&w, &b, (0.5, 64.5, 0.5), &s) };
-        let (d_wool, _) = { let (w, b) = build(WOOL); reverb_estimate(&w, &b, (0.5, 64.5, 0.5), &s) };
-        assert!(d_wool < d_stone, "wool room {d_wool} must decay before stone room {d_stone}");
+        let s = ReverbSettings {
+            ray_count: 128,
+            ..Default::default()
+        };
+        let (d_stone, _) = {
+            let (w, b) = build(STONE);
+            reverb_estimate(&w, &b, (0.5, 64.5, 0.5), &s)
+        };
+        let (d_wool, _) = {
+            let (w, b) = build(WOOL);
+            reverb_estimate(&w, &b, (0.5, 64.5, 0.5), &s)
+        };
+        assert!(
+            d_wool < d_stone,
+            "wool room {d_wool} must decay before stone room {d_stone}"
+        );
     }
 }

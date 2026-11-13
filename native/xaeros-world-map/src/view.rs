@@ -15,19 +15,31 @@ pub struct ViewState {
 
 impl ViewState {
     pub fn new(center_x: f64, center_z: f64, width: u32, height: u32) -> Self {
-        Self { center_x, center_z, zoom: 0, width, height }
+        Self {
+            center_x,
+            center_z,
+            zoom: 0,
+            width,
+            height,
+        }
     }
 
     /// Screen position of a world block, top-left origin.
     pub fn to_screen(&self, wx: f64, wz: f64) -> (f64, f64) {
         let scale = self.blocks_per_pixel();
-        (self.width as f64 / 2.0 + (wx - self.center_x) / scale, self.height as f64 / 2.0 + (wz - self.center_z) / scale)
+        (
+            self.width as f64 / 2.0 + (wx - self.center_x) / scale,
+            self.height as f64 / 2.0 + (wz - self.center_z) / scale,
+        )
     }
 
     /// World block under a screen pixel.
     pub fn to_world(&self, sx: f64, sz: f64) -> (f64, f64) {
         let scale = self.blocks_per_pixel();
-        (self.center_x + (sx - self.width as f64 / 2.0) * scale, self.center_z + (sz - self.height as f64 / 2.0) * scale)
+        (
+            self.center_x + (sx - self.width as f64 / 2.0) * scale,
+            self.center_z + (sz - self.height as f64 / 2.0) * scale,
+        )
     }
 
     fn blocks_per_pixel(&self) -> f64 {
@@ -78,9 +90,13 @@ mod tests {
         let mut v = ViewState::new(0.0, 0.0, 640, 480);
         v.zoom_by(-1);
         assert_eq!(v.zoom, 1);
-        for _ in 0..20 { v.zoom_by(-1); }
+        for _ in 0..20 {
+            v.zoom_by(-1);
+        }
         assert_eq!(v.zoom, 12);
-        for _ in 0..20 { v.zoom_by(1); }
+        for _ in 0..20 {
+            v.zoom_by(1);
+        }
         assert_eq!(v.zoom, 0);
     }
 }

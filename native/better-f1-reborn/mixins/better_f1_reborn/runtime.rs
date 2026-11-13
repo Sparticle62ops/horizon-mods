@@ -46,7 +46,9 @@ pub struct BetterF1 {
 impl Default for BetterF1 {
     fn default() -> Self {
         // BetterF1.state starts at HUDState.ALL_VISIBLE.
-        Self { state: HudState::AllVisible }
+        Self {
+            state: HudState::AllVisible,
+        }
     }
 }
 
@@ -74,7 +76,10 @@ mod tests {
     fn next_cycles_through_three_states() {
         let mut s = HudState::AllVisible;
         let seen = [s.next(), s.next().next(), s.next().next().next()];
-        assert_eq!(seen, [HudState::NoHud, HudState::AllHidden, HudState::AllVisible]);
+        assert_eq!(
+            seen,
+            [HudState::NoHud, HudState::AllHidden, HudState::AllVisible]
+        );
         s = s.next().next().next();
         assert_eq!(s, HudState::AllVisible, "full cycle returns to the start");
     }
@@ -116,7 +121,13 @@ mod tests {
 
     #[test]
     fn serde_names_match_enum_names() {
-        assert_eq!(serde_json::to_string(&HudState::NoHud).unwrap(), r#""NO_HUD""#);
-        assert_eq!(serde_json::from_str::<HudState>(r#""ALL_HIDDEN""#).unwrap(), HudState::AllHidden);
+        assert_eq!(
+            serde_json::to_string(&HudState::NoHud).unwrap(),
+            r#""NO_HUD""#
+        );
+        assert_eq!(
+            serde_json::from_str::<HudState>(r#""ALL_HIDDEN""#).unwrap(),
+            HudState::AllHidden
+        );
     }
 }
