@@ -996,10 +996,11 @@ mod tests {
     }
 
     fn plain_config() -> BlurConfig {
-        let mut c = BlurConfig::default();
-        c.gradient_start = "#FF0000".to_string();
-        c.gradient_end = "#0000FF".to_string();
-        c
+        BlurConfig {
+            gradient_start: "#FF0000".to_string(),
+            gradient_end: "#0000FF".to_string(),
+            ..Default::default()
+        }
     }
 
     fn drive_fade_in(b: &mut Blur, seconds_per_step: f32, steps: usize) {
