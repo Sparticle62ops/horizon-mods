@@ -1,46 +1,32 @@
 id = "salvage"
 kind = "mod"
 name = "Salvage"
-summary = "Smelt old leather gear, saddles and wooden tools back into useful materials."
+summary = "The all-recycling mod: smelt leather, wood, stone, diamond gear, shells and the elytra back into useful materials, and break down armour and tools at the crafti"
 description = """
-**Nothing in that chest is trash anymore.** Salvage lets you smelt old gear back into useful
-materials in a normal furnace.
+Nothing in that chest is trash anymore. Salvage — the all-recycling mod — turns old gear back into useful materials.
 
-Leather helmets from zombie drops, the saddle from a horse you never ride, the wooden pickaxe
-you outgrew ten minutes in — put any of them in a furnace with any fuel and you get leather,
-charcoal or string back, plus a little experience for your trouble.
-
-| Smelt this | Get this |
-| --- | --- |
-| Leather helmet / chestplate / leggings / boots | Leather |
-| Leather horse armor, saddle | Leather |
-| Wooden sword / pickaxe / axe / shovel / hoe | Charcoal |
-| Bow, fishing rod | String |
-
-**How to use**
-
-1. Install the mod and enable it in Options → Mods, then restart the game.
-2. Put the old gear in the top slot of a furnace, any fuel below.
-3. Collect the material — ready for armor, bows, and charcoal for your next build.
-
-**Good to know**
-
-- Uses only vanilla items. No new blocks, textures, or mechanics to learn.
-- Works in single player. On a multiplayer server, the server needs the mod too.
-- Tested on Horizon 0.2.97 (Minecraft Java Edition 26.3).
-- Uninstall any time — materials you already smelted stay in your world; the recipes simply
-  stop working.
-
-Free and open source under the MIT license. Not an official Minecraft product."""
+Leather helmets from zombie drops, stone pickaxes you outgrew, diamond swords you are done with, an elytra you never fly, saddles from horses you never ride — put them in a furnace with any fuel and get leather, charcoal, cobblestone, diamonds, turtle scutes or phantom membrane back, plus a little experience for your trouble."""
 authors = ["CGRLabs"]
 owners = ["CGRLabs"]
 owner_ids = [213680048]
 license = "MIT"
 source = "https://github.com/CGRLabs/salvage"
 icon = "icons/salvage.png"
-categories = ["game-mechanics", "utility"]
-tags = ["smelting", "furnace", "leather", "recycling", "salvage", "quality-of-life", "survival", "vanilla-friendly"]
+categories = ["utility", "game-mechanics"]
+tags = ["smelting", "furnace", "crafting", "recycling", "quality-of-life", "survival", "vanilla-friendly", "leather", "scute"]
 key = "RWTDxzLUJVk6XFJWJw1WcVOeEbSCS1OUG9MkdU9b1q08Ynf54O92X64F"
+
+[[versions]]
+version = "1.2.0"
+published = "2026-11-12"
+game = "26.3"
+file = "salvage-1.2.0.hmod"
+sha256 = "6aa95ed89c3e23f20c47a87543eafa123b96bc3e1c3f231e6fc72359c26726f6"
+signature = """
+untrusted comment: signature from rsign secret key
+RUTDxzLUJVk6XAW7nh3jOcsiCBAZoXCcz/9/F70De53E4q/mCkjpjqlRCRYacQ5ljwuwhlzJg99pqLPDooOAmPTaxC6D3PwTaQs=
+trusted comment: salvage 1.2.0
+3sPPd3SEjBjNmP4oZ7BGAsY8cCcyH3R6t/35mmwzgCNZmWF/X6mbIwxKTNLHawJ/7sNX1y7525y3Ej3cHdKzDw=="""
 
 [[versions]]
 version = "1.0.0"
