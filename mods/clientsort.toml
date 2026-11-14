@@ -15,17 +15,25 @@ A port of [ClientSort](https://github.com/TerminalMC/ClientSort) by TerminalMC t
 
 Every action is an ordinary container click, so it works on servers too.
 
-Built for Horizon Nightly 2026-11-07 (`2ebf00a`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+Built for Horizon Nightly 2026-11-08 (`fdc87ae`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
 
-**Credits.** ClientSort is Copyright 2024-2026 TerminalMC, Apache License 2.0; it uses code from Mouse Wheelie by Siphalor (Apache-2.0) and Inventory Management by Roundaround (MIT). The button sprites are ClientSort's own. Since 1.2.0 the config screen follows [Cloth Config](https://github.com/shedaniel/cloth-config) by shedaniel and uses its texture, under the GNU LGPL 3.0 or later. This port rewrites ClientSort's logic in Rust under ClientSort's licence and is not affiliated with TerminalMC, Mojang or Microsoft."""
+**Credits.** ClientSort is Copyright 2024-2026 TerminalMC, Apache License 2.0; it uses code from Mouse Wheelie by Siphalor (Apache-2.0) and Inventory Management by Roundaround (MIT). The button sprites are ClientSort's own. Since 1.2.0 the config screen follows [Cloth Config](https://github.com/shedaniel/cloth-config) by shedaniel and uses its texture. This port rewrites ClientSort's logic in Rust under ClientSort's licence and is not affiliated with TerminalMC, Mojang or Microsoft. The Cloth Config parts (cloth.rs, cloth_sprites.rs) are under the GNU LGPL-3.0; the rest of the port is Apache-2.0."""
 authors = ["DeportedToHell"]
 owners = ["DeportedToHell"]
 owner_ids = [344119465]
-license = "Apache-2.0 AND LGPL-3.0-or-later"
-source = "https://github.com/DeportedToHell/MCRE-Mods/tree/main/clientsort"
+license = "Apache-2.0 AND LGPL-3.0-only"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/b033b17c8a7d623fe3be4713f52e9b6b9021ee23/clientsort"
 icon = "icons/clientsort.png"
 categories = ["utility", "storage"]
 tags = ["inventory", "sorting", "buttons", "port"]
+
+[[versions]]
+version = "1.2.1"
+published = "2026-11-11"
+game = "26.3"
+file = "clientsort-1.2.1.hnmod"
+sha256 = "e07a64a27ec386a12916b3d685cccb9d2e0d5f8273dc61344df3667c93ce1c87"
+changelog = "The licence now names the LGPL-3.0 of the config screen's Cloth Config parts (cloth.rs, cloth_sprites.rs), with the LGPL and GPL texts in the bundle, as in BetterF3 1.0.2 (#693). No code changes. Built for Horizon Nightly 2026-11-08 (fdc87ae)."
 
 [[versions]]
 version = "1.2.0"
