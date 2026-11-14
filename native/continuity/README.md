@@ -1,23 +1,46 @@
 # continuity
 
-Behavioral clean-room port of [Continuity](https://modrinth.com/mod/continuity) (LGPL-3.0-only) for the Horizon native mod API. No upstream code was used; ported under CC0-1.0 per the Horizon modport policy.
+Exact 1:1 Horizon Rust port of [Continuity](https://github.com/PepperCode1/Continuity)
+by PepperCode1 (LGPL-3.0-only). Every upstream Java class maps to one Rust
+module with the same names, logic, defaults, and control flow; the Minecraft
+client / Fabric renderer surfaces the engine binds sit in `src/seams.rs` with
+one seam per upstream call.
 
-## What this carries
+## What it carries
 
-- OptiFine-style `.properties` CTM rule parsing: `matchBlocks`, `method` (`ctm`, `ctm_compact`, `horizontal`, `vertical`, `random`), `tiles` as names or numeric ranges, `#` comments, unknown keys ignored.
-- Neighbor-mask computation over the 8-neighborhood and per-method tile selection:
-  - `horizontal` / `vertical`: 4-tile layouts (none, one side, other side, both).
-  - `ctm_compact`: 5-tile orthogonal logic (none, edge, outer corner, straight, center).
-  - `ctm`: canonical 47-tile layout, orthogonal base cases refined by inner-corner diagonals in the surrounded row.
-  - `random`: deterministic seeded tile pick.
-- First-matching-rule-wins resolution across a pack's rules.
+- The full properties layer: `BaseCtmProperties` and the Connecting /
+  Compact / Random / Repeat / Overlay property families with the exact
+  parsing order, defaults, and error paths of the upstream classes.
+- The full `CtmLoaderRegistry`: all 25 loader registrations (`ctm`+`glass`,
+  `ctm_compact`, `horizontal`/`bookshelf`, `vertical`, the `h+v`/`v+h`
+  aliases, `top`, `random`, `repeat`, `fixed`, and the 10 overlay variants)
+  with the `createLoader`/`createCustomLoader` helper chain and the two
+  built-in resource packs.
+- The processor layer: Simple / Compact / Top / StandardOverlay /
+  SimpleOverlay quad processors with caching and processing predicates,
+  DirectionMaps, QuadUtil, MathUtil, RandomIndexProvider, and the five
+  sprite providers.
+- The model layer: `CtmBakedModel` + `EmissiveBakedModel` with the
+  `ModelWrappingHandler` bake wrap, `ModelObjectsContainer`, and the
+  feature states the entity renderer mixins toggle.
+- The resource layer: `CtmPropertiesLoader` (pack priority order,
+  `java.util.Properties` parsing), `ResourceRedirectHandler`, 
+  `CustomBlockLayers` + `EmissiveSuffixLoader` reload listeners, and the
+  `BakedModelManagerReloadExtension` with the atlas/sprite loader contexts
+  (AtlasLoader/SpriteLoader/BakedModelManager mixins, emissive control,
+  stitch carry).
+- The config screen, the ModMenu entry, and the falling-block / piston
+  entity renderer mixins.
 
-## Host seams (degradations, tracked upstream)
+The engine-bound surfaces (block model rendering, atlas json loading, GUI)
+sit behind seams; `mixins/continuity/runtime.rs` is the native mod entry
+wiring the upstream `ContinuityClient` init and reload order.
 
-The resource-pack texture loading, atlas packing, and the block-model quad override that actually swap UVs at render time need a Horizon hook for per-block-state quad UV override driven by pack textures. Without it the policy logic above runs but nothing renders connected; this is tracked in horizon-rust/horizon issue #15369 (open umbrella: connected textures pack formats) and the port upgrades to full 1:1 when it lands.
+Port: sparticle. Upstream license and credit carried: the crate is
+LGPL-3.0-only, copyright (c) PepperCode1. The license text ships with the
+source.
 
 ## Tests
 
-`cargo test`: 17 tests cover rule parsing, every method's tile mapping, inner-corner refinement, and seeded random selection.
-
-Credits: sparticle.
+134 tests cover the property parsing, processor math and split logic,
+resource redirect, atlas/sprite context seams, and the loader registry.
