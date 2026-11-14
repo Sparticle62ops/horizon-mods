@@ -22,10 +22,18 @@ authors = ["DeportedToHell"]
 owners = ["DeportedToHell"]
 owner_ids = [344119465]
 license = "MIT"
-source = "https://github.com/DeportedToHell/MCRE-Mods/tree/main/justenoughitems"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/e662a0c6672c8f2b0770fb815bfae6611b9f0e16/justenoughitems"
 icon = "icons/justenoughitems.png"
 categories = ["utility"]
 tags = ["jei", "recipes", "item-list", "recipe-viewer", "search", "port"]
+
+[[versions]]
+version = "1.1.2"
+published = "2026-11-11"
+game = "26.3"
+file = "justenoughitems-1.1.2.hnmod"
+sha256 = "4429e031f7aa53d1467679fb3d224837760882f318d082ccdbe54f1870e76d47"
+changelog = "Fixes from the review of #550: Ctrl+X in the search bar puts the cut text on the clipboard; anvil and grindstone recipes keep the book, item, result and cost on the same alternative when one is looked up, as JEI's focus links do; a plain mouse drag selects text in the config screen's search. Replaces 1.1.1 (#550). Built for Horizon Nightly 2026-11-08 (fdc87ae)."
 
 [[versions]]
 version = "1.1.0"
