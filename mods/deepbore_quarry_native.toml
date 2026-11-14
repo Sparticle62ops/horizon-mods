@@ -29,6 +29,14 @@ tags = ["quarry", "mining", "machine", "automation", "digging"]
 screenshots = ["screenshots/deepbore_quarry_native/1.jpg", "screenshots/deepbore_quarry_native/2.jpg", "screenshots/deepbore_quarry_native/3.jpg", "screenshots/deepbore_quarry_native/4.png"]
 
 [[versions]]
+version = "0.2.0"
+published = "2026-11-14"
+game = "26.3"
+file = "deepbore_quarry_native-0.2.0.hnmod"
+sha256 = "b563205bfa0005a6c6de9d85639235fd8412c5cf635b3f6635eed93c982c0072"
+changelog = "Pinned to Nightly 2026-11-13 (9f42064) and Horizon Mixins 5a64af9. A chunk-upgraded quarry holds its chunks with Horizon's chunk tickets instead of /forceload, so it no longer touches the world's forced chunks; a world from 0.1.x moves over by itself (the mod's old /forceloads are released, loads.json is kept as loads.json.migrated). Builds on the Horizon with #11083 (hooks 415)."
+
+[[versions]]
 version = "0.1.2"
 published = "2026-11-08"
 game = "26.3"
