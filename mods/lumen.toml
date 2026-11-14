@@ -1,19 +1,30 @@
 id = "lumen"
 kind = "shader"
 name = "Lumen"
-summary = "Cozy Photon-style look: soft shadows, warm sunsets, volumetric clouds, light shafts, clear water, waving plants."
+summary = "Cozy Photon-style shader with quality presets: soft shadows, volumetric clouds, light shafts, gorgeous water and underwater, starry nights and an epic End."
 description = """
 A cozy shader pack in Horizon's own format, inspired by the look of Photon. All code is original, no Minecraft assets.
 
-- Soft sun and moon shadows
-- Warm sky with a round sun and golden sunsets
-- Volumetric clouds with drifting cloud shadows
-- Light shafts through trees, sun rays, bloom and distance haze
-- Clear water with waves, refraction, reflections and the sun's glint
-- Clear turquoise water with caustics when you dive
-- Waving leaves, grass, flowers and seagrass
-- Coloured block light and glowing fireflies
-- Wet ground after rain
+**Overworld**
+- Soft sun and moon shadows, leaves that glow when the sun is behind them
+- Warm sky with a round sun, golden sunsets and volumetric clouds with drifting cloud shadows
+- Light shafts through trees, sun rays, bloom and a soft haze in the distance
+- Clear water with soft random waves, reflections, the sun's glint and a moon path at night
+- Twinkling stars and a faint Milky Way at night, a rainbow after the rain
+- Puddles with rain ripples, shiny ice, metal, polished stone and glass, glittering snow, glowing lava
+- Waving leaves, grass, flowers and seagrass, coloured block light and glowing fireflies
+
+**Underwater**
+- Turquoise water with strong light shafts, caustics and floating particles
+
+**Nether and End**
+- Nether: drifting red haze and glowing embers
+- End: violet light curtains rising from the horizon and a black hole with a glowing ring in the sky
+
+**Performance**
+- Quality presets Low, Medium, High and Ultra to fit your PC
+- Shadow resolution, shadow distance and reflections can be set separately
+- Soft effects are drawn at half resolution, with its own anti-aliasing
 
 Every effect can be changed in Options > Horizon Settings > Shader Packs > Shader Options."""
 authors = ["Lutziano888"]
@@ -22,8 +33,28 @@ owner_ids = [129792568]
 license = "MIT"
 source = "https://github.com/Lutziano888/horizon-lumen"
 icon = "icons/lumen.png"
-categories = ["semi-realistic", "atmosphere", "medium"]
+categories = ["atmosphere", "medium", "realistic"]
 tags = ["shadows", "clouds", "water", "reflections", "waving-plants", "god-rays", "colored-light"]
+screenshots = ["screenshots/lumen/1.jpg", "screenshots/lumen/2.jpg", "screenshots/lumen/3.jpg", "screenshots/lumen/4.jpg", "screenshots/lumen/5.jpg"]
+
+[[versions]]
+version = "2.6.0"
+published = "2026-11-12"
+game = "26.3"
+file = "lumen-2.6.0.hshader"
+sha256 = "453e0e263a8af04f2a2ade0e6bed63dbd2bab444de7697cf177e6a0ee30b05e6"
+changelog = """
+- New water surface: soft random waves everywhere, no more lines or patterns
+- Night sky: twinkling stars, a faint Milky Way and a moon path on the water
+- Rainbow after the rain, puddles with rain ripples on flat ground
+- Shiny ice, metal blocks, polished stone and glass, glittering snow, glowing lava
+- Nether: drifting red haze and glowing embers
+- End: violet light curtains and a black hole in the sky
+- You can see much farther: thinner haze in all dimensions
+- New Anti-Aliasing option (smooths jagged edges)
+- Faster: clouds, light shafts, sun rays and bloom drawn at half resolution
+- Fixed: Nether portal frames no longer turn purple
+- New icon"""
 
 [[versions]]
 version = "2.5.1"
