@@ -1,4 +1,4 @@
-## Horizon registry entry for MoreChatHistory (port of JackFredMods/MoreChatHistory).
+## Horizon registry entry for MoreChatHistory (exact 1:1 Rust port of MoreChatHistory by JackFred).
 id = "morechathistory"
 kind = "native-mod"
 name = "MoreChatHistory"
@@ -10,7 +10,7 @@ description = """
 - The display queue, send queue and recent-chat caps all read 16384 instead of 100.
 - Trimming drops from the oldest side exactly as vanilla does; nothing else in the chat paths changes.
 
-Port of [MoreChatHistory](https://github.com/JackFredMods/MoreChatHistory) by JackFred (CC0-1.0); credited upstream, CC0-1.0 carried. Ported to Rust by sparticle.
+Exact 1:1 Rust port of [MoreChatHistory](https://github.com/JackFred2/MoreChatHistory) by JackFred (CC0-1.0); upstream code translated code-for-code, CC0-1.0 carried, credited upstream. Ported to Rust by sparticle.
 """
 authors = ["sparticle62ops"]
 owners = ["sparticle62ops"]

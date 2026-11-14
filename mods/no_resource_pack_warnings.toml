@@ -9,7 +9,7 @@ description = """
 - Every resource-pack compatibility check reads as compatible: packs of the wrong format load and select without the warning screen.
 - Upstream redirects `PackCompatibility.isCompatible()` to true in the options-side pack reload and the pack-selection screen; Horizon routes packs through its configuration adapter, so the port overrides the one verdict the adapter applies and extends to a selection UI when one lands.
 
-Port of [no-resource-pack-warnings](https://github.com/SpaceWalkerRS/no-resource-pack-warnings) by SpaceWalkerRS (MIT); credited upstream, MIT carried. Ported to Rust by sparticle.
+Exact 1:1 Rust port of [no-resource-pack-warnings](https://github.com/SpaceWalkerRS/no-resource-pack-warnings) by SpaceWalkerRS (MIT); upstream code translated code-for-code, MIT carried, credited upstream. Ported to Rust by sparticle.
 """
 authors = ["sparticle62ops"]
 owners = ["sparticle62ops"]

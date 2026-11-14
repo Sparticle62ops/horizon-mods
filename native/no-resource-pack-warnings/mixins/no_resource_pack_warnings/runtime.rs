@@ -1,63 +1,103 @@
-// No Resource Pack Warnings for Horizon: every resource-pack
-// compatibility check reports compatible, so incompatible-format packs
-// load and select without the warning screen.
+// Upstream no-resource-pack-warnings, 1:1 splice carrier.
 //
-// A Rust port of no-resource-pack-warnings (SpaceWalkerRS, MIT,
-// https://github.com/SpaceWalkerRS/no-resource-pack-warnings). The
-// original's behavior is kept:
-//
-// - The Options path (`updateResourcePacks` and `loadSelectedResourcePacks`)
-//   reads `PackCompatibility.isCompatible` as always true (upstream's
-//   OptionsMixin, two redirects).
-// - The pack-selection path (`PackEntry.extractContent` and
-//   `handlePackSelection`) reads the same call as always true (upstream's
-//   PackEntryMixin, two redirects).
-// - Nothing else is touched: packs still get a compatibility verdict from
-//   the repository layer, the verdict is simply never honored as a block.
-//
-// Horizon note: the engine takes packs through the configuration adapter
-// (`horizon-protocol`), with no pack-selection screen or options-side
-// pack reload yet, so both upstream paths funnel into one verdict the
-// adapter applies. The override covers that path; when a selection UI
-// lands, this module extends to it unchanged.
+// Copyright (c) 2022 Space Walker. MIT. Ported 1:1 per the port policy;
+// credit Space Walker. Upstream is 2 mixins, 69 lines: all four
+// `PackCompatibility.isCompatible()` call sites the mod cares about are
+// redirected to return `true`, so outdated resource/data packs load and
+// select with no warning screen or red border. Target methods:
+// `Options.updateResourcePacks`, `Options.loadSelectedResourcePacks`,
+// `PackEntry.extractContent`, `PackEntry.handlePackSelection`.
 
-/// What every compatibility check reads once this port is active.
-pub const ALWAYS_COMPATIBLE: bool = true;
+/// `net.minecraft.server.packs.repository.PackCompatibility` (token).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub struct PackCompatibility(pub u64);
 
-/// The verdict the adapter applies to a pack's format compatibility.
-/// Upstream returns `PackCompatibility::isCompatible()`; this port
-/// always answers true.
-pub fn pack_is_compatible(_compatibility: PackCompatibility) -> bool {
-    ALWAYS_COMPATIBLE
+/// `@Mixin(Options.class) public class OptionsMixin`.
+pub struct OptionsMixin;
+
+impl OptionsMixin {
+    /// `@Redirect(method = "updateResourcePacks", at = @At(value = "INVOKE",
+    /// target = "Lnet/minecraft/server/packs/repository/PackCompatibility;isCompatible()Z"))
+    /// private boolean onUpdateResourcePacksRedirectIsCompatible(PackCompatibility
+    /// compatibility)`.
+    pub fn on_update_resource_packs_redirect_is_compatible(
+        &self,
+        _compatibility: PackCompatibility,
+    ) -> bool {
+        true
+    }
+
+    /// `@Redirect(method = "loadSelectedResourcePacks", at = @At(value =
+    /// "INVOKE", ordinal = 0, target =
+    /// "Lnet/minecraft/server/packs/repository/PackCompatibility;isCompatible()Z"))
+    /// private boolean onLoadSelectedResourcePacksRedirectIsCompatible(PackCompatibility
+    /// compatibility)`.
+    pub fn on_load_selected_resource_packs_redirect_is_compatible(
+        &self,
+        _compatibility: PackCompatibility,
+    ) -> bool {
+        true
+    }
 }
 
-/// The verdict, as the engine's repository layer reports it upstream.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum PackCompatibility {
-    Compatible,
-    TooNew,
-    TooOld,
-    Broken,
+/// The redirect target the mixin replaces: upstream
+/// `PackCompatibility.isCompatible()`, as the engine surface reads it.
+pub trait PackCompatibilitySeam {
+    /// `isCompatible()` on the compatibility instance the call site holds.
+    fn is_compatible(&self, compatibility: PackCompatibility) -> bool;
 }
 
-/// A pack passes compatibility under this port whatever its verdict.
-pub fn suppress_warning(compatibility: PackCompatibility) -> bool {
-    pack_is_compatible(compatibility)
+/// `@Mixin(PackEntry.class) public class PackEntryMixin`.
+pub struct PackEntryMixin;
+
+impl PackEntryMixin {
+    /// `@Redirect(method = "extractContent", at = @At(value = "INVOKE",
+    /// target = "Lnet/minecraft/server/packs/repository/PackCompatibility;isCompatible()Z"))
+    /// private boolean onRenderRedirectIsCompatible(PackCompatibility
+    /// compatibility)`.
+    pub fn on_render_redirect_is_compatible(
+        &self,
+        _compatibility: PackCompatibility,
+    ) -> bool {
+        true
+    }
+
+    /// `@Redirect(method = "handlePackSelection", at = @At(value = "INVOKE",
+    /// target = "Lnet/minecraft/server/packs/repository/PackCompatibility;isCompatible()Z"))
+    /// private boolean onMouseClickedRedirectIsCompatible(PackCompatibility
+    /// compatibility)`.
+    pub fn on_mouse_clicked_redirect_is_compatible(
+        &self,
+        _compatibility: PackCompatibility,
+    ) -> bool {
+        true
+    }
+}
+
+impl PackCompatibilitySeam for PackEntryMixin {
+    fn is_compatible(&self, _compatibility: PackCompatibility) -> bool {
+        true
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
+    fn compat(id: u64) -> PackCompatibility {
+        PackCompatibility(id)
+    }
+
     #[test]
-    fn every_verdict_passes() {
-        for verdict in [
-            PackCompatibility::Compatible,
-            PackCompatibility::TooNew,
-            PackCompatibility::TooOld,
-            PackCompatibility::Broken,
-        ] {
-            assert!(suppress_warning(verdict));
+    fn redirects_return_true_for_any_verdict() {
+        let options = OptionsMixin;
+        let entry = PackEntryMixin;
+        for id in [0, 1, 2, 3, u64::MAX] {
+            assert!(options.on_update_resource_packs_redirect_is_compatible(compat(id)));
+            assert!(options.on_load_selected_resource_packs_redirect_is_compatible(compat(id)));
+            assert!(entry.on_render_redirect_is_compatible(compat(id)));
+            assert!(entry.on_mouse_clicked_redirect_is_compatible(compat(id)));
+            assert!(entry.is_compatible(compat(id)));
         }
     }
 }
