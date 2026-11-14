@@ -30,6 +30,14 @@ tags = ["nuclear", "bombs", "explosions", "radiation", "missile", "bunker"]
 screenshots = ["screenshots/big_nukes_native/1.jpg", "screenshots/big_nukes_native/2.jpg", "screenshots/big_nukes_native/3.jpg", "screenshots/big_nukes_native/4.jpg", "screenshots/big_nukes_native/5.jpg", "screenshots/big_nukes_native/6.jpg", "screenshots/big_nukes_native/7.jpg"]
 
 [[versions]]
+version = "0.2.0"
+published = "2026-11-14"
+game = "26.3"
+file = "big_nukes_native-0.2.0.hnmod"
+sha256 = "6d85c8cdb29ffd792e4af25be6a072e21e76d37cdea2013df64311c48819efce"
+changelog = "Ears ring after a close blast: the game's sounds go dull and quiet for a few seconds under a high whine, longer the closer you stood. The flights' chunks are held by the game's chunk tickets instead of /forceload (a world from before gives its /forceloads back once). Pinned to Nightly 2026-11-13 (9f42064) and Horizon Mixins 5a64af9."
+
+[[versions]]
 version = "0.1.3"
 published = "2026-11-08"
 game = "26.3"
