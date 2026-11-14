@@ -21,17 +21,25 @@ description = """
 
 An item glows as brightly as its block does when placed (torch 14, lantern and glowstone 15, soul torch 10…). Turn the mod off in Options > Mods and Horizon's own switch works as before. Client side: it changes only what you see, on any server.
 
-Built for Horizon Nightly 2026-11-08 (`fdc87ae`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+Built for Horizon Nightly 2026-11-13 (`9f42064`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
 
 **Credits.** An original mod for Horizon by DeportedToHell, MIT License, written from scratch. Not affiliated with Mojang or Microsoft. Found a bug? [Report it here](https://github.com/DeportedToHell/MCRE-Mods/issues)."""
 authors = ["DeportedToHell"]
 owners = ["DeportedToHell"]
 owner_ids = [344119465]
 license = "MIT"
-source = "https://github.com/DeportedToHell/MCRE-Mods/tree/main/betterdynamiclights"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/dd8a13ebd07dd53b8ab13fea52b380282489ad13/betterdynamiclights"
 icon = "icons/dynamiclights.png"
 categories = ["utility", "decoration"]
 tags = ["lighting", "dynamic-lights", "torch", "visual", "better-dynamic-lights"]
+
+[[versions]]
+version = "1.0.4"
+published = "2026-11-14"
+game = "26.3"
+file = "dynamiclights-1.0.4.hnmod"
+sha256 = "73949154cc294ccf98fdfb5780e50e27f75d5afa0883c823bee7837914c8a7b9"
+changelog = "Pinned to Horizon Nightly 2026-11-13 (`9f42064`). The Ender Dragon's fireballs are level projectiles in this Nightly, so the mod now reads them from the projectile list. No other changes."
 
 [[versions]]
 version = "1.0.3"
