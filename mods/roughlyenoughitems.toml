@@ -18,17 +18,25 @@ A port of [Roughly Enough Items (REI)](https://github.com/shedaniel/RoughlyEnoug
 
 It steps aside while Just Enough Items is on: both use the same place on screen.
 
-Built for Horizon Nightly 2026-11-07 (`2ebf00a`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
+Built for Horizon Nightly 2026-11-08 (`fdc87ae`). Native mods are compiled into the game and are not sandboxed: build only code you trust.
 
 **Credits.** Roughly Enough Items is Copyright (c) 2018-2023 shedaniel, MIT License; the GUI textures are REI's own. This port rewrites REI in Rust under the same licence and is not affiliated with shedaniel, Mojang or Microsoft."""
 authors = ["DeportedToHell"]
 owners = ["DeportedToHell"]
 owner_ids = [344119465]
 license = "MIT"
-source = "https://github.com/DeportedToHell/MCRE-Mods/tree/main/roughlyenoughitems"
+source = "https://github.com/DeportedToHell/MCRE-Mods/tree/6060e0fba1ee4b720f43e005a4cb12b67ade4eab/roughlyenoughitems"
 icon = "icons/roughlyenoughitems.png"
 categories = ["utility"]
 tags = ["rei", "recipes", "item-list", "recipe-viewer", "search", "favorites", "port"]
+
+[[versions]]
+version = "1.1.2"
+published = "2026-11-11"
+game = "26.3"
+file = "roughlyenoughitems-1.1.2.hnmod"
+sha256 = "37487d6c03374af33d45d875776036be54c438a2d160c8318cc921964ec1d823"
+changelog = "Fixes from the review of #551: a -word search leaves out every entry whose name, tooltip or id has the word; ^ and $ work in r/regex/ searches; Ctrl+X in the search bar puts the cut text on the clipboard; choice menus that open upwards stay on screen and scroll. Replaces 1.1.1 (#551). Built for Horizon Nightly 2026-11-08 (fdc87ae)."
 
 [[versions]]
 version = "1.1.0"
