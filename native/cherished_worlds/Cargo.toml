@@ -2,9 +2,9 @@
 name = "horizon-mod-cherished-worlds"
 version = "1.0.0"
 edition = "2024"
-license = "CC0-1.0"
+license = "LGPL-3.0-or-later"
 publish = false
-description = "Favorite worlds: a Horizon behavioral port of Cherished Worlds (LGPL-3.0, no upstream code)."
+description = "Favorite worlds: an exact 1:1 Horizon Rust port of Cherished Worlds (LGPL-3.0-or-later, Illusive Soulworks)."
 
 [lib]
 path = "src/lib.rs"
