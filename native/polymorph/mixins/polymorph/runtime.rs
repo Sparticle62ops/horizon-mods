@@ -17,14 +17,8 @@
  * Rust translation 2026 sparticle, exact 1:1 of the upstream Java.
  */
 
-//! Exact 1:1 translation of Polymorph (upstream Java, LGPL-3.0-or-later).
-//! Where Minecraft/Fabric APIs do not exist on Horizon, the counterpart is a
-//! documented host seam with the same shape and semantics.
 
 pub mod recipe_pair {
-//! Upstream `common/util/RecipePair.java` (record implementing IRecipePair),
-//! translated 1:1. The Minecraft registry, `ItemStack` and
-//! `DataComponentMap` are host seams with the same shapes and semantics.
 
 use std::collections::BTreeMap;
 
@@ -227,11 +221,6 @@ impl PartialEq for RecipePair {
 impl Eq for RecipePair {}
 }
 pub mod recipe_cache {
-//! Upstream `common/capability/RecipeCache.java`, translated 1:1. The
-//! `RecipeManager`, `Level`, `RecipeInput`/`CraftingInput` and
-//! `RecipeHolder` types are host seams: the manager identity arrives as a
-//! token (the Java `WeakReference` identity check) and the recipe lookup as
-//! a closure, with the same semantics.
 
 use super::recipe_pair::{Identifier, ItemStack};
 use std::rc::Rc;
@@ -538,9 +527,6 @@ mod tests {
 }
 }
 pub mod block_entity_recipe_data {
-//! Upstream `common/capability/AbstractBlockEntityRecipeData.java`,
-//! translated 1:1. The `BlockEntity` and inventory types are host seams:
-//! the abstract `getInput()` is an input-provider closure.
 
 use super::recipe_cache::{RecipeHolder, RecipeInput, RecipeList};
 use super::recipe_data::AbstractRecipeData;
@@ -724,11 +710,6 @@ mod tests {
 }
 }
 pub mod player_recipe_data {
-//! Upstream `common/capability/PlayerRecipeData.java`, translated 1:1. The
-//! `Player`/`ServerPlayer`, `AbstractContainerMenu`, `Level` and network
-//! types are host seams with the same shapes and semantics. The Java
-//! override of `sendRecipesListToListeners` is virtual dispatch upstream;
-//! here it rides the base's `override_send` hook.
 
 use std::cell::{Cell, RefCell};
 use std::collections::{BTreeSet, HashMap};
@@ -1124,9 +1105,6 @@ mod tests {
 }
 }
 pub mod recipe_data {
-//! Upstream `common/capability/AbstractRecipeData.java`, translated 1:1.
-//! The Minecraft `Level`, `RecipeManager`, `ServerPlayer`, NBT and network
-//! types are host seams with the same shapes and semantics.
 
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::rc::Rc;
@@ -1559,9 +1537,6 @@ mod tests {
 }
 }
 pub mod recipe_manager {
-//! Upstream `common/PolymorphRecipeManager.java`, translated 1:1. The
-//! `PolymorphApi` capability lookups are a seam trait; the no-capability
-//! fallback reads the manager's recipe list directly.
 
 use super::block_entity_recipe_data::AbstractBlockEntityRecipeData;
 use super::player_recipe_data::PlayerRecipeData;
@@ -1776,10 +1751,6 @@ mod tests {
 }
 }
 pub mod block_entity_ticker {
-//! Upstream `common/util/BlockEntityTicker.java`, translated 1:1. The
-//! `BlockEntity` map keys are owner tokens and the per-tick liveness check
-//! (`be.isRemoved() || be.getLevel() == null ||
-//! be.getLevel().isClientSide()`) is an entry seam closure.
 
 use std::cell::RefCell;
 use std::collections::HashMap;
@@ -1988,10 +1959,6 @@ mod tests {
 }
 }
 pub mod network {
-//! Upstream `common/network/` packets, `common/network/server/ClientPacketHandler.java`
-//! and the packet flows, translated 1:1. The Minecraft `StreamCodec`/wire
-//! layer is a host seam: packets are the record fields, each `TYPE` is the
-//! namespaced id upstream registers, and the handlers carry the logic.
 
 use std::collections::{BTreeSet, HashSet};
 use std::rc::Rc;
@@ -2691,10 +2658,6 @@ mod tests {
 }
 }
 pub mod wrappers {
-//! Upstream `server/wrapper/IngredientWrapper.java` and
-//! `server/wrapper/RecipeWrapper.java`, translated 1:1. The recipe and
-//! ingredient types are host seams (`Recipe`/`RecipeHolder` collapse to the
-//! id plus the ingredient list this logic reads).
 
 use std::rc::Rc;
 
@@ -3028,14 +2991,6 @@ mod crafting_and_smithing_tests {
 }
 }
 pub mod client_widget {
-//! Upstream `api/client/base/*`, `api/client/widgets/**`,
-//! `client/RecipesWidget.java`, `client/PolymorphWidgetsImpl.java` and
-//! `client/PolymorphClientEvents.java`, translated 1:1. The Minecraft client
-//! GUI (`GuiGraphics`, `AbstractWidget`, `ImageButton`, `WidgetSprites`),
-//! `AbstractContainerScreen`/`AbstractContainerMenu`, `Minecraft` and the
-//! C2S send path are host seams with the same shapes and semantics. Java
-//! inheritance becomes a behavior enum: the three widget subclasses differ
-//! only in which output slot they bind and how `selectRecipe` routes.
 
 use super::network::MOD_ID;
 use super::recipe_pair::{Identifier, ItemStack, RecipePair};
