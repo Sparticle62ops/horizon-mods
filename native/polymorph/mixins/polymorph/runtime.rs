@@ -20,6 +20,16 @@
 #[allow(dead_code, unused_imports, unused_variables)]
 pub mod polymorph {
 
+    /// Upstream `PolymorphApi.MOD_ID`.
+    pub const MOD_ID: &str = "polymorph";
+
+    /// Upstream `fabric.mod.json` metadata (name, version, description); shown
+    /// on the mod's row in Options > Mods.
+    pub const NAME: &str = "Polymorph";
+    pub const VERSION: &str = "1.0.0";
+    pub const DESCRIPTION: &str =
+        "The mod that fixes recipe conflicts by allowing for alternate recipes.";
+
     pub mod recipe_pair {
 
         use std::collections::BTreeMap;
@@ -2214,13 +2224,6 @@ pub mod polymorph {
 
         /// Upstream `PolymorphApi.MOD_ID`.
         pub const MOD_ID: &str = "polymorph";
-
-        /// Upstream `fabric.mod.json` metadata (name, version, description); shown
-        /// on the mod's row in Options > Mods.
-        pub const NAME: &str = "Polymorph";
-        pub const VERSION: &str = "1.0.0";
-        pub const DESCRIPTION: &str =
-            "The mod that fixes recipe conflicts by allowing for alternate recipes.";
 
         /// `PolymorphApi.MOD_ID` namespaced type id, standing in for the Java
         /// `Type<...>` constants.
