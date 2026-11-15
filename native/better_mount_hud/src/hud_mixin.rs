@@ -78,11 +78,7 @@ impl HudMixin {
     ///
     /// Redirects the vehicle-max-hearts call to 0 so the player food bar
     /// always renders while riding.
-    pub fn bettermounthud_always_render_food(
-        &self,
-        _hud: &(),
-        _entity: LivingEntity,
-    ) -> i32 {
+    pub fn bettermounthud_always_render_food(&self, _hud: &(), _entity: LivingEntity) -> i32 {
         0
     }
 
@@ -146,8 +142,7 @@ impl HudMixin {
 mod tests {
     use super::*;
 
-    #[derive(Default)]
-    #[derive(Clone)]
+    #[derive(Default, Clone)]
     struct TestEnv {
         can_hurt: bool,
         has_experience: bool,
@@ -219,15 +214,18 @@ mod tests {
     }
 
     #[test]
-    fn the_jump_bar_survives_when_experience_is_hidden_the_jump_key_is_down_or_the_meter_is_charging()
-     {
+    fn the_jump_bar_survives_when_experience_is_hidden_the_jump_key_is_down_or_the_meter_is_charging(
+    ) {
         let base = TestEnv {
             has_experience: true,
             key_jump_down: false,
             jump_scale: 0.0,
             ..Default::default()
         };
-        assert_eq!(mixin(&base).bettermounthud_switch_bar(PlayerRideableJumping(1)), None);
+        assert_eq!(
+            mixin(&base).bettermounthud_switch_bar(PlayerRideableJumping(1)),
+            None
+        );
         assert_eq!(
             mixin(&TestEnv {
                 has_experience: false,
