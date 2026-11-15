@@ -41,6 +41,13 @@ pub const MOD_ID: &str = "rrls";
 /// logger name is kept and emission is the host seam.
 pub const LOGGER: &str = MOD_ID;
 
+/// Upstream: `fabric.mod.json` metadata (name, version, description); shown
+/// on the mod's row in Options > Mods.
+pub const NAME: &str = "Remove Reloading Screen";
+pub const VERSION: &str = "1.0.0";
+pub const DESCRIPTION: &str =
+    "Allows you to remove the reloading screen when changing resource packs";
+
 /// Upstream: `AtomicReference<CompletableFuture<Void>> MOD_RELOADERS_FUTURE`.
 /// The Java type pairs a slot with a completable future; the same
 /// set-and-swap semantics live in one lock here (`STATE_*` hold the payload,
