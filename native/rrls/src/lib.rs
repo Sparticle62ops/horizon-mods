@@ -13,6 +13,22 @@
  * same shape is kept and the host side is a seam (see README).
  */
 
+#![allow(
+    clippy::unused_unit,
+    clippy::too_many_arguments,
+    clippy::collapsible_if,
+    clippy::result_unit_err,
+    clippy::default_constructed_unit_structs,
+    clippy::new_without_default,
+    unused_imports,
+    unused_must_use,
+    unused_mut,
+    clippy::items_after_test_module
+)]
+// CI runs clippy --all-targets -D warnings. These lints flag shapes kept from the
+// upstream Java (unit returns, many-arg methods, nested ifs), so they are allowed
+// at crate level and the ported code stays exact.
+
 pub mod rrls;
 
 pub mod config;
