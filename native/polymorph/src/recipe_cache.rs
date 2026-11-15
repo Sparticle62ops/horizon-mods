@@ -252,7 +252,7 @@ mod tests {
 
     fn lookup_of(entries: Vec<(&str, Vec<&str>)>) -> impl Fn(&RecipeInput) -> RecipeList {
         move |input: &RecipeInput| {
-            let key = format!("{}", input.get_item(0).item.path);
+            let key = input.get_item(0).item.path.to_string();
             entries
                 .iter()
                 .find(|(k, _)| *k == key)

@@ -57,6 +57,7 @@ pub struct AbstractRecipeData<E> {
     pub network: Rc<RecipesListSender>,
     /// A subclass override of `sendRecipesListToListeners`; None runs the
     /// base per-listener send (the Java virtual-dispatch seam).
+    #[allow(clippy::type_complexity)]
     pub override_send: Option<Box<dyn for<'a> Fn(&BroadcastCtx<'a, E>)>>,
 }
 
@@ -98,6 +99,7 @@ impl<E> AbstractRecipeData<E> {
             return None;
         }
 
+        #[allow(clippy::collapsible_if)]
         if self.loaded_recipe.is_some() && self.get_selected_recipe().is_none() {
             if let Some(holder) = by_key(self.loaded_recipe.as_ref().unwrap()) {
                 self.set_selected_recipe(holder);
@@ -112,6 +114,7 @@ impl<E> AbstractRecipeData<E> {
         for entry in recipes {
             let mut output = entry.recipe.result_item();
 
+            #[allow(clippy::unnecessary_map_or)]
             if output.as_ref().map_or(true, |o| o.is_empty()) || entry.recipe.is_custom() {
                 output = Some(entry.recipe.assemble(recipe_input));
             }

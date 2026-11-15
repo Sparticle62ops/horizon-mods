@@ -296,6 +296,7 @@ impl ClientPacketHandler {
 
     /// `handle(SPacketHighlightRecipe)`.
     pub fn handle_highlight_recipe(packet: SPacketHighlightRecipe, env: &mut dyn ClientPacketEnv) {
+        #[allow(clippy::collapsible_if)]
         if env.client_player().is_some() {
             if let Some(widget) = env.recipes_widget() {
                 widget.highlight_recipe(&packet.recipe);

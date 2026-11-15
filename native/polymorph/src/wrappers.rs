@@ -89,6 +89,7 @@ impl RecipeWrapper {
         }
         let other_ingredients = &other.ingredients;
 
+        #[allow(clippy::needless_range_loop)]
         for i in 0..other_ingredients.len() {
             if !other_ingredients[i].matches(Some(&self.ingredients[i])) {
                 return false;
@@ -186,10 +187,12 @@ mod tests {
 pub struct CraftingRecipeWrapper {
     inner: RecipeWrapper,
     shaped: bool,
+    #[allow(clippy::type_complexity)]
     is_same_shape: Rc<dyn Fn(&RecipeWrapper, &RecipeWrapper) -> bool>,
 }
 
 impl CraftingRecipeWrapper {
+    #[allow(clippy::type_complexity)]
     pub fn new(
         inner: RecipeWrapper,
         shaped: bool,

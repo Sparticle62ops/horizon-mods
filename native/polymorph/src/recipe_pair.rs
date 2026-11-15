@@ -43,6 +43,7 @@ fn component_hash(map: &BTreeMap<String, String>) -> i32 {
 /// translated logic reads: the item's registry key, the count, and the
 /// component map (`ItemStack#matches` semantics). Hash supports the wire
 /// HashSet in the network packets.
+#[allow(clippy::derived_hash_with_manual_eq)]
 #[derive(Clone, Debug, Hash)]
 pub struct ItemStack {
     pub item: Identifier,
@@ -70,6 +71,7 @@ impl Ingredient {
 /// Upstream record `RecipePair(ResourceLocation resourceLocation,
 /// ItemStack output) implements IRecipePair`. Hash supports the wire
 /// HashSet in the network packets.
+#[allow(clippy::derived_hash_with_manual_eq)]
 #[derive(Clone, Debug, Hash)]
 pub struct RecipePair {
     pub resource_location: Identifier,
@@ -185,10 +187,11 @@ mod tests {
     fn two_modded_fall_through_to_item_compare() {
         let a = pair("mod:aa", "mod:out1", 1, "");
         let b = pair("mod:bb", "mod:out2", 1, "");
-        assert_eq!(a.compare_to(&b) < 0, true);
+        assert!(a.compare_to(&b) < 0);
     }
 }
 
+#[allow(clippy::items_after_test_module)]
 impl Ord for RecipePair {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
         let c = self.compare_to(other);

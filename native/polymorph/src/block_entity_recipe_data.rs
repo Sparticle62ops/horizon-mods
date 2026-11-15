@@ -187,7 +187,7 @@ mod tests {
 
     #[test]
     fn get_recipe_delegates_to_the_base() {
-        let mut data = AbstractBlockEntityRecipeData::new(7_u64, || Vec::new());
+        let mut data = AbstractBlockEntityRecipeData::new(7_u64, Vec::new);
         let out = data.get_recipe(
             &RecipeInput::new(vec![stack("mod:stick", 1)]),
             1,

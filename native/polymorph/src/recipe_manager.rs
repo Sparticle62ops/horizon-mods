@@ -26,6 +26,7 @@ pub struct PolymorphRecipeManager;
 impl PolymorphRecipeManager {
     /// `getPlayerRecipe`: attach the menu to the player's capability when
     /// one exists, then run its getRecipe; otherwise the plain first match.
+    #[allow(clippy::too_many_arguments)]
     pub fn get_player_recipe(
         api: &mut dyn PolymorphApiSeam,
         container_menu: u64,
@@ -204,7 +205,7 @@ mod tests {
     fn block_entity_capability_runs_with_an_empty_list() {
         let mut api = TestApi {
             player: None,
-            block: Some(AbstractBlockEntityRecipeData::new((), || Vec::new())),
+            block: Some(AbstractBlockEntityRecipeData::new((), Vec::new)),
         };
         let out = PolymorphRecipeManager::get_block_entity_recipe(
             &mut api,

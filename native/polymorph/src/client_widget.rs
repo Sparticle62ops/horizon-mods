@@ -693,6 +693,7 @@ impl AbstractRecipesWidget {
         if let Some(widget) = &mut self.selection_widget {
             widget.render(gui, mouse_x, mouse_y);
         }
+        #[allow(clippy::collapsible_if)]
         if let Some(button) = &mut self.open_button {
             if button.visible {
                 button.render_widget(gui, mouse_x, mouse_y);
@@ -703,6 +704,7 @@ impl AbstractRecipesWidget {
     /// `mouseClicked`: the open button first, then a selection click, then
     /// deactivating an open panel on any other click.
     pub fn mouse_clicked(&mut self, mouse_x: f64, mouse_y: f64, button: i32) -> bool {
+        #[allow(clippy::collapsible_if)]
         if let Some(button_widget) = &mut self.open_button {
             if button_widget.mouse_clicked(mouse_x, mouse_y, button) {
                 if let Some(widget) = &mut self.selection_widget {
@@ -712,6 +714,7 @@ impl AbstractRecipesWidget {
             }
         }
         if let Some(widget) = &mut self.selection_widget {
+            #[allow(clippy::if_same_then_else)]
             if widget.mouse_clicked(mouse_x, mouse_y, button) {
                 widget.set_active(false);
                 return true;
@@ -830,6 +833,7 @@ impl RecipesWidgetHolder {
         let mut widget = widgets.get_widget_or_default(container_screen, env);
 
         if widget.is_some() {
+            #[allow(clippy::unnecessary_unwrap)]
             let widget = widget.as_mut().unwrap();
 
             if widget.is_persistent() && env.borrow().connection_present() {
@@ -1013,6 +1017,7 @@ impl PolymorphClientEvents {
     /// `tick`: drop the widget when the player or screen went away.
     pub fn tick(screen_present: bool, env: &Rc<RefCell<dyn ClientWidgetEnv>>) {
         let has_widget = RecipesWidgetHolder::is_present();
+        #[allow(clippy::collapsible_if)]
         if has_widget {
             if !screen_present {
                 RecipesWidgetHolder::clear(env);
@@ -1109,6 +1114,7 @@ mod tests {
         connected: bool,
     }
 
+    #[allow(clippy::type_complexity)]
     fn test_env(connected: bool) -> (Rc<RefCell<dyn ClientWidgetEnv>>, Rc<RefCell<Vec<String>>>) {
         let log = Rc::new(RefCell::new(Vec::new()));
         (
