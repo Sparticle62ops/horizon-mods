@@ -1,0 +1,29 @@
+## Horizon registry entry for Wavey Capes (exact 1:1 Rust translation of the tr7zw Protective License mod).
+id = "wavey_capes"
+kind = "native-mod"
+name = "Wavey Capes"
+summary = "Physically simulated capes: the upstream Wavey Capes client logic, translated 1:1, with wind, movement simulation, its config screen and render layer."
+description = """**A native Horizon mod**: the launcher builds it into the game (install it on the launcher's Mods page, then press Build there). Native mods are not sandboxed and run with your account's rights, so read the source before you build it. Pinned to the Horizon tree this was built against.
+
+An exact 1:1 Rust translation of [Wavey Capes](https://modrinth.com/mod/wavey-capes): the upstream Java by tr7zw translated code-for-code, carrying the upstream license and credit in full.
+
+All upstream modules (base, simulation, wind, render layers, NMS util, versionless glue, config screen and mod menu, plus the support-mod integrations for Ears, MinecraftCapes, Wynntils and LabyCloak) are carried 1:1 as a Horizon client runtime splice, with crate:: mapped to super:: for the carrier. Host seams where the Minecraft and Fabric APIs do not exist in Horizon live behind the port's seam traits.
+
+Port of [tr7zw/WaveyCapes](https://github.com/tr7zw/WaveyCapes), copyright (C) tr7zw, LicenseRef-tr7zw-Protective-License (no commercial use): the license text ships with the source. Rust port by sparticle, upstream by tr7zw."""
+authors = ["sparticle62ops"]
+owners = ["sparticle62ops"]
+owner_ids = [209812745]
+license = "LicenseRef-tr7zw-Protective-License"
+source = "https://github.com/Sparticle62ops/horizon-wavey-capes"
+categories = ["cosmetic"]
+tags = ["capes", "cosmetic", "physics"]
+
+icon = "icons/wavey_capes.png"
+
+[[versions]]
+published = "2026-11-15"
+version = "1.11.3"
+game = "26.3"
+file = "wavey_capes-1.11.3.hnmod"
+sha256 = "deb43f42fe1a9fd777f6fcc6d83fa3f6548cbee3f30448a365d49647cc6eba40"
+changelog = "Exact 1:1 Rust translation of Wavey Capes (LicenseRef-tr7zw-Protective-License) by tr7zw, license and upstream credit carried: physics simulation, wind, support-mod integrations and config screen, 1:1, as a Horizon client runtime splice."
