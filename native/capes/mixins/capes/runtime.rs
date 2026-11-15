@@ -1531,6 +1531,7 @@ pub mod capes {
 
         /// `MixinPlayerInfo#loadTextures` (`createSkinLookup` HEAD inject): touch the
         /// handler when the profile is valid.
+        #[allow(non_snake_case)]
         pub fn loadTextures(host: &dyn PlayerInfoHost) {
             if super::util::is_valid_profile(&host.profile()) {
                 PlayerHandler::on_load_texture(&host.profile());
