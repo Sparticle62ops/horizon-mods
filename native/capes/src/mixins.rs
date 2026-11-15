@@ -6,11 +6,13 @@
  * Licensed under the GNU Lesser General Public License v2.1.
  */
 
-use crate::config::{CapeConfig, CapeType};
 use crate::capes_mod::Capes;
+use crate::config::{CapeConfig, CapeType};
 use crate::handler::{GameProfile, Identifier, PlayerHandler, Texture, Uuid};
-use crate::menus::{skin_customization_icon_button, skin_customization_icon_clicked, Button, ScreenHost};
-use crate::render::{PlayerSkin, PlaceholderEntityRenderState};
+use crate::menus::{
+    skin_customization_icon_button, skin_customization_icon_clicked, Button, ScreenHost,
+};
+use crate::render::{PlaceholderEntityRenderState, PlayerSkin};
 
 /// The `PlayerInfo` fields the mixin shadows (`@Shadow @Final profile`) and
 /// the skin supplier it returns.
@@ -42,8 +44,7 @@ pub fn get_cape_texture(host: &mut dyn PlayerInfoHost) {
         let config: CapeConfig = Capes::config();
         let old_textures = host.skin();
         let cape_texture = handler.borrow_mut().get_cape();
-        let elytra_texture = if handler.borrow().has_elytra_texture
-            && config.enable_elytra_texture
+        let elytra_texture = if handler.borrow().has_elytra_texture && config.enable_elytra_texture
         {
             cape_texture.clone()
         } else {

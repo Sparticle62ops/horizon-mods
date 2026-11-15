@@ -36,7 +36,9 @@ impl Identifier {
     /// `Identifier.parse("ns:path")`.
     pub fn parse(value: impl Into<String>) -> Self {
         let value = value.into();
-        let (namespace, path) = value.split_once(':').unwrap_or(("minecraft", value.as_str()));
+        let (namespace, path) = value
+            .split_once(':')
+            .unwrap_or(("minecraft", value.as_str()));
         Self::from_namespace_and_path(namespace, path)
     }
 }
@@ -248,10 +250,12 @@ pub fn registered_textures() -> Vec<Identifier> {
     TEXTURES.with(|slot| slot.borrow().borrow().ids())
 }
 
+#[allow(dead_code)]
 trait RegistryView {
     fn ids(&self) -> Vec<Identifier>;
 }
 
+#[allow(dead_code)]
 struct RecordingRegistry {
     ids: Vec<Identifier>,
     textures: Vec<NativeImage>,
@@ -332,9 +336,7 @@ impl PlayerHandler {
             handler.borrow_mut().has_cape = false;
             handler.borrow_mut().has_animated_cape = false;
             let config = Capes::config();
-            handler
-                .borrow_mut()
-                .set_cape(config.client_cape_type);
+            handler.borrow_mut().set_cape(config.client_cape_type);
         } else if !handler.borrow().has_loaded_textures {
             for cape_type in CapeType::all() {
                 if handler.borrow_mut().set_cape(cape_type) {
@@ -359,7 +361,10 @@ impl PlayerHandler {
             self.last_frame_time = time;
             Texture::Dynamic(Capes::identifier(format!("{}/{}", self.uuid, this_frame)))
         } else {
-            Texture::Dynamic(Capes::identifier(format!("{}/{}", self.uuid, self.last_frame)))
+            Texture::Dynamic(Capes::identifier(format!(
+                "{}/{}",
+                self.uuid, self.last_frame
+            )))
         }
     }
 
@@ -399,11 +404,10 @@ impl PlayerHandler {
 
     /// `fun setCosmeticaCape(connection)`: read the cloak JSON, then load its
     /// texture (animated when `frames > 1`).
-    pub fn set_cosmetica_cape(
-        &mut self,
-        connection: Result<HttpResponse, HttpError>,
-    ) -> bool {
-        let Ok(response) = connection else { return false };
+    pub fn set_cosmetica_cape(&mut self, connection: Result<HttpResponse, HttpError>) -> bool {
+        let Ok(response) = connection else {
+            return false;
+        };
         if !response.is_success() {
             return false;
         }
@@ -435,7 +439,9 @@ impl PlayerHandler {
     /// `fun setMCMCape(connection)`: read the profile JSON, then its cape URL
     /// (animated when an `animated_cape_url` is present).
     pub fn set_mcm_cape(&mut self, connection: Result<HttpResponse, HttpError>) -> bool {
-        let Ok(response) = connection else { return false };
+        let Ok(response) = connection else {
+            return false;
+        };
         if !response.is_success() {
             return false;
         }
@@ -453,8 +459,9 @@ impl PlayerHandler {
         let Some(cape) = NativeImage::read(&bytes) else {
             return false;
         };
-        if labymod && Uuid::from_string("ff305f81-ff30-5f90-ff30-5f90ff305f90").0
-            == uuid_from_int_array(&cape.pixels).0
+        if labymod
+            && Uuid::from_string("ff305f81-ff30-5f90-ff30-5f90ff305f90").0
+                == uuid_from_int_array(&cape.pixels).0
         {
             return false;
         }
@@ -465,7 +472,10 @@ impl PlayerHandler {
             self.has_cape = true;
             self.has_animated_cape = true;
             for (frame, texture) in animated_cape_frames {
-                register_texture(Capes::identifier(format!("{}/{}", self.uuid, frame)), texture);
+                register_texture(
+                    Capes::identifier(format!("{}/{}", self.uuid, frame)),
+                    texture,
+                );
             }
         } else {
             self.has_elytra_texture = cape.width / cape.height == 2;
@@ -633,8 +643,7 @@ fn decode_png(bytes: &[u8]) -> Option<NativeImage> {
     if width == 0 || height == 0 || idat.is_empty() {
         return None;
     }
-    inflate(&idat, (width * height * 4 + height) as usize)
-        .map(|raw| unfilter(raw, width, height))
+    inflate(&idat, (width * height * 4 + height) as usize).map(|raw| unfilter(raw, width, height))
 }
 
 fn inflate(data: &[u8], size_hint: usize) -> Option<Vec<u8>> {
@@ -680,8 +689,16 @@ fn unfilter(raw: Vec<u8>, width: u32, height: u32) -> NativeImage {
         let row = &raw[off..off + row_len];
         off += row_len;
         for x in 0..row_len {
-            let left = if x >= 4 { pixels[y * stride + x - 4] } else { 0 };
-            let up = if y > 0 { pixels[(y - 1) * stride + x] } else { 0 };
+            let left = if x >= 4 {
+                pixels[y * stride + x - 4]
+            } else {
+                0
+            };
+            let up = if y > 0 {
+                pixels[(y - 1) * stride + x]
+            } else {
+                0
+            };
             let up_left = if y > 0 && x >= 4 {
                 pixels[(y - 1) * stride + x - 4]
             } else {

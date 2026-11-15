@@ -13,8 +13,8 @@ use crate::handler::{
 use crate::menus::*;
 use crate::mixins::*;
 use crate::render::{
-    placeholder, reset_placeholder, PlayerModelType, PlayerSkin, RenderContext,
-    PlaceholderEntityRenderState,
+    placeholder, reset_placeholder, PlaceholderEntityRenderState, PlayerModelType, PlayerSkin,
+    RenderContext,
 };
 use crate::util::is_valid_profile;
 use std::cell::RefCell;
@@ -242,7 +242,11 @@ fn on_load_texture_for_another_profile_tries_every_provider_once() {
     let http = Rc::new(RecordingHttp::default());
     crate::handler::set_http(http.clone());
     let other = valid_profile();
-    crate::handler::set_own_profile(profile("00000000-0000-0000-0000-000000000000", "other", None));
+    crate::handler::set_own_profile(profile(
+        "00000000-0000-0000-0000-000000000000",
+        "other",
+        None,
+    ));
     // Every provider is disabled or unreachable except OptiFine, which
     // returns a cape image.
     http.capes.borrow_mut().insert(
@@ -395,10 +399,7 @@ fn toggle_menu_buttons_flip_their_config_flag_save_and_relabel() {
     let mut config = CapeConfig::default();
     let buttons = toggle_menu_buttons(&config);
     assert_eq!(buttons.len(), 7);
-    assert_eq!(
-        buttons[0].message,
-        CapeType::Optifine.get_toggle_text(true)
-    );
+    assert_eq!(buttons[0].message, CapeType::Optifine.get_toggle_text(true));
     toggle_button_clicked(&mut config, 0);
     assert!(!config.enable_optifine);
     assert!(!recording.writes.borrow().is_empty());
@@ -588,10 +589,7 @@ impl RenderContext for NullCtx {
     fn is_model_part_enabled(&self, _part: &str) -> bool {
         true
     }
-    fn skin_for(
-        &self,
-        _profile: &GameProfile,
-    ) -> crate::render::PlayerSkin {
+    fn skin_for(&self, _profile: &GameProfile) -> crate::render::PlayerSkin {
         base_skin()
     }
 }
@@ -694,7 +692,11 @@ fn crc32(data: &[u8]) -> u32 {
     for i in 0..256u32 {
         let mut c = i;
         for _ in 0..8 {
-            c = if c & 1 != 0 { 0xEDB88320 ^ (c >> 1) } else { c >> 1 };
+            c = if c & 1 != 0 {
+                0xEDB88320 ^ (c >> 1)
+            } else {
+                c >> 1
+            };
         }
         table[i as usize] = c;
     }

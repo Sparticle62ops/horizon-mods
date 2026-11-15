@@ -104,8 +104,7 @@ pub fn toggle_menu_buttons(config: &CapeConfig) -> Vec<Button> {
             id: 0,
         },
         Button {
-            message: CapeType::MinecraftCapes
-                .get_toggle_text(config.enable_minecraft_capes_mod),
+            message: CapeType::MinecraftCapes.get_toggle_text(config.enable_minecraft_capes_mod),
             pos: (width_half - 155 + 160, row(1)),
             size: (150, 20),
             active: true,
@@ -211,8 +210,7 @@ pub fn optifine_editor_clicked(host: &mut dyn OtherMenuHost) {
 
 fn rand128() -> u128 {
     // `BigInteger(128, Random())`-shaped value.
-    (std::process::id() as u128)
-        .wrapping_mul(0x9E3779B97F4A7C15)
+    (std::process::id() as u128).wrapping_mul(0x9E3779B97F4A7C15)
         ^ (std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)
             .map(|d| d.as_nanos())
@@ -276,7 +274,10 @@ pub fn selector_menu_init(config: &mut CapeConfig) -> SelectorMenuState {
     // it.message = ...; PlaceholderEntity.capeLoaded = false` runs on click,
     // so rebuild the label from the config after a cycle.
     buttons[0].message = config.client_cape_type.get_text();
-    SelectorMenuState { last_time: 0, buttons }
+    SelectorMenuState {
+        last_time: 0,
+        buttons,
+    }
 }
 
 /// The cycle button's click, 1:1 with the upstream callback.
@@ -377,7 +378,10 @@ pub fn skin_customization_icon_clicked(host: &mut dyn ScreenHost) {
 }
 
 /// Keep the context import used on engines that need the trait in scope.
-pub fn with_context<T>(ctx: &Rc<dyn RenderContext>, f: impl FnOnce(&Rc<dyn RenderContext>) -> T) -> T {
+pub fn with_context<T>(
+    ctx: &Rc<dyn RenderContext>,
+    f: impl FnOnce(&Rc<dyn RenderContext>) -> T,
+) -> T {
     f(ctx)
 }
 

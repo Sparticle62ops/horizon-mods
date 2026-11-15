@@ -5,9 +5,7 @@
  */
 
 use crate::capes_mod::Capes;
-use crate::handler::{
-    Identifier, PlayerHandler, Texture, Uuid,
-};
+use crate::handler::{Identifier, PlayerHandler, Texture, Uuid};
 use std::cell::{Cell, RefCell};
 use std::rc::Rc;
 
@@ -232,9 +230,9 @@ pub fn placeholder() -> Rc<RefCell<PlaceholderEntity>> {
         if let Some(instance) = &*slot {
             return instance.clone();
         }
-        let ctx = CTX.with(|slot| slot.borrow().clone()).unwrap_or_else(|| {
-            Rc::new(NullRenderContext) as Rc<dyn RenderContext>
-        });
+        let ctx = CTX
+            .with(|slot| slot.borrow().clone())
+            .unwrap_or_else(|| Rc::new(NullRenderContext) as Rc<dyn RenderContext>);
         let profile = ctx_default_profile(&ctx);
         let skin = ctx.skin_for(&profile);
         let slim = skin.model == PlayerModelType::Slim;
@@ -329,9 +327,9 @@ impl RenderContext for NullRenderContext {
             body: Texture::ResourceTexture(Identifier::with_default_namespace(
                 "textures/entity/player/wide/steve.png",
             )),
-            cape: Some(Texture::ResourceTexture(Identifier::with_default_namespace(
-                "textures/entity/cape.png",
-            ))),
+            cape: Some(Texture::ResourceTexture(
+                Identifier::with_default_namespace("textures/entity/cape.png"),
+            )),
             elytra: Texture::ResourceTexture(Identifier::with_default_namespace(
                 "textures/entity/equipment/wings/elytra.png",
             )),
@@ -352,7 +350,8 @@ impl PlaceholderEntity {
         }
         self.limb_distance
             .set(self.limb_distance.get() + (g - self.limb_distance.get()) * 0.4);
-        self.limb_angle.set(self.limb_angle.get() + self.limb_distance.get());
+        self.limb_angle
+            .set(self.limb_angle.get() + self.limb_distance.get());
     }
 
     /// `fun getCapeTexture()`: load once, then the handler's cape or the
