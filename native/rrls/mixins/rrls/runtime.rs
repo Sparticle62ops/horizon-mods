@@ -19,7 +19,7 @@
 // same shapes and semantics; the background-load seam is tracked under
 // horizon-rust/horizon #15868. Rust port by sparticle, upstream by dima_dencep.
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod rrls {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -166,7 +166,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod mixins {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -761,7 +761,7 @@ impl TranslatableEnum for Type {}
 /// internals accessor (`ResourceLoaderImpl.addedReloaders`). Horizon has no
 /// Fabric resource-loader implementation; the added-reloader map is a host
 /// seam read at the mixin site.
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod accessors {
     /// `getAddedReloaders()` returns the mod-added reload listeners.
     pub fn get_added_reloaders() -> std::collections::HashMap<String, ()> {
@@ -1123,7 +1123,7 @@ mod tests {
 
 /// Mixins under `mixins/animation/`: they retune the vanilla fade animations
 /// while rrls owns the screen.
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod animation {
     use super::*;
 
@@ -1189,7 +1189,7 @@ pub mod animation {
 
 /// Mixins under `mixins/compat/`: compat shims that keep the vanilla client
 /// coherent while rrls holds the screen.
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod compat {
     use super::*;
     use super::super::utils::texture_utils;
@@ -1398,7 +1398,7 @@ mod animation_compat_tests {
 
 /// Upstream `mixins/workaround`: the eight read this fire. `ReloadableResourceManagerMixin`
 /// is still open.
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod workaround {
     use super::*;
     use super::super::utils::texture_utils;
@@ -2005,7 +2005,7 @@ mod workaround_tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod screens {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -2363,7 +2363,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod services {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -2515,7 +2515,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod config {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -2550,7 +2550,7 @@ impl Translatable {
         Self { key }
     }
 }
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod april_fool {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -2631,7 +2631,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod double_load {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -2682,7 +2682,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod hide_type {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -2764,7 +2764,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod rrls_config {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -2855,7 +2855,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod rrls_type {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -2907,7 +2907,7 @@ mod tests {
 
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod utils {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -2925,7 +2925,7 @@ pub mod utils {
 // host seams; the pure-logic ones are translated here.
 
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod atlas_utils {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -3114,7 +3114,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod gui_graphics {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -3663,7 +3663,7 @@ pub trait GuiGraphicsExtractor {
 impl GuiGraphicsExtractor for DummyGuiGraphics {}
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod gui_graphics_generator {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -3687,7 +3687,7 @@ pub mod gui_graphics_generator {
 // and the source generator are translated exactly.
 
 /// `Opcodes` access flags used below.
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod opcodes {
     pub const ACC_PUBLIC: u32 = 0x0001;
     pub const ACC_STATIC: u32 = 0x0008;
@@ -3934,7 +3934,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod ease {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -4167,7 +4167,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod overlay_helper {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -4345,7 +4345,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod texture_utils {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -4534,7 +4534,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod easing {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -4713,7 +4713,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod rainbow {
 /*
  * Copyright 2023 - 2026 dima_dencep.
@@ -4806,7 +4806,7 @@ mod tests {
 }
 }
 
-#[allow(unused_imports, unused_variables)]
+#[allow(dead_code, unused_imports, unused_variables)]
 pub mod waiting_shared_state {
 /*
  * Copyright 2023 - 2026 dima_dencep.
