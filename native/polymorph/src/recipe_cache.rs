@@ -40,11 +40,17 @@ pub struct RecipeInput {
 
 impl RecipeInput {
     pub fn new(items: Vec<ItemStack>) -> Self {
-        Self { items, crafting: None }
+        Self {
+            items,
+            crafting: None,
+        }
     }
 
     pub fn crafting(items: Vec<ItemStack>, width: usize, height: usize) -> Self {
-        Self { items, crafting: Some((width, height)) }
+        Self {
+            items,
+            crafting: Some((width, height)),
+        }
     }
 
     /// `RecipeInput#size()`.
@@ -54,7 +60,9 @@ impl RecipeInput {
 
     /// `RecipeInput#isEmpty()`: every slot empty.
     pub fn is_empty(&self) -> bool {
-        self.items.iter().all(|s| s.count == 0 && s.components.is_empty())
+        self.items
+            .iter()
+            .all(|s| s.count == 0 && s.components.is_empty())
     }
 
     /// `RecipeInput#getItem(i)`.
@@ -110,7 +118,11 @@ pub struct RecipeCache {
 
 impl RecipeCache {
     pub fn new(size: usize) -> Self {
-        Self { entries: Vec::new(), capacity: size, cached_manager: None }
+        Self {
+            entries: Vec::new(),
+            capacity: size,
+            cached_manager: None,
+        }
     }
 
     /// `get`, line for line: empty input is no recipes, a changed manager
@@ -152,7 +164,11 @@ impl RecipeCache {
 
     /// `compute`: the manager's `getRecipesFor` (the lookup seam), then the
     /// result is cached.
-    fn compute(&mut self, lookup: &dyn Fn(&RecipeInput) -> RecipeList, recipe_input: &RecipeInput) -> RecipeList {
+    fn compute(
+        &mut self,
+        lookup: &dyn Fn(&RecipeInput) -> RecipeList,
+        recipe_input: &RecipeInput,
+    ) -> RecipeList {
         let list = lookup(recipe_input);
         self.insert(recipe_input, list.clone());
         list
@@ -197,7 +213,11 @@ mod tests {
 
     fn stack(item: &str, count: i32) -> ItemStack {
         let (ns, path) = item.split_once(':').unwrap();
-        ItemStack { item: Identifier::new(ns, path), count, components: BTreeMap::new() }
+        ItemStack {
+            item: Identifier::new(ns, path),
+            count,
+            components: BTreeMap::new(),
+        }
     }
 
     fn id(s: &str) -> Identifier {
@@ -205,16 +225,29 @@ mod tests {
         Identifier::new(ns, path)
     }
 
-    struct TestRecipe { output: ItemStack }
+    struct TestRecipe {
+        output: ItemStack,
+    }
 
     impl Recipe for TestRecipe {
-        fn result_item(&self) -> Option<ItemStack> { Some(self.output.clone()) }
-        fn is_custom(&self) -> bool { false }
-        fn assemble(&self, _input: &RecipeInput) -> ItemStack { self.output.clone() }
+        fn result_item(&self) -> Option<ItemStack> {
+            Some(self.output.clone())
+        }
+        fn is_custom(&self) -> bool {
+            false
+        }
+        fn assemble(&self, _input: &RecipeInput) -> ItemStack {
+            self.output.clone()
+        }
     }
 
     fn holder(s: &str) -> RecipeHolder {
-        RecipeHolder { id: id(s), recipe: Rc::new(TestRecipe { output: stack("mod:out", 1) }) }
+        RecipeHolder {
+            id: id(s),
+            recipe: Rc::new(TestRecipe {
+                output: stack("mod:out", 1),
+            }),
+        }
     }
 
     fn lookup_of(entries: Vec<(&str, Vec<&str>)>) -> impl Fn(&RecipeInput) -> RecipeList {
@@ -229,7 +262,9 @@ mod tests {
     }
 
     fn ids(list: &RecipeList) -> Vec<String> {
-        list.iter().map(|h| format!("{}:{}", h.id.namespace, h.id.path)).collect()
+        list.iter()
+            .map(|h| format!("{}:{}", h.id.namespace, h.id.path))
+            .collect()
     }
 
     #[test]

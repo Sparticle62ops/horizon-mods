@@ -52,17 +52,19 @@ impl PlayerRecipeData {
         let owner_for_send = owner.clone();
         let widget_for_send = widget.clone();
         let network_for_send = base.network.clone();
-        base.override_send = Some(Box::new(move |ctx: &BroadcastCtx<Rc<RefCell<PlayerHandle>>>| {
-            let o = owner_for_send.borrow();
+        base.override_send = Some(Box::new(
+            move |ctx: &BroadcastCtx<Rc<RefCell<PlayerHandle>>>| {
+                let o = owner_for_send.borrow();
 
-            if menu.get() == Some(o.container_menu) {
-                if o.is_client_side {
-                    (widget_for_send)(ctx.pairs, ctx.selected_id);
-                } else if o.is_server_player {
-                    (network_for_send)(o.token, ctx.pairs, ctx.selected_id);
+                if menu.get() == Some(o.container_menu) {
+                    if o.is_client_side {
+                        (widget_for_send)(ctx.pairs, ctx.selected_id);
+                    } else if o.is_server_player {
+                        (network_for_send)(o.token, ctx.pairs, ctx.selected_id);
+                    }
                 }
-            }
-        }));
+            },
+        ));
 
         Self {
             base,
@@ -94,13 +96,9 @@ impl PlayerRecipeData {
         } else {
             self.cached_selection = None;
         }
-        let result = self.base.get_recipe(
-            recipe_input,
-            manager_token,
-            lookup,
-            by_key,
-            recipes_list,
-        );
+        let result =
+            self.base
+                .get_recipe(recipe_input, manager_token, lookup, by_key, recipes_list);
 
         let menu_matches = {
             let o = self.base.get_owner().borrow();
@@ -220,7 +218,11 @@ mod tests {
 
     fn stack(item: &str, count: i32) -> ItemStack {
         let (ns, path) = item.split_once(':').unwrap();
-        ItemStack { item: Identifier::new(ns, path), count, components: BTreeMap::new() }
+        ItemStack {
+            item: Identifier::new(ns, path),
+            count,
+            components: BTreeMap::new(),
+        }
     }
 
     fn id(s: &str) -> Identifier {
@@ -228,18 +230,28 @@ mod tests {
         Identifier::new(ns, path)
     }
 
-    struct TestRecipe { out: ItemStack }
+    struct TestRecipe {
+        out: ItemStack,
+    }
 
     impl Recipe for TestRecipe {
-        fn result_item(&self) -> Option<ItemStack> { Some(self.out.clone()) }
-        fn is_custom(&self) -> bool { false }
-        fn assemble(&self, _input: &RecipeInput) -> ItemStack { self.out.clone() }
+        fn result_item(&self) -> Option<ItemStack> {
+            Some(self.out.clone())
+        }
+        fn is_custom(&self) -> bool {
+            false
+        }
+        fn assemble(&self, _input: &RecipeInput) -> ItemStack {
+            self.out.clone()
+        }
     }
 
     fn holder(s: &str) -> RecipeHolder {
         RecipeHolder {
             id: id(s),
-            recipe: Rc::new(TestRecipe { out: stack(&format!("mod:o_{}", s.split_once(':').unwrap().1), 1) }),
+            recipe: Rc::new(TestRecipe {
+                out: stack(&format!("mod:o_{}", s.split_once(':').unwrap().1), 1),
+            }),
         }
     }
 
@@ -254,7 +266,9 @@ mod tests {
     }
 
     fn level(on: bool) -> LevelHandle {
-        LevelHandle { on_server_thread: on }
+        LevelHandle {
+            on_server_thread: on,
+        }
     }
 
     fn lookup() -> impl Fn(&RecipeInput) -> RecipeList {
@@ -273,15 +287,36 @@ mod tests {
     fn same_tick_reuses_the_cached_selection() {
         let mut data = PlayerRecipeData::new(owner(5, 7));
         let out = data
-            .get_recipe(&input(), 1, &lookup(), &no_by_key(), &level(true), vec![holder("mod:a")])
+            .get_recipe(
+                &input(),
+                1,
+                &lookup(),
+                &no_by_key(),
+                &level(true),
+                vec![holder("mod:a")],
+            )
             .unwrap();
         assert_eq!(out.id, id("mod:a"));
         // Same tick again, but the recipe list no longer contains a: the
         // cached selection is restored instead of dropping the pick.
-        let cached = data.get_recipe(&input(), 1, &lookup(), &no_by_key(), &level(true), Vec::new());
+        let cached = data.get_recipe(
+            &input(),
+            1,
+            &lookup(),
+            &no_by_key(),
+            &level(true),
+            Vec::new(),
+        );
         assert!(cached.is_none()); // empty list path still clears the list
         let out2 = data
-            .get_recipe(&input(), 1, &lookup(), &no_by_key(), &level(true), vec![holder("mod:b")])
+            .get_recipe(
+                &input(),
+                1,
+                &lookup(),
+                &no_by_key(),
+                &level(true),
+                vec![holder("mod:b")],
+            )
             .unwrap();
         assert_eq!(out2.id, id("mod:b")); // base selection logic on a fresh tick
     }
@@ -289,13 +324,27 @@ mod tests {
     #[test]
     fn a_new_tick_clears_the_cache() {
         let mut data = PlayerRecipeData::new(owner(5, 7));
-        data.get_recipe(&input(), 1, &lookup(), &no_by_key(), &level(true), vec![holder("mod:a")]);
+        data.get_recipe(
+            &input(),
+            1,
+            &lookup(),
+            &no_by_key(),
+            &level(true),
+            vec![holder("mod:a")],
+        );
         // Simulate a tick passing and the selection being cleared upstream.
         let mut inner = data.base.get_owner().borrow_mut();
         inner.tick_count = 6;
         drop(inner);
         let out = data
-            .get_recipe(&input(), 1, &lookup(), &no_by_key(), &level(true), vec![holder("mod:b")])
+            .get_recipe(
+                &input(),
+                1,
+                &lookup(),
+                &no_by_key(),
+                &level(true),
+                vec![holder("mod:b")],
+            )
             .unwrap();
         assert_eq!(out.id, id("mod:b"));
     }
@@ -304,7 +353,14 @@ mod tests {
     fn off_thread_results_are_not_cached() {
         let mut data = PlayerRecipeData::new(owner(5, 7));
         let out = data
-            .get_recipe(&input(), 1, &lookup(), &no_by_key(), &level(false), vec![holder("mod:a")])
+            .get_recipe(
+                &input(),
+                1,
+                &lookup(),
+                &no_by_key(),
+                &level(false),
+                vec![holder("mod:a")],
+            )
             .unwrap();
         assert_eq!(out.id, id("mod:a"));
         assert!(data.cached_selection.is_none());
@@ -316,12 +372,20 @@ mod tests {
         let syncs = Rc::new(RefCell::new(Vec::new()));
         let sink = syncs.clone();
         data.base.network = Rc::new(move |listener, pairs, selected| {
-            sink.borrow_mut().push((listener, pairs.len(), selected.map(|i| i.path.clone())));
+            sink.borrow_mut()
+                .push((listener, pairs.len(), selected.map(|i| i.path.clone())));
         });
         rewire_override(&mut data);
 
         data.set_container_menu(Some(7));
-        data.get_recipe(&input(), 1, &lookup(), &no_by_key(), &level(true), vec![holder("mod:a")]);
+        data.get_recipe(
+            &input(),
+            1,
+            &lookup(),
+            &no_by_key(),
+            &level(true),
+            vec![holder("mod:a")],
+        );
         // Two sends upstream on this path: the override's
         // sendRecipesListS2C during updateRecipesList, then sendPlayerSyncS2C
         // from syncPlayerRecipeData (both ride the one network seam here).
@@ -337,7 +401,8 @@ mod tests {
         let syncs = Rc::new(RefCell::new(Vec::new()));
         let sink = syncs.clone();
         data.base.network = Rc::new(move |l, pairs, sel| {
-            sink.borrow_mut().push((l, pairs.len(), sel.map(|i| i.path.clone())));
+            sink.borrow_mut()
+                .push((l, pairs.len(), sel.map(|i| i.path.clone())));
         });
         rewire_override(&mut data);
         data.add_listener(1);
@@ -359,7 +424,8 @@ mod tests {
         let widgets = Rc::new(RefCell::new(Vec::new()));
         let sink = widgets.clone();
         data.widget = Rc::new(move |pairs, sel| {
-            sink.borrow_mut().push((pairs.len(), sel.map(|i| i.path.clone())));
+            sink.borrow_mut()
+                .push((pairs.len(), sel.map(|i| i.path.clone())));
         });
         rewire_override(&mut data);
         data.set_container_menu(Some(7));
@@ -382,8 +448,8 @@ mod tests {
         let menu = data.container_menu.clone();
         let widget = data.widget.clone();
         let net = data.base.network.clone();
-        data.base.override_send =
-            Some(Box::new(move |ctx: &BroadcastCtx<Rc<RefCell<PlayerHandle>>>| {
+        data.base.override_send = Some(Box::new(
+            move |ctx: &BroadcastCtx<Rc<RefCell<PlayerHandle>>>| {
                 let o = owner_for_send.borrow();
 
                 if menu.get() == Some(o.container_menu) {
@@ -393,6 +459,7 @@ mod tests {
                         (net)(o.token, ctx.pairs, ctx.selected_id);
                     }
                 }
-            }));
+            },
+        ));
     }
 }

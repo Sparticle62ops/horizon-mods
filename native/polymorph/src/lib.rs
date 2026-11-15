@@ -21,13 +21,13 @@
 //! Where Minecraft/Fabric APIs do not exist on Horizon, the counterpart is a
 //! documented host seam with the same shape and semantics.
 
-pub mod recipe_pair;
-pub mod recipe_cache;
 pub mod block_entity_recipe_data;
+pub mod block_entity_ticker;
+pub mod client_widget;
+pub mod network;
 pub mod player_recipe_data;
+pub mod recipe_cache;
 pub mod recipe_data;
 pub mod recipe_manager;
-pub mod block_entity_ticker;
-pub mod network;
+pub mod recipe_pair;
 pub mod wrappers;
-pub mod client_widget;

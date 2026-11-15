@@ -13,7 +13,10 @@ pub struct Identifier {
 
 impl Identifier {
     pub fn new(namespace: &str, path: &str) -> Self {
-        Self { namespace: namespace.to_string(), path: path.to_string() }
+        Self {
+            namespace: namespace.to_string(),
+            path: path.to_string(),
+        }
     }
 
     /// `ResourceLocation#compareTo`: namespace, then path (host seam).
@@ -49,9 +52,7 @@ pub struct ItemStack {
 
 impl PartialEq for ItemStack {
     fn eq(&self, other: &Self) -> bool {
-        self.item == other.item
-            && self.count == other.count
-            && self.components == other.components
+        self.item == other.item && self.count == other.count && self.components == other.components
     }
 }
 
@@ -139,12 +140,19 @@ mod tests {
             components.insert("tag".to_string(), tag.to_string());
         }
         let (ns, path) = item.split_once(':').unwrap();
-        ItemStack { item: Identifier::new(ns, path), count, components }
+        ItemStack {
+            item: Identifier::new(ns, path),
+            count,
+            components,
+        }
     }
 
     fn pair(id: &str, item: &str, count: i32, tag: &str) -> RecipePair {
         let (ns, path) = id.split_once(':').unwrap();
-        RecipePair { resource_location: Identifier::new(ns, path), output: stack(item, count, tag) }
+        RecipePair {
+            resource_location: Identifier::new(ns, path),
+            output: stack(item, count, tag),
+        }
     }
 
     #[test]
@@ -184,7 +192,13 @@ mod tests {
 impl Ord for RecipePair {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
         let c = self.compare_to(other);
-        if c < 0 { std::cmp::Ordering::Less } else if c > 0 { std::cmp::Ordering::Greater } else { std::cmp::Ordering::Equal }
+        if c < 0 {
+            std::cmp::Ordering::Less
+        } else if c > 0 {
+            std::cmp::Ordering::Greater
+        } else {
+            std::cmp::Ordering::Equal
+        }
     }
 }
 

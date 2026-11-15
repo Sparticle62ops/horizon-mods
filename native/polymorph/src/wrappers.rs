@@ -59,8 +59,10 @@ impl RecipeWrapper {
     /// Upstream takes `RecipeHolder<?>` and reads `id()` +
     /// `value().getIngredients()`; both arrive through the seam.
     pub fn new(id: Identifier, recipe_ingredients: Vec<Ingredient>) -> Self {
-        let ingredients =
-            recipe_ingredients.into_iter().map(IngredientWrapper::new).collect();
+        let ingredients = recipe_ingredients
+            .into_iter()
+            .map(IngredientWrapper::new)
+            .collect();
         Self { id, ingredients }
     }
 
@@ -99,12 +101,16 @@ impl RecipeWrapper {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::recipe_pair::ItemStack;
     use crate::recipe_pair::Identifier;
+    use crate::recipe_pair::ItemStack;
 
     fn stack(item: &str, count: i32) -> ItemStack {
         let (ns, path) = item.split_once(':').unwrap();
-        ItemStack { item: Identifier::new(ns, path), count, components: Default::default() }
+        ItemStack {
+            item: Identifier::new(ns, path),
+            count,
+            components: Default::default(),
+        }
     }
 
     fn wrapper(id: &str, ingredients: Vec<Vec<ItemStack>>) -> RecipeWrapper {
@@ -128,21 +134,36 @@ mod tests {
     #[test]
     fn different_sizes_do_not_conflict() {
         let a = wrapper("mod:a", vec![vec![stack("mod:stick", 1)]]);
-        let b = wrapper("mod:b", vec![vec![stack("mod:stick", 1)], vec![stack("mod:stone", 1)]]);
+        let b = wrapper(
+            "mod:b",
+            vec![vec![stack("mod:stick", 1)], vec![stack("mod:stone", 1)]],
+        );
         assert!(!a.conflicts(Some(&b)));
     }
 
     #[test]
     fn matching_positions_conflict() {
-        let a = wrapper("mod:a", vec![vec![stack("mod:stick", 1)], vec![stack("mod:stone", 1)]]);
-        let b = wrapper("mod:b", vec![vec![stack("mod:stick", 1)], vec![stack("mod:stone", 1)]]);
+        let a = wrapper(
+            "mod:a",
+            vec![vec![stack("mod:stick", 1)], vec![stack("mod:stone", 1)]],
+        );
+        let b = wrapper(
+            "mod:b",
+            vec![vec![stack("mod:stick", 1)], vec![stack("mod:stone", 1)]],
+        );
         assert!(a.conflicts(Some(&b)));
     }
 
     #[test]
     fn mismatched_position_does_not_conflict() {
-        let a = wrapper("mod:a", vec![vec![stack("mod:stick", 1)], vec![stack("mod:stone", 1)]]);
-        let b = wrapper("mod:b", vec![vec![stack("mod:planks", 2)], vec![stack("mod:dirt", 1)]]);
+        let a = wrapper(
+            "mod:a",
+            vec![vec![stack("mod:stick", 1)], vec![stack("mod:stone", 1)]],
+        );
+        let b = wrapper(
+            "mod:b",
+            vec![vec![stack("mod:planks", 2)], vec![stack("mod:dirt", 1)]],
+        );
         assert!(!a.conflicts(Some(&b)));
     }
 
@@ -150,7 +171,9 @@ mod tests {
     fn empty_matches_only_empty() {
         let empty = IngredientWrapper::new(Ingredient::EMPTY);
         assert!(empty.matches(Some(&IngredientWrapper::new(Ingredient::EMPTY))));
-        let full = IngredientWrapper::new(Ingredient { stacks: vec![stack("mod:stick", 1)] });
+        let full = IngredientWrapper::new(Ingredient {
+            stacks: vec![stack("mod:stick", 1)],
+        });
         assert!(!empty.matches(Some(&full)));
         assert!(!empty.matches(None));
     }
@@ -172,7 +195,11 @@ impl CraftingRecipeWrapper {
         shaped: bool,
         is_same_shape: Rc<dyn Fn(&RecipeWrapper, &RecipeWrapper) -> bool>,
     ) -> Self {
-        Self { inner, shaped, is_same_shape }
+        Self {
+            inner,
+            shaped,
+            is_same_shape,
+        }
     }
 
     pub fn is_shaped(&self) -> bool {
@@ -254,7 +281,11 @@ mod crafting_and_smithing_tests {
 
     fn stack(item: &str, count: i32) -> ItemStack {
         let (ns, path) = item.split_once(':').unwrap();
-        ItemStack { item: Identifier::new(ns, path), count, components: Default::default() }
+        ItemStack {
+            item: Identifier::new(ns, path),
+            count,
+            components: Default::default(),
+        }
     }
 
     fn id(s: &str) -> Identifier {
@@ -264,9 +295,18 @@ mod crafting_and_smithing_tests {
 
     /// The platform `isSameShape` seam is global upstream, so the tests
     /// share one closure whose verdict a Cell flips.
-    fn crafting(id_str: &str, shaped: bool, platform: Rc<std::cell::Cell<bool>>) -> CraftingRecipeWrapper {
+    fn crafting(
+        id_str: &str,
+        shaped: bool,
+        platform: Rc<std::cell::Cell<bool>>,
+    ) -> CraftingRecipeWrapper {
         CraftingRecipeWrapper::new(
-            RecipeWrapper::new(id(id_str), vec![Ingredient { stacks: vec![stack("test:plank", 1)] }]),
+            RecipeWrapper::new(
+                id(id_str),
+                vec![Ingredient {
+                    stacks: vec![stack("test:plank", 1)],
+                }],
+            ),
             shaped,
             Rc::new(move |_, _| platform.get()),
         )
@@ -288,9 +328,15 @@ mod crafting_and_smithing_tests {
         let platform = Rc::new(std::cell::Cell::new(false));
         let a = crafting("test:a", false, platform.clone());
         let b = crafting("test:b", false, platform.clone());
-        assert!(a.conflicts(&b), "the platform shape check never runs unshaped");
+        assert!(
+            a.conflicts(&b),
+            "the platform shape check never runs unshaped"
+        );
         let shaped = crafting("test:c", true, platform.clone());
-        assert!(a.conflicts(&shaped), "either side unshaped counts as the same shape");
+        assert!(
+            a.conflicts(&shaped),
+            "either side unshaped counts as the same shape"
+        );
     }
 
     fn smithing(

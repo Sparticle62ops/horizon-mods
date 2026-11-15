@@ -113,7 +113,15 @@ pub enum MenuKind {
 /// Host seam for the client side of `GuiGraphics`.
 pub trait GuiGraphics {
     /// `guiGraphics.blitSprite(texture, x, y, z, width, height)`.
-    fn blit_sprite(&mut self, texture: &Identifier, x: i32, y: i32, z: i32, width: i32, height: i32);
+    fn blit_sprite(
+        &mut self,
+        texture: &Identifier,
+        x: i32,
+        y: i32,
+        z: i32,
+        width: i32,
+        height: i32,
+    );
     /// `guiGraphics.renderItem(stack, x, y)`.
     fn render_item(&mut self, stack: &ItemStack, x: i32, y: i32);
     /// `guiGraphics.renderItemDecorations(font, stack, x, y)`.
@@ -216,7 +224,14 @@ impl OutputWidget {
         {
             texture = sprite.enabled_focused.clone();
         }
-        gui.blit_sprite(&texture, self.x, self.y, 600, self.get_width(), self.get_width());
+        gui.blit_sprite(
+            &texture,
+            self.x,
+            self.y,
+            600,
+            self.get_width(),
+            self.get_width(),
+        );
         let k = 4;
         gui.render_item(&self.output, self.x + k, self.y + k);
         gui.render_item_decorations(&self.output, self.x + k, self.y + k);
@@ -325,7 +340,8 @@ impl SelectionWidget {
         self.output_widgets.clear();
         for data in recipe_list {
             if !data.output.is_empty() {
-                self.output_widgets.push(OutputWidget::new(self.sprites.clone(), data));
+                self.output_widgets
+                    .push(OutputWidget::new(self.sprites.clone(), data));
             }
         }
         self.update_button_positions();
@@ -545,7 +561,10 @@ impl AbstractRecipesWidget {
 
     /// `getOutputSprites`.
     pub fn get_output_sprites(&self) -> SpritePair {
-        SpritePair { first: output_sprites(), second: current_output_sprites() }
+        SpritePair {
+            first: output_sprites(),
+            second: current_output_sprites(),
+        }
     }
 
     /// `resetWidgetOffsets`.
@@ -710,7 +729,11 @@ pub trait IRecipesWidget {
     fn init_child_widgets(&mut self);
     fn select_recipe(&mut self, resource_location: &Identifier);
     fn highlight_recipe(&mut self, resource_location: &Identifier);
-    fn set_recipes_list(&mut self, recipes_list: &BTreeSet<RecipePair>, selected: Option<&Identifier>);
+    fn set_recipes_list(
+        &mut self,
+        recipes_list: &BTreeSet<RecipePair>,
+        selected: Option<&Identifier>,
+    );
     fn render(&mut self, gui: &mut dyn GuiGraphics, mouse_x: i32, mouse_y: i32);
     fn mouse_clicked(&mut self, mouse_x: f64, mouse_y: f64, button: i32) -> bool;
     fn get_output_slot(&self) -> SlotRef;
@@ -733,7 +756,11 @@ impl IRecipesWidget for AbstractRecipesWidget {
         AbstractRecipesWidget::highlight_recipe(self, resource_location)
     }
 
-    fn set_recipes_list(&mut self, recipes_list: &BTreeSet<RecipePair>, selected: Option<&Identifier>) {
+    fn set_recipes_list(
+        &mut self,
+        recipes_list: &BTreeSet<RecipePair>,
+        selected: Option<&Identifier>,
+    ) {
         AbstractRecipesWidget::set_recipes_list(self, recipes_list, selected)
     }
 
@@ -866,7 +893,9 @@ pub struct PolymorphWidgetsImpl {
 
 impl PolymorphWidgetsImpl {
     pub fn new() -> Self {
-        Self { widget_factories: RefCell::new(Vec::new()) }
+        Self {
+            widget_factories: RefCell::new(Vec::new()),
+        }
     }
 
     /// `setup`: register the built-in menu matcher.
@@ -1083,7 +1112,10 @@ mod tests {
     fn test_env(connected: bool) -> (Rc<RefCell<dyn ClientWidgetEnv>>, Rc<RefCell<Vec<String>>>) {
         let log = Rc::new(RefCell::new(Vec::new()));
         (
-            Rc::new(RefCell::new(TestEnv { log: log.clone(), connected })),
+            Rc::new(RefCell::new(TestEnv {
+                log: log.clone(),
+                connected,
+            })),
             log,
         )
     }
@@ -1102,9 +1134,7 @@ mod tests {
             self.log.borrow_mut().push("capability-select".into());
         }
         fn send_block_entity_listener_c2s(&mut self, add: bool) {
-            self.log
-                .borrow_mut()
-                .push(format!("listener:{}", add));
+            self.log.borrow_mut().push(format!("listener:{}", add));
         }
         fn send_persistent_recipe_selection_c2s(&mut self, id: &Identifier) {
             self.log
@@ -1112,9 +1142,7 @@ mod tests {
                 .push(format!("persistent:{}", id.path));
         }
         fn send_player_recipe_selection_c2s(&mut self, id: &Identifier) {
-            self.log
-                .borrow_mut()
-                .push(format!("player:{}", id.path));
+            self.log.borrow_mut().push(format!("player:{}", id.path));
         }
     }
 
@@ -1132,7 +1160,12 @@ mod tests {
     }
 
     fn slot(index: usize, x: i32, y: i32, container: ContainerKind) -> SlotRef {
-        SlotRef { index, x, y, container }
+        SlotRef {
+            index,
+            x,
+            y,
+            container,
+        }
     }
 
     fn widget(
@@ -1152,7 +1185,12 @@ mod tests {
             kind: MenuKind::Other,
         });
         let (env, _log) = test_env(false);
-        let mut w = widget(&screen, &env, WidgetBehavior::Player, slot(0, 10, 20, ContainerKind::Result));
+        let mut w = widget(
+            &screen,
+            &env,
+            WidgetBehavior::Player,
+            slot(0, 10, 20, ContainerKind::Result),
+        );
         w.init_child_widgets();
         let mut list = BTreeSet::new();
         list.insert(pair("a", Some("test:a")));
@@ -1163,7 +1201,10 @@ mod tests {
         assert_eq!(selection.get_output_widgets().len(), 2);
         // Two widgets: xOffset = -25 * floor(1) + 13 = -12.
         assert_eq!(selection.get_output_widgets()[0].get_x(), 100 + 10 - 4 - 12);
-        assert_eq!(selection.get_output_widgets()[1].get_x(), 100 + 10 - 4 - 12 + 25);
+        assert_eq!(
+            selection.get_output_widgets()[1].get_x(),
+            100 + 10 - 4 - 12 + 25
+        );
         assert!(w.open_button.as_ref().unwrap().visible);
     }
 
@@ -1175,7 +1216,12 @@ mod tests {
             kind: MenuKind::Other,
         });
         let (env, log) = test_env(false);
-        let mut w = widget(&screen, &env, WidgetBehavior::Player, slot(0, 10, 20, ContainerKind::Result));
+        let mut w = widget(
+            &screen,
+            &env,
+            WidgetBehavior::Player,
+            slot(0, 10, 20, ContainerKind::Result),
+        );
         w.init_child_widgets();
         let mut list = BTreeSet::new();
         list.insert(pair("a", Some("test:a")));
@@ -1185,8 +1231,10 @@ mod tests {
         // Open the panel, then click the output widget: onSelect fires and
         // the panel closes.
         w.selection_widget.as_mut().unwrap().set_active(true);
-        let widget_x = w.selection_widget.as_ref().unwrap().get_output_widgets()[0].get_x() as f64 + 1.0;
-        let widget_y = w.selection_widget.as_ref().unwrap().get_output_widgets()[0].get_y() as f64 + 1.0;
+        let widget_x =
+            w.selection_widget.as_ref().unwrap().get_output_widgets()[0].get_x() as f64 + 1.0;
+        let widget_y =
+            w.selection_widget.as_ref().unwrap().get_output_widgets()[0].get_y() as f64 + 1.0;
         assert!(w.mouse_clicked(widget_x, widget_y, 0));
         assert_eq!(
             *log.borrow(),
@@ -1203,7 +1251,12 @@ mod tests {
             kind: MenuKind::Other,
         });
         let (env, _log) = test_env(false);
-        let mut w = widget(&screen, &env, WidgetBehavior::Player, slot(0, 10, 20, ContainerKind::Result));
+        let mut w = widget(
+            &screen,
+            &env,
+            WidgetBehavior::Player,
+            slot(0, 10, 20, ContainerKind::Result),
+        );
         w.init_child_widgets();
         let mut list = BTreeSet::new();
         list.insert(pair("a", Some("test:a")));
@@ -1225,7 +1278,12 @@ mod tests {
             kind: MenuKind::Other,
         });
         let (env, log) = test_env(true);
-        let mut w = widget(&screen, &env, WidgetBehavior::Persistent, slot(0, 10, 20, ContainerKind::Result));
+        let mut w = widget(
+            &screen,
+            &env,
+            WidgetBehavior::Persistent,
+            slot(0, 10, 20, ContainerKind::Result),
+        );
         w.init_child_widgets();
         assert!(log.borrow().is_empty());
         w.select_recipe(&Identifier::new("test", "recipe"));
@@ -1300,7 +1358,10 @@ mod tests {
         RecipesWidgetHolder::enqueue_recipes_list(list, Some(Identifier::new("test", "a")));
         RecipesWidgetHolder::create(&screen, &widgets, &env);
         assert!(RecipesWidgetHolder::is_present());
-        assert!(log.borrow().is_empty(), "a player widget sends no listener packet");
+        assert!(
+            log.borrow().is_empty(),
+            "a player widget sends no listener packet"
+        );
 
         // The same screen keeps its widget instead of rebuilding it.
         RecipesWidgetHolder::create(&screen, &widgets, &env);

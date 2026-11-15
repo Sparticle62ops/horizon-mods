@@ -40,14 +40,7 @@ impl PolymorphRecipeManager {
         match api.player_recipe_data(player) {
             Some(recipe_data) => {
                 recipe_data.set_container_menu(Some(container_menu));
-                recipe_data.get_recipe(
-                    recipe_input,
-                    manager_token,
-                    lookup,
-                    by_key,
-                    level,
-                    recipes,
-                )
+                recipe_data.get_recipe(recipe_input, manager_token, lookup, by_key, level, recipes)
             }
             None => get_recipe_fallback(lookup, recipe_input),
         }
@@ -65,13 +58,9 @@ impl PolymorphRecipeManager {
         block_entity: u64,
     ) -> Option<RecipeHolder> {
         match api.block_entity_recipe_data(block_entity) {
-            Some(recipe_data) => recipe_data.get_recipe(
-                recipe_input,
-                manager_token,
-                lookup,
-                by_key,
-                Vec::new(),
-            ),
+            Some(recipe_data) => {
+                recipe_data.get_recipe(recipe_input, manager_token, lookup, by_key, Vec::new())
+            }
             None => get_recipe_fallback(lookup, recipe_input),
         }
     }
@@ -98,7 +87,11 @@ mod tests {
 
     fn stack(item: &str, count: i32) -> ItemStack {
         let (ns, path) = item.split_once(':').unwrap();
-        ItemStack { item: Identifier::new(ns, path), count, components: BTreeMap::new() }
+        ItemStack {
+            item: Identifier::new(ns, path),
+            count,
+            components: BTreeMap::new(),
+        }
     }
 
     fn id(s: &str) -> Identifier {
@@ -106,20 +99,35 @@ mod tests {
         Identifier::new(ns, path)
     }
 
-    struct TestRecipe { out: ItemStack }
+    struct TestRecipe {
+        out: ItemStack,
+    }
 
     impl Recipe for TestRecipe {
-        fn result_item(&self) -> Option<ItemStack> { Some(self.out.clone()) }
-        fn is_custom(&self) -> bool { false }
-        fn assemble(&self, _input: &RecipeInput) -> ItemStack { self.out.clone() }
+        fn result_item(&self) -> Option<ItemStack> {
+            Some(self.out.clone())
+        }
+        fn is_custom(&self) -> bool {
+            false
+        }
+        fn assemble(&self, _input: &RecipeInput) -> ItemStack {
+            self.out.clone()
+        }
     }
 
     fn holder(s: &str) -> RecipeHolder {
-        RecipeHolder { id: id(s), recipe: Rc::new(TestRecipe { out: stack("mod:o", 1) }) }
+        RecipeHolder {
+            id: id(s),
+            recipe: Rc::new(TestRecipe {
+                out: stack("mod:o", 1),
+            }),
+        }
     }
 
     fn level(on: bool) -> LevelHandle {
-        LevelHandle { on_server_thread: on }
+        LevelHandle {
+            on_server_thread: on,
+        }
     }
 
     fn input() -> RecipeInput {
@@ -174,7 +182,10 @@ mod tests {
 
     #[test]
     fn no_player_capability_falls_back_to_the_first_match() {
-        let mut api = TestApi { player: None, block: None };
+        let mut api = TestApi {
+            player: None,
+            block: None,
+        };
         let out = PolymorphRecipeManager::get_player_recipe(
             &mut api,
             9,
@@ -209,7 +220,10 @@ mod tests {
         let data = api.block.as_ref().unwrap();
         assert_eq!(
             data.get_recipes_list(),
-            &BTreeSet::from([RecipePair { resource_location: id("mod:be_recipe"), output: stack("mod:o", 1) }])
+            &BTreeSet::from([RecipePair {
+                resource_location: id("mod:be_recipe"),
+                output: stack("mod:o", 1)
+            }])
         );
     }
 }

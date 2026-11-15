@@ -38,7 +38,8 @@ pub struct BroadcastCtx<'a, E> {
 }
 
 fn parse_identifier(s: &str) -> Option<Identifier> {
-    s.split_once(':').map(|(ns, path)| Identifier::new(ns, path))
+    s.split_once(':')
+        .map(|(ns, path)| Identifier::new(ns, path))
 }
 
 /// Upstream `AbstractRecipeData<E>`: the per-owner recipe selection state
@@ -249,7 +250,11 @@ mod tests {
 
     fn stack(item: &str, count: i32) -> ItemStack {
         let (ns, path) = item.split_once(':').unwrap();
-        ItemStack { item: Identifier::new(ns, path), count, components: BTreeMap::new() }
+        ItemStack {
+            item: Identifier::new(ns, path),
+            count,
+            components: BTreeMap::new(),
+        }
     }
 
     fn id(s: &str) -> Identifier {
@@ -264,19 +269,35 @@ mod tests {
     }
 
     impl Recipe for TestRecipe {
-        fn result_item(&self) -> Option<ItemStack> { self.result.clone() }
-        fn is_custom(&self) -> bool { self.custom }
-        fn assemble(&self, _input: &RecipeInput) -> ItemStack { self.assembled.clone() }
+        fn result_item(&self) -> Option<ItemStack> {
+            self.result.clone()
+        }
+        fn is_custom(&self) -> bool {
+            self.custom
+        }
+        fn assemble(&self, _input: &RecipeInput) -> ItemStack {
+            self.assembled.clone()
+        }
     }
 
     fn holder(s: &str, recipe: TestRecipe) -> RecipeHolder {
-        RecipeHolder { id: id(s), recipe: Rc::new(recipe) }
+        RecipeHolder {
+            id: id(s),
+            recipe: Rc::new(recipe),
+        }
     }
 
     fn plain(s: &str) -> RecipeHolder {
         let (_, path) = s.split_once(':').unwrap();
         let out = stack(&format!("mod:o_{}", path), 1);
-        holder(s, TestRecipe { result: Some(out.clone()), custom: false, assembled: out })
+        holder(
+            s,
+            TestRecipe {
+                result: Some(out.clone()),
+                custom: false,
+                assembled: out,
+            },
+        )
     }
 
     fn input() -> RecipeInput {
@@ -299,7 +320,12 @@ mod tests {
 
     fn pair_ids(list: &BTreeSet<RecipePair>) -> Vec<String> {
         list.iter()
-            .map(|p| format!("{}:{}", p.resource_location.namespace, p.resource_location.path))
+            .map(|p| {
+                format!(
+                    "{}:{}",
+                    p.resource_location.namespace, p.resource_location.path
+                )
+            })
             .collect()
     }
 
@@ -319,7 +345,9 @@ mod tests {
     fn first_result_becomes_the_selection() {
         let mut data = AbstractRecipeData::new(());
         let recipes = vec![plain("mod:a"), plain("mod:b")];
-        let out = data.get_recipe(&input(), 1, &lookup(), &no_by_key(), recipes).unwrap();
+        let out = data
+            .get_recipe(&input(), 1, &lookup(), &no_by_key(), recipes)
+            .unwrap();
         assert_eq!(out.id, id("mod:a"));
         assert_eq!(data.get_selected_recipe().unwrap().id, id("mod:a"));
         assert_eq!(pair_ids(data.get_recipes_list()), vec!["mod:a", "mod:b"]);
@@ -331,7 +359,9 @@ mod tests {
         let recipes: Vec<RecipeHolder> =
             (0..20).map(|i| plain(&format!("mod:r{:02}", i))).collect();
         data.set_selected_recipe(plain("mod:r18"));
-        let out = data.get_recipe(&input(), 1, &lookup(), &no_by_key(), recipes).unwrap();
+        let out = data
+            .get_recipe(&input(), 1, &lookup(), &no_by_key(), recipes)
+            .unwrap();
         // The selected recipe is kept even though the list is capped at 15.
         assert_eq!(out.id, id("mod:r18"));
         let ids = pair_ids(data.get_recipes_list());
@@ -342,12 +372,17 @@ mod tests {
     #[test]
     fn custom_and_null_result_fall_back_to_assemble() {
         let mut data = AbstractRecipeData::new(());
-        let custom = holder("mod:custom", TestRecipe {
-            result: None,
-            custom: true,
-            assembled: stack("mod:assembled", 2),
-        });
-        let out = data.get_recipe(&input(), 1, &lookup(), &no_by_key(), vec![custom]).unwrap();
+        let custom = holder(
+            "mod:custom",
+            TestRecipe {
+                result: None,
+                custom: true,
+                assembled: stack("mod:assembled", 2),
+            },
+        );
+        let out = data
+            .get_recipe(&input(), 1, &lookup(), &no_by_key(), vec![custom])
+            .unwrap();
         assert_eq!(out.id, id("mod:custom"));
         let pair = data.get_recipes_list().iter().next().unwrap();
         assert_eq!(pair.output.count, 2);
@@ -356,12 +391,21 @@ mod tests {
     #[test]
     fn empty_output_is_skipped() {
         let mut data = AbstractRecipeData::new(());
-        let empty = holder("mod:empty", TestRecipe {
-            result: Some(stack("mod:out", 0)),
-            custom: false,
-            assembled: stack("mod:out", 0),
-        });
-        let out = data.get_recipe(&input(), 1, &lookup(), &no_by_key(), vec![empty, plain("mod:b")]);
+        let empty = holder(
+            "mod:empty",
+            TestRecipe {
+                result: Some(stack("mod:out", 0)),
+                custom: false,
+                assembled: stack("mod:out", 0),
+            },
+        );
+        let out = data.get_recipe(
+            &input(),
+            1,
+            &lookup(),
+            &no_by_key(),
+            vec![empty, plain("mod:b")],
+        );
         assert_eq!(out.unwrap().id, id("mod:b"));
         assert_eq!(pair_ids(data.get_recipes_list()), vec!["mod:b"]);
     }
@@ -370,21 +414,30 @@ mod tests {
     fn loaded_recipe_is_re_resolved_once() {
         let mut data = AbstractRecipeData::new(());
         data.read_nbt(&CompoundTag {
-            strings: BTreeMap::from([(
-                "SelectedRecipe".to_string(),
-                "mod:loaded".to_string(),
-            )]),
+            strings: BTreeMap::from([("SelectedRecipe".to_string(), "mod:loaded".to_string())]),
         });
         let by_key = |wanted: &Identifier| {
-            if *wanted == id("mod:loaded") { Some(plain("mod:loaded")) } else { None }
+            if *wanted == id("mod:loaded") {
+                Some(plain("mod:loaded"))
+            } else {
+                None
+            }
         };
         let out = data
-            .get_recipe(&input(), 1, &lookup(), &by_key, vec![plain("mod:a"), plain("mod:loaded")])
+            .get_recipe(
+                &input(),
+                1,
+                &lookup(),
+                &by_key,
+                vec![plain("mod:a"), plain("mod:loaded")],
+            )
             .unwrap();
         // The loaded recipe wins over the first result.
         assert_eq!(out.id, id("mod:loaded"));
         // And the loaded id is consumed either way.
-        let again = data.get_recipe(&input(), 1, &lookup(), &no_by_key(), vec![plain("mod:a")]).unwrap();
+        let again = data
+            .get_recipe(&input(), 1, &lookup(), &no_by_key(), vec![plain("mod:a")])
+            .unwrap();
         assert_eq!(again.id, id("mod:a"));
     }
 
@@ -394,7 +447,8 @@ mod tests {
         let sent = std::rc::Rc::new(std::cell::RefCell::new(Vec::new()));
         let sink = sent.clone();
         data.network = Rc::new(move |listener, pairs, selected| {
-            sink.borrow_mut().push((listener, pairs.len(), selected.map(|i| i.path.clone())));
+            sink.borrow_mut()
+                .push((listener, pairs.len(), selected.map(|i| i.path.clone())));
         });
         data.add_listener(7);
         data.add_listener(9);
@@ -408,7 +462,10 @@ mod tests {
         data.send_recipes_list_to_listeners();
         let mut got = sent.borrow().clone();
         got.sort();
-        assert_eq!(got, vec![(7, 1, Some("a".to_string())), (9, 1, Some("a".to_string()))]);
+        assert_eq!(
+            got,
+            vec![(7, 1, Some("a".to_string())), (9, 1, Some("a".to_string()))]
+        );
         data.remove_listener(7);
         assert_eq!(data.get_listeners(), vec![9]);
         data.clear_listeners();
@@ -427,7 +484,10 @@ mod tests {
         let mut other = AbstractRecipeData::<()>::new(());
         other.read_nbt(&nbt);
         // writeNBT on a fresh capability (no selection) writes no key.
-        assert_eq!(AbstractRecipeData::<()>::new(()).write_nbt(), CompoundTag::default());
+        assert_eq!(
+            AbstractRecipeData::<()>::new(()).write_nbt(),
+            CompoundTag::default()
+        );
         let _ = other;
     }
 }

@@ -117,18 +117,17 @@ impl CPacketBlockEntityListener {
             let container = player.container_menu;
             if let Some(be) = env.block_entity_recipe_data(container) {
                 BlockEntityTicker::add(player.token, be.owner, be.data, be.is_alive);
-                let (pairs, selected) = BlockEntityTicker
-                    ::read(be.owner, |data| {
-                        (
-                            if data.is_empty() {
-                                BTreeSet::new()
-                            } else {
-                                data.get_recipes_list().clone()
-                            },
-                            data.get_selected_recipe().map(|r| r.id.clone()),
-                        )
-                    })
-                    .unwrap_or((BTreeSet::new(), None));
+                let (pairs, selected) = BlockEntityTicker::read(be.owner, |data| {
+                    (
+                        if data.is_empty() {
+                            BTreeSet::new()
+                        } else {
+                            data.get_recipes_list().clone()
+                        },
+                        data.get_selected_recipe().map(|r| r.id.clone()),
+                    )
+                })
+                .unwrap_or((BTreeSet::new(), None));
                 env.send_recipes_list_s2c(player.token, &pairs, selected.as_ref());
             }
         } else {
@@ -274,10 +273,7 @@ impl ClientPacketHandler {
         if env.client_player().is_some() {
             // Resolve the selection through the recipe manager first; the
             // upstream flatMap runs before `setSelectedRecipe`.
-            let selected = packet
-                .selected
-                .as_ref()
-                .and_then(|id| env.by_key(id));
+            let selected = packet.selected.as_ref().and_then(|id| env.by_key(id));
             if let Some(recipe_data) = env.player_recipe_data() {
                 recipe_data.set_recipes_list(sort(packet.recipe_list.unwrap_or_default()));
                 if let Some(recipe) = selected {
@@ -385,7 +381,11 @@ mod tests {
     impl TestServerEnv {
         fn new() -> Self {
             Self {
-                player: ServerPlayerRef { token: 1, container_menu: 100, inventory: 7 },
+                player: ServerPlayerRef {
+                    token: 1,
+                    container_menu: 100,
+                    inventory: 7,
+                },
                 ..Default::default()
             }
         }
@@ -425,7 +425,8 @@ mod tests {
             self.block_entity.take()
         }
         fn integrations_select(&mut self, owner: u64, container: u64, recipe: &RecipeHolder) {
-            self.integrations.push((owner, container, recipe.id.clone()));
+            self.integrations
+                .push((owner, container, recipe.id.clone()));
         }
         fn slots_changed(&mut self, _container: u64, _inventory: u64) {
             self.slots_changed_count += 1;
@@ -458,9 +459,16 @@ mod tests {
         let mut env = TestServerEnv::new().with_player_data();
         env.combiner = true;
         env.registry.push(holder("test:stick"));
-        CPacketPlayerRecipeSelection { recipe: id("test:stick") }.handle(&mut env);
+        CPacketPlayerRecipeSelection {
+            recipe: id("test:stick"),
+        }
+        .handle(&mut env);
         assert_eq!(
-            env.player_data.as_ref().unwrap().get_selected_recipe().map(|h| h.id.clone()),
+            env.player_data
+                .as_ref()
+                .unwrap()
+                .get_selected_recipe()
+                .map(|h| h.id.clone()),
             Some(id("test:stick"))
         );
         assert_eq!(
@@ -477,7 +485,10 @@ mod tests {
     #[test]
     fn player_selection_skips_everything_on_an_unknown_recipe() {
         let mut env = TestServerEnv::new().with_player_data();
-        CPacketPlayerRecipeSelection { recipe: id("test:missing") }.handle(&mut env);
+        CPacketPlayerRecipeSelection {
+            recipe: id("test:missing"),
+        }
+        .handle(&mut env);
         assert_eq!(env.slots_changed_count, 0);
         assert!(env.integrations.is_empty());
     }
@@ -486,7 +497,10 @@ mod tests {
     fn player_selection_without_a_capability_still_runs_integrations_and_slots() {
         let mut env = TestServerEnv::new();
         env.registry.push(holder("test:stick"));
-        CPacketPlayerRecipeSelection { recipe: id("test:stick") }.handle(&mut env);
+        CPacketPlayerRecipeSelection {
+            recipe: id("test:stick"),
+        }
+        .handle(&mut env);
         assert_eq!(env.slots_changed_count, 1);
         assert_eq!(env.integrations.len(), 1);
     }
@@ -522,7 +536,10 @@ mod tests {
     fn persistent_selection_lands_on_the_block_entity_data() {
         let mut env = TestServerEnv::new().with_block_entity();
         env.registry.push(holder("test:trim"));
-        CPacketPersistentRecipeSelection { recipe: id("test:trim") }.handle(&mut env);
+        CPacketPersistentRecipeSelection {
+            recipe: id("test:trim"),
+        }
+        .handle(&mut env);
         assert_eq!(
             env.integrations,
             vec![(55, 100, id("test:trim"))],
@@ -534,7 +551,10 @@ mod tests {
     fn persistent_selection_with_no_block_entity_does_nothing() {
         let mut env = TestServerEnv::new();
         env.registry.push(holder("test:trim"));
-        CPacketPersistentRecipeSelection { recipe: id("test:trim") }.handle(&mut env);
+        CPacketPersistentRecipeSelection {
+            recipe: id("test:trim"),
+        }
+        .handle(&mut env);
         assert!(env.integrations.is_empty());
     }
 
@@ -546,7 +566,11 @@ mod tests {
     }
 
     impl RecipesWidget for TestWidget {
-        fn set_recipes_list(&mut self, pairs: &BTreeSet<RecipePair>, selected: Option<&Identifier>) {
+        fn set_recipes_list(
+            &mut self,
+            pairs: &BTreeSet<RecipePair>,
+            selected: Option<&Identifier>,
+        ) {
             self.sets.push((pairs.clone(), selected.cloned()));
         }
         fn highlight_recipe(&mut self, recipe: &Identifier) {
@@ -576,7 +600,10 @@ mod tests {
                     is_client_side: true,
                 }),
                 registry: Vec::new(),
-                widget: Some(TestWidget { sets: Vec::new(), highlights: Vec::new() }),
+                widget: Some(TestWidget {
+                    sets: Vec::new(),
+                    highlights: Vec::new(),
+                }),
                 enqueued: Vec::new(),
                 smithing: false,
                 previews: Vec::new(),
@@ -608,7 +635,11 @@ mod tests {
             self.smithing
         }
         fn smithing_slot_item(&self) -> ItemStack {
-            ItemStack { item: id("test:helm"), count: 1, components: Default::default() }
+            ItemStack {
+                item: id("test:helm"),
+                count: 1,
+                components: Default::default(),
+            }
         }
         fn update_armor_stand_preview(&mut self, stack: ItemStack) {
             self.previews.push(stack);
@@ -629,7 +660,11 @@ mod tests {
         .handle(&mut env);
         let list = env.player_data.get_recipes_list();
         let first = list.iter().next().unwrap();
-        assert_eq!(first.resource_location, id("test:alpha"), "sorted, not wire order");
+        assert_eq!(
+            first.resource_location,
+            id("test:alpha"),
+            "sorted, not wire order"
+        );
         assert_eq!(
             env.player_data.get_selected_recipe().map(|h| h.id.clone()),
             Some(id("test:chosen"))
@@ -639,7 +674,11 @@ mod tests {
     #[test]
     fn player_sync_with_no_list_clears_to_an_empty_set() {
         let mut env = TestClientEnv::new();
-        SPacketPlayerRecipeSync { recipe_list: None, selected: None }.handle(&mut env);
+        SPacketPlayerRecipeSync {
+            recipe_list: None,
+            selected: None,
+        }
+        .handle(&mut env);
         assert!(env.player_data.get_recipes_list().is_empty());
     }
 
@@ -648,10 +687,17 @@ mod tests {
         let mut env = TestClientEnv::new();
         let mut wire: HashSet<RecipePair> = HashSet::new();
         wire.insert(pair("test:a"));
-        SPacketRecipesList { recipe_list: Some(wire), selected: Some(id("test:a")) }.handle(&mut env);
+        SPacketRecipesList {
+            recipe_list: Some(wire),
+            selected: Some(id("test:a")),
+        }
+        .handle(&mut env);
         let widget = env.widget.as_ref().unwrap();
         assert_eq!(widget.sets.len(), 1);
-        assert_eq!(widget.sets[0].0.iter().next().unwrap().resource_location, id("test:a"));
+        assert_eq!(
+            widget.sets[0].0.iter().next().unwrap().resource_location,
+            id("test:a")
+        );
         assert_eq!(widget.sets[0].1, Some(id("test:a")));
         assert!(env.enqueued.is_empty());
     }
@@ -662,7 +708,11 @@ mod tests {
         env.widget = None;
         let mut wire: HashSet<RecipePair> = HashSet::new();
         wire.insert(pair("test:a"));
-        SPacketRecipesList { recipe_list: Some(wire), selected: None }.handle(&mut env);
+        SPacketRecipesList {
+            recipe_list: Some(wire),
+            selected: None,
+        }
+        .handle(&mut env);
         assert_eq!(env.enqueued.len(), 1);
         assert_eq!(env.enqueued[0].0.len(), 1);
     }
@@ -670,7 +720,10 @@ mod tests {
     #[test]
     fn highlight_reaches_the_widget() {
         let mut env = TestClientEnv::new();
-        SPacketHighlightRecipe { recipe: id("test:a") }.handle(&mut env);
+        SPacketHighlightRecipe {
+            recipe: id("test:a"),
+        }
+        .handle(&mut env);
         assert_eq!(env.widget.as_ref().unwrap().highlights, vec![id("test:a")]);
     }
 
@@ -691,9 +744,20 @@ mod tests {
         env.player = None;
         let mut wire: HashSet<RecipePair> = HashSet::new();
         wire.insert(pair("test:a"));
-        SPacketPlayerRecipeSync { recipe_list: Some(wire.clone()), selected: None }.handle(&mut env);
-        SPacketRecipesList { recipe_list: Some(wire), selected: None }.handle(&mut env);
-        SPacketHighlightRecipe { recipe: id("test:a") }.handle(&mut env);
+        SPacketPlayerRecipeSync {
+            recipe_list: Some(wire.clone()),
+            selected: None,
+        }
+        .handle(&mut env);
+        SPacketRecipesList {
+            recipe_list: Some(wire),
+            selected: None,
+        }
+        .handle(&mut env);
+        SPacketHighlightRecipe {
+            recipe: id("test:a"),
+        }
+        .handle(&mut env);
         assert!(env.widget.as_ref().unwrap().sets.is_empty());
         assert!(env.enqueued.is_empty());
         assert!(env.widget.as_ref().unwrap().highlights.is_empty());

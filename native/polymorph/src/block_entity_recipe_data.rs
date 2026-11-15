@@ -111,7 +111,11 @@ mod tests {
 
     fn stack(item: &str, count: i32) -> ItemStack {
         let (ns, path) = item.split_once(':').unwrap();
-        ItemStack { item: Identifier::new(ns, path), count, components: BTreeMap::new() }
+        ItemStack {
+            item: Identifier::new(ns, path),
+            count,
+            components: BTreeMap::new(),
+        }
     }
 
     fn id(s: &str) -> Identifier {
@@ -119,16 +123,29 @@ mod tests {
         Identifier::new(ns, path)
     }
 
-    struct TestRecipe { out: ItemStack }
+    struct TestRecipe {
+        out: ItemStack,
+    }
 
     impl Recipe for TestRecipe {
-        fn result_item(&self) -> Option<ItemStack> { Some(self.out.clone()) }
-        fn is_custom(&self) -> bool { false }
-        fn assemble(&self, _input: &RecipeInput) -> ItemStack { self.out.clone() }
+        fn result_item(&self) -> Option<ItemStack> {
+            Some(self.out.clone())
+        }
+        fn is_custom(&self) -> bool {
+            false
+        }
+        fn assemble(&self, _input: &RecipeInput) -> ItemStack {
+            self.out.clone()
+        }
     }
 
     fn holder(s: &str) -> RecipeHolder {
-        RecipeHolder { id: id(s), recipe: Rc::new(TestRecipe { out: stack("mod:o", 1) }) }
+        RecipeHolder {
+            id: id(s),
+            recipe: Rc::new(TestRecipe {
+                out: stack("mod:o", 1),
+            }),
+        }
     }
 
     #[test]

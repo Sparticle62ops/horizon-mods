@@ -127,8 +127,8 @@ impl BlockEntityTicker {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::cell::Cell;
     use crate::recipe_pair::ItemStack;
+    use std::cell::Cell;
 
     fn empty_input() -> Vec<ItemStack> {
         Vec::new()
@@ -181,7 +181,11 @@ mod tests {
         BlockEntityTicker::add(5, 10, data_with_listener(), Rc::new(|| false));
         BlockEntityTicker::tick();
         assert_eq!(ticked.get(), 1, "the dead entry must not tick");
-        assert_eq!(BlockEntityTicker::entry_count(), 1, "the dead entry is removed");
+        assert_eq!(
+            BlockEntityTicker::entry_count(),
+            1,
+            "the dead entry is removed"
+        );
     }
 
     #[test]
@@ -191,7 +195,11 @@ mod tests {
         BlockEntityTicker::add(1, 4, data_with_listener(), alive());
         BlockEntityTicker::add(2, 4, data_with_listener(), alive());
         BlockEntityTicker::remove(1);
-        assert_eq!(BlockEntityTicker::entry_count(), 1, "entry 3 had only player 1");
+        assert_eq!(
+            BlockEntityTicker::entry_count(),
+            1,
+            "entry 3 had only player 1"
+        );
         assert_eq!(
             BlockEntityTicker::read(4, |d| d.get_listeners()),
             Some(vec![2])
