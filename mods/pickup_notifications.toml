@@ -6,7 +6,7 @@ description = """Pickup Notifications ported to Horizon as a native mod (slice 1
 
 Port by sparticle. Upstream: https://github.com/Roundaround/mc-fabric-pickup-notifications (MIT).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MPL-2.0. Source: https://github.com/Sparticle62ops/horizon-pickup-notifications
 """
@@ -23,6 +23,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "pickup_notifications-1.0.0.hnmod"
-sha256 = "0057ccb1859d780601cd7f840f021a8fd6a89f6d73a1f5ccb53ab9c507456b13"
+file = "pickup_notifications-1.0.0.hmod"
+sha256 = "33266d6042c01bf10d46ac64ab793fa605a6ca8f85daa6dbe154d562c16e4b64"
 changelog = "Initial registry submission"
