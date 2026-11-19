@@ -15,7 +15,7 @@ packs load and select with no warning screen or red border:
 Upstream is 2 mixins, 69 lines; the port mirrors them file for file.
 Credited to sparticle.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-no-resource-pack-warnings
 """
@@ -32,6 +32,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "no_resource_pack_warnings-1.0.0.hnmod"
-sha256 = "71747080ef70c0209c8d7b65736672f48c7b19bf3cd11487601660b43a065bd9"
+file = "no_resource_pack_warnings-1.0.0.hmod"
+sha256 = "8df4091c0076fe745e527fe2fa12a080f103dc673e501ab349564b3ed4857617"
 changelog = "Initial registry submission"
