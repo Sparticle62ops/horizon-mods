@@ -6,7 +6,7 @@ description = """screenshot-viewer (Horizon Rust port), slice 1: the gallery mod
 
 Port by sparticle. Upstream: https://github.com/LGatodu47/ScreenshotViewer (MIT).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-screenshot-viewer
 """
@@ -23,6 +23,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "screenshot_viewer-1.0.0.hnmod"
-sha256 = "4bd35cbf76e276b04b45771491de82f04abeb0ced311c906e981104848d360cb"
+file = "screenshot_viewer-1.0.0.hmod"
+sha256 = "46c05b05f13a6f784326fcc0d85f2b83d0e606bce63ff7a51bf5ddfe6ed3b1ab"
 changelog = "Initial registry submission"
