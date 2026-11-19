@@ -32,7 +32,7 @@ replacement point for the menu background, no texture tiling draw). A seam
 issue is filed on horizon-rust/horizon. Upstream's asset (the 16x16
 inworld_invent
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: CC-BY-NC-4.0. Source: https://github.com/Sparticle62ops/horizon-inventory-blur
 """
@@ -49,6 +49,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "inventory_blur-1.0.0.hnmod"
-sha256 = "fba74a4368bde20583e5941833e587a666e37da46f4e5eb65c0a6eeb3986e22f"
+file = "inventory_blur-1.0.0.hmod"
+sha256 = "0da243b61540d2f44659b720f81c33ffdce5210b863a3774cacb0392de5ee5c3"
 changelog = "Initial registry submission"
