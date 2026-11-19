@@ -1,0 +1,28 @@
+id = "pickup_notifications"
+kind = "native-mod"
+name = "pickup_notifications"
+summary = "A Horizon port of Pickup Notifications."
+description = """Pickup Notifications ported to Horizon as a native mod (slice 1). Upstream: github.com/Roundaround/mc-fabric-pickup-notifications, commit aa29c0d, MIT (c) 2021 Evan Steinkerchner (Roundaround). Port policy: 1:1 behavior port, no optimizations or behavior changes. Slice 1 covers the core non-GUI logic: config (trove ModConfigImpl semantics + the v1->v2 offset migration), IconAlignment and GuiAlignment values, the pickup event buses, the S2C packet models + server send gate, the HUD queue state machine (shown list + backlog queue, merge/extend rules), and the notification base state machine (durations, pop, expiry, slide-in/out math) plus the item and experience notifications' merge and display logic. The drawing itself (strata, text, icons) is a seam: render() is modeled as draw specs, the server->client transport and the server Touch hooks (ItemEntityMixin.playerTouch at awardStat, ExperienceOrbMixin.playerTouch at take) are game-side seams.
+
+Port by sparticle. Upstream: https://github.com/Roundaround/mc-fabric-pickup-notifications (MIT).
+
+Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+
+Licence: MPL-2.0. Source: https://github.com/Sparticle62ops/horizon-pickup-notifications
+"""
+authors = ["Roundaround", "sparticle"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "MPL-2.0"
+source = "https://github.com/Sparticle62ops/horizon-pickup-notifications"
+icon = "icons/pickup_notifications.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-19"
+game = "26.3"
+file = "pickup_notifications-1.0.0.hnmod"
+sha256 = "0057ccb1859d780601cd7f840f021a8fd6a89f6d73a1f5ccb53ab9c507456b13"
+changelog = "Initial registry submission"
