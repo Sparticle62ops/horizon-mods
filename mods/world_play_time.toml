@@ -1,0 +1,28 @@
+id = "world_play_time"
+kind = "native-mod"
+name = "world_play_time"
+summary = "A Horizon port of World Play Time."
+description = """world-play-time (Horizon Rust port), slice 1: the playtime model. NOTE: the master repo keeps this port as src/lib.rs + modules; this bundle inlines the modules into one runtime.rs file, compile-equivalent, for the single-module .hnmod format.  1:1 port of the upstream logic core (MIT): playtime accumulates per world (per save and per server) in seconds, is persisted through a JSON store the upstream keeps per world, and is rendered by the same human formatting the mod uses. HUD/overlay seams land in the next slice.
+
+Port by sparticle. Upstream: https://github.com/Khajiitos/WorldPlayTime (MIT).
+
+Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+
+Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-world-play-time
+"""
+authors = ["Khajiitos", "sparticle"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "MIT"
+source = "https://github.com/Sparticle62ops/horizon-world-play-time"
+icon = "icons/world_play_time.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-19"
+game = "26.3"
+file = "world_play_time-1.0.0.hnmod"
+sha256 = "750dec2f31a52538c84d62b34512e464caeeb2285a1dd563937fdc4e4e76c25c"
+changelog = "Initial registry submission"
