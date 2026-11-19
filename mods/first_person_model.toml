@@ -25,7 +25,7 @@ shapes and semantics (`seams`).
 
 Credited to sparticle; carries the upstream MIT license and credit.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-first-person-model
 """
@@ -42,6 +42,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "first_person_model-1.0.0.hnmod"
-sha256 = "3fb8ec627b0be398f67b41b860896164b2a8f54a72cdb5fcd4254a07cadc8990"
+file = "first_person_model-1.0.0.hmod"
+sha256 = "2754589a01abed078df98b6cdc726d8da0437e1a19ff65e6e9a3f18604df3170"
 changelog = "Initial registry submission"
