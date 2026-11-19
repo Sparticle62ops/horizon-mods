@@ -17,7 +17,7 @@ about the chat paths changes.
 
 Credited to sparticle.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: CC0-1.0. Source: https://github.com/Sparticle62ops/horizon-morechathistory
 """
@@ -34,6 +34,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "morechathistory-1.0.0.hnmod"
-sha256 = "291c77282353d2d1cda748787a7f89fe07e89fa7068f6aa35d202db35c52266b"
+file = "morechathistory-1.0.0.hmod"
+sha256 = "95597506d8ab9c4a47ac3ac9582d371b06820f542fa9975afafc41e5169bda15"
 changelog = "Initial registry submission"
