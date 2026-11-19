@@ -1,0 +1,28 @@
+id = "cleardespawn"
+kind = "native-mod"
+name = "cleardespawn"
+summary = "A Horizon port of ClearDespawn."
+description = """cleardespawn (Horizon Rust port), slice 1: the despawn filter model. NOTE: the master repo keeps this port as src/lib.rs + modules; this bundle inlines the modules into one runtime.rs file, compile-equivalent, for the single-module .hnmod format.  1:1 port of the upstream logic core (MIT): when an item entity despawns, its poof particles are suppressed, except for entity ids on the ignore list. Sound and render seams land in the next slice.
+
+Port by sparticle. Upstream: https://github.com/StrikerRockers-Mods/ClearDespawn/ (MIT).
+
+Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+
+Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-cleardespawn
+"""
+authors = ["StrikerRockers-Mods", "sparticle"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "MIT"
+source = "https://github.com/Sparticle62ops/horizon-cleardespawn"
+icon = "icons/cleardespawn.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-19"
+game = "26.3"
+file = "cleardespawn-1.0.0.hnmod"
+sha256 = "7e2525504ae65bcc71f561e239bcde61f5429fee87d763f77f9666deb444dde0"
+changelog = "Initial registry submission"
