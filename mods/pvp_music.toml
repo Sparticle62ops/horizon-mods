@@ -33,7 +33,7 @@ random track and never repeats until the pool is exhausted.
   On a remote server the client half needs a client-side combat surface; until
   then single-player and
 
-Pinned to Horizon 3fb4c31 and horizon-mixins e8cd0aa; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: CC0-1.0. Source: https://github.com/Sparticle62ops/horizon-pvp-music
 """
@@ -50,6 +50,6 @@ tags = ["port", "horizon"]
 version = "1.2.0"
 published = "2026-11-19"
 game = "26.3"
-file = "pvp_music-1.2.0.hnmod"
-sha256 = "8aad5e06a1926fc232f2a90dc3006e78a6b93c2b451ac9a3142dc3ad538d3158"
+file = "pvp_music-1.2.0.hmod"
+sha256 = "69b752a7a21a6ac12d1408bbd1087aa1412b4bbd7c1c0635434c84e7cd7b9a76"
 changelog = "Initial registry submission"
