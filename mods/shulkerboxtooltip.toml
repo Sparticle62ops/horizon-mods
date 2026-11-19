@@ -11,7 +11,7 @@ Shows a preview of a container's contents when hovering the container item in an
 - `src/color.rs` - ColorKey/ColorKeyImpl (float rgb components + default components), ColorRegistryImpl categories, rgbToComponents/componentsToRgb, ColorKey.ofDye with the 0.15 per-channel clamp, and the default key set (default, ender_chest, generic_container, shulker_box, bundle + all 16 dyed shulker box / bundle keys).
 - `src/item.rs` - ItemKey (item id + component map, with the upstream asymmetric hashing rule), MergedItemStack (add/get_sub_stack/first_slot/compareTo) and mergeInventory with all three ItemStackMergingStrategy
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-shulkerboxtooltip
 """
@@ -28,6 +28,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "shulkerboxtooltip-1.0.0.hnmod"
-sha256 = "eb1905e17dfef2369a760853015730f888414beecdb4bba985c5c4f087c50199"
+file = "shulkerboxtooltip-1.0.0.hmod"
+sha256 = "f082b329c66f0408dfc417848fe2a6b3c7a634482340b81ed15f3fb4632a290b"
 changelog = "Initial registry submission"
