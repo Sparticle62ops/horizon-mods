@@ -27,7 +27,7 @@ Ported by sparticle.
 Upstream Smooth Swapping is LGPL-3.0-only, Copyright (c) Schauweg. This port
 carries the upstream license and credit per the port policy.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: LGPL-3.0-only. Source: https://github.com/Sparticle62ops/horizon-smooth-swapping
 """
@@ -44,6 +44,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "smoothswapping-1.0.0.hnmod"
-sha256 = "3577da57461f5e0fa5e9247fd6aec22298e9c6720353b29607eda5a7cab555dd"
+file = "smoothswapping-1.0.0.hmod"
+sha256 = "f3fe35ce650a612bc330770cf5161e5fa5143db5335be575d246d91eb977946f"
 changelog = "Initial registry submission"
