@@ -30,7 +30,7 @@ cannot rewrite the joining player's profile. The heart of TwinSession is that
 rewrite: the duplicate's UUID is replaced before placement so two sessions of
 one account coexist. Without it the port can detect a dupl
 
-Pinned to Horizon 3fb4c31 and horizon-mixins e8cd0aa; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: CC0-1.0. Source: https://github.com/Sparticle62ops/horizon-twinsession
 """
@@ -47,6 +47,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "twinsession-1.0.0.hnmod"
-sha256 = "baac1175c660263fb7517cf8edd5fbb0219f4a881ca42b2e2723f70b0f48330e"
+file = "twinsession-1.0.0.hmod"
+sha256 = "23c1f428cc0faaaf42296ad2324c77f5402c9c99a3f200001766dcced991122d"
 changelog = "Initial registry submission"
