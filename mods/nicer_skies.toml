@@ -20,7 +20,7 @@ Every Minecraft client type the port touches sits behind the host seams in
 noise math), a thin surface the engine binds. Log lines, field names, branch
 order and quirks are kept as-is.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Upstream licence: LGPL-3.0-only (Modrinth); port licence as stated in the source repo: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-nicer-skies
 """
@@ -37,6 +37,6 @@ tags = ["port", "horizon"]
 version = "1.5.2"
 published = "2026-11-19"
 game = "26.3"
-file = "nicer_skies-1.5.2.hnmod"
-sha256 = "64850299d2af386504e4acc3bbc799e10d6a618ac25036943eadb4c23f0ab7bd"
+file = "nicer_skies-1.5.2.hmod"
+sha256 = "dfd99b24878dd277e6dfa3e7ef3365cc271b0017a62bc076400129d1cb4159c1"
 changelog = "Initial registry submission"
