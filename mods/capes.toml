@@ -20,7 +20,7 @@ Ported by sparticle.
 Upstream Capes is Copyright (C) CaelTheColher, LGPL-2.1-or-later. This port
 carries the upstream license and credit per the port policy.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins e8cd0aa; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Upstream licence: LGPL-2.1-only (Modrinth); port licence as stated in the source repo: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-capes
 """
@@ -37,6 +37,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "capes-1.0.0.hnmod"
-sha256 = "922326d47c588e2a691d441f93466702fbab6d17b4ac75f5f553df88f9fc1e7c"
+file = "capes-1.0.0.hmod"
+sha256 = "72b0adda4561cc6227279033ac45f79cdd8778580512dbe2e9294a65757da963"
 changelog = "Initial registry submission"
