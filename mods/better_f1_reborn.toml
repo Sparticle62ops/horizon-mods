@@ -6,7 +6,7 @@ description = """Better F1 Reborn ported to Horizon (slice 1: HUD state machine 
 
 Port by sparticle. Upstream: https://github.com/MovTery/Better-F1-Reborn (MIT).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-better-f1-reborn
 """
@@ -23,6 +23,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "better_f1_reborn-1.0.0.hnmod"
-sha256 = "45a5312bd44aff0e6003a010321cea71aacffd1b41a4be87239af23cafba9b38"
+file = "better_f1_reborn-1.0.0.hmod"
+sha256 = "5fd3c6e005023ed1085ac3e5fd2ca12a6b21c9b48fc09d8ffb8620bc393a7853"
 changelog = "Initial registry submission"
