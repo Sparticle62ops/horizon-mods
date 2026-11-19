@@ -6,7 +6,7 @@ description = """Emojiful ported to Horizon as a native Rust mod.  Upstream: htt
 
 Port by sparticle. Upstream: https://github.com/InnovativeOnlineIndustries/Emojiful (MIT).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-emojiful
 """
@@ -23,6 +23,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "emojiful-1.0.0.hnmod"
-sha256 = "6f74779f7c7fe4eca2a323f8e88738719d144cd9013e4d00729ed192dd5649d6"
+file = "emojiful-1.0.0.hmod"
+sha256 = "2fccf7afc4754cc1aae6472b3816c61c4d47d0e41e564dba51f9d72a8100a927"
 changelog = "Initial registry submission"
