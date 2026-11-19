@@ -1,0 +1,28 @@
+id = "emojiful"
+kind = "native-mod"
+name = "emojiful"
+summary = "A Horizon port of Emojiful."
+description = """Emojiful ported to Horizon as a native Rust mod.  Upstream: https://github.com/InnovativeOnlineIndustries/Emojiful at commit 6442d9d75ddc39308d8cdce8f14e0a9aa3011519 (2024-06-12), MIT (c) 2022 Innovative Online Industries. 1:1 feature port of the client core: config, emoji model (with Github/Custom/Twemoji sources), regex + text matching, profanity filter, twemoji and custom-package loading, emoji indexing for the selection GUI, and the datapack emoji flow.  Game-side seams (documented in README.md): font renderer swap and emoji quad rendering (EmojiFontRenderer, EmojiUtil.createRenderType/renderEmoji), texture upload and GIF frame upload (Emoji.DownloadImageData and the Twitmoji/Emojipedia variants), asset HTTP fetch (CommonClass.readStringFromURL, Emoji.loadTextureFromServer), recipe-manager lookup (onRecipesUpdated) and
+
+Port by sparticle. Upstream: https://github.com/InnovativeOnlineIndustries/Emojiful (MIT).
+
+Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+
+Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-emojiful
+"""
+authors = ["InnovativeOnlineIndustries", "sparticle"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "MIT"
+source = "https://github.com/Sparticle62ops/horizon-emojiful"
+icon = "icons/emojiful.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-19"
+game = "26.3"
+file = "emojiful-1.0.0.hnmod"
+sha256 = "6f74779f7c7fe4eca2a323f8e88738719d144cd9013e4d00729ed192dd5649d6"
+changelog = "Initial registry submission"
