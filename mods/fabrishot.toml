@@ -30,7 +30,7 @@ The heart of fabrishot is the framebuffer read, and Horizon has no screenshot
 hook yet: the client's own screenshot path supports a custom capture size
 (`ScreenshotRequest` carries `size`), but no native mod can request a
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-fabrishot
 """
@@ -47,6 +47,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "fabrishot-1.0.0.hnmod"
-sha256 = "11b3cfb2081429d59012c6f01197bd4bfa545e3c81ba93f0774380e81ab4c36e"
+file = "fabrishot-1.0.0.hmod"
+sha256 = "eb0b0f15109f0a1408d97d1ebcde03f54f6f5db952dc00a2c14ade7331e1427e"
 changelog = "Initial registry submission"
