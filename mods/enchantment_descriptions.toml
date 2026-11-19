@@ -21,7 +21,7 @@ Degradations from the original:
   plain text, not translation keys), so an item custom-named to an
   enchantment's name could gain a stray description line.
 
-Pinned to Horizon 27b9d34 and horizon-mixins (none, api-level bundle); exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Upstream licence: LGPL-2.1-only (Modrinth); port licence as stated in the source repo: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-enchantment-descriptions
 """
@@ -38,6 +38,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "enchantment_descriptions-1.0.0.hnmod"
-sha256 = "7cb653f74ecf6bdf02311124077272b2581d380250e4ead369383e06bb51c25d"
+file = "enchantment_descriptions-1.0.0.hmod"
+sha256 = "f7dde9488bb1966d0892de1f40ea9070b052a359c1bf505ccc3882f18abf9769"
 changelog = "Initial registry submission"
