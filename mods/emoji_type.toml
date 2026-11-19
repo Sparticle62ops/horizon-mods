@@ -17,7 +17,7 @@ replaces codes in the edit box as they are typed and shows code suggestions;
 that in-field stage, plus the pack config UI, lands as a later phase on the
 screen hooks.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins (none, api-level bundle); exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: GPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-emoji-type
 """
@@ -34,6 +34,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "emoji_type-1.0.0.hnmod"
-sha256 = "1333f8d033b4aeb518065879fbebaf5d82580388224befe4c2d8697c9d1a3789"
+file = "emoji_type-1.0.0.hmod"
+sha256 = "56ccf26be5ff55c48c0c4f12323345e70abde8f3b4094f1d6172806cb6186442"
 changelog = "Initial registry submission"
