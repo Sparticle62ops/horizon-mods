@@ -10,7 +10,7 @@ by the /mousetweaks command instead of the original's MouseTweaks.cfg.
 
 License: BSD 3-Clause (the original's), notice preserved in LICENSE.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins (none, api-level bundle); exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f).
 
 Licence: BSD-3-Clause. Source: https://github.com/Sparticle62ops/horizon-mouse-tweaks
 """
@@ -27,6 +27,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "mouse_tweaks-1.0.0.hnmod"
-sha256 = "5b6829e2d9eed42dd4f857681ca539d920172f049a569b61b21d5ed608ba0e04"
+file = "mouse_tweaks-1.0.0.hmod"
+sha256 = "b3840798674af16d72653c536e10abe59d5242f38501606153d95b046bf9cce8"
 changelog = "Initial registry submission"
