@@ -4,7 +4,7 @@ name = "music_player"
 summary = "A Horizon port of Music Player."
 description = """Port by sparticle. Upstream: https://github.com/MC-U-Team/Music-Player (Apache-2.0).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: Apache-2.0. Source: https://github.com/Sparticle62ops/horizon-music-player
 """
@@ -21,6 +21,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "music_player-1.0.0.hnmod"
-sha256 = "7fc0eed439e875fae2e2ef9e03cf2ac7c2d9e7386c8c7590fe3a62436a2d1053"
+file = "music_player-1.0.0.hmod"
+sha256 = "04c6668ddb6f6d9bd8841b6070f3391137c955a7827c50ff8323adf39ed41138"
 changelog = "Initial registry submission"
