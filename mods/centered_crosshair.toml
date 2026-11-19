@@ -6,7 +6,7 @@ description = """centered-crosshair, ported 1:1 to Horizon from JustAlittleWolf/
 
 Port by sparticle. Upstream: https://github.com/JustAlittleWolf/centered-crosshair (MIT).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-centered-crosshair
 """
@@ -23,6 +23,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "centered_crosshair-1.0.0.hnmod"
-sha256 = "b76be1c634bfa89adf266f62a202656a53cde9fe5b09aa10bedb30721387a9b0"
+file = "centered_crosshair-1.0.0.hmod"
+sha256 = "83787592ff6d0faf5b72e19e709d8cd64cbf109e1fcdd7c14a7a59cfbcc467a3"
 changelog = "Initial registry submission"
