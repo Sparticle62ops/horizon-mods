@@ -6,7 +6,7 @@ description = """crosshair-indicator (Horizon Rust port), slice 1: the progress 
 
 Port by sparticle. Upstream: https://modrinth.com/mod/crosshair-indicator (CC0-1.0).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: CC0-1.0. Source: https://github.com/Sparticle62ops/horizon-crosshair-indicator
 """
@@ -23,6 +23,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "crosshair_indicator-1.0.0.hnmod"
-sha256 = "737b84ae1094520247bf69dd7e95487eabea9dcf34c4c59713ca905bb231022e"
+file = "crosshair_indicator-1.0.0.hmod"
+sha256 = "b85986eb8a5f5058a168c31007d3b2acb34c8f040fd31bb76a32c91e43130244"
 changelog = "Initial registry submission"
