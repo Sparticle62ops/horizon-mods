@@ -6,7 +6,7 @@ description = """xaeros-world-map runtime (behavioral port of xaero96/Xaero's Wo
 
 Port by sparticle. Upstream: https://modrinth.com/mod/xaeros-world-map (CC0-1.0).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Behavioural port: the port contains no upstream code; upstream stays All Rights Reserved with its author and is credited here.
 
@@ -25,6 +25,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "xaeros_world_map-1.0.0.hnmod"
-sha256 = "aae890dd8df71170f6f840a4b58791a4cac569e22430ba597581f0490a41cae6"
+file = "xaeros_world_map-1.0.0.hmod"
+sha256 = "271b09485bcf32b26745448c10698d4e536dcb8bc88eb89a348e37075a777d0f"
 changelog = "Initial registry submission"
