@@ -1,0 +1,28 @@
+id = "betterhurtcam"
+kind = "native-mod"
+name = "betterhurtcam"
+summary = "A Horizon port of BetterHurtCam."
+description = """betterhurtcam (Horizon Rust port), slice 1: the shake model. NOTE: the master repo keeps this port as src/lib.rs + modules; this bundle inlines the modules into one runtime.rs file, compile-equivalent, for the single-module .hnmod format.  1:1 port of the upstream logic core (MIT): on damage the camera gets a shake whose intensity comes from the hurt direction and a configurable multiplier, decays over a configurable duration, and repeats a configurable number of times. Game-facing hooks (camera rotation write) land in the next slice behind the same seam upstream uses.
+
+Port by sparticle. Upstream: https://github.com/uku3lig/betterhurtcam (MIT).
+
+Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+
+Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-betterhurtcam
+"""
+authors = ["uku3lig", "sparticle"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "MIT"
+source = "https://github.com/Sparticle62ops/horizon-betterhurtcam"
+icon = "icons/betterhurtcam.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-19"
+game = "26.3"
+file = "betterhurtcam-1.0.0.hnmod"
+sha256 = "13fc7587470f8831b5961eff12fcd51288857f49822e653d6f3cc1151d04f0c5"
+changelog = "Initial registry submission"
