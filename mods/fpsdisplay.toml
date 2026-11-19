@@ -2,15 +2,45 @@ id = "fpsdisplay"
 kind = "native-mod"
 name = "fpsdisplay"
 summary = "A Horizon port of fpsdisplaymod."
-description = """Exact 1:1 Rust translation of [FPS - Display](https://github.com/Grayray75/FPS-Display)
-(upstream Java, LGPL-3.0-only), v5.2.0 (minecraft 26.3), by Grayray75. Carries the
-upstream LGPL-3.0-only license and credit.
+description = """A 1:1 Rust port of [fpsdisplaymod](https://modrinth.com/mod/fpsdisplay) (MIT):
+an FPS readout that shows the current frames per second, and with advanced
+stats the minimum, average and maximum of the last seven seconds, at your
+chosen corner, size, colour and alpha. The package is the .hmod source: a
+native mod built against the pinned Horizon SDK (api 0.2, game 26.3).
 
-Ported by sparticle.
+## Behavior (the original's, kept)
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+- The readout draws the current fps, plain or with the advanced stats line.
+- The position, text colour, opacity, shadow and the advanced toggle are the
+  original's config fields, held as settings on Horizon's Options > Mods
+  page instead of the original's config screen.
+- The readout hides with the HUD (the hud mode read).
 
-Licence: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-fpsdisplay
+## Wiring
+
+- register: the original's config fields registered as settings, same
+  defaults, labels in assets/fpsdisplay/lang/.
+- register_gui_layers + gui_layer_draw: the readout's own HUD layer above
+  all others, drawn once a frame.
+- The samples come from the frame interval the draw call measures between
+  two of its own calls; the history is the original's FIFO cap at 420.
+
+## Horizon seams
+
+- No client fps read in the mod API, so the readout measures its own frame
+  interval instead.
+- The text draw takes no scale, so the original's text-size setting reads
+  but does not scale the glyphs yet.
+- The original's keybind (toggle or push-to-show) has no keybinding
+  registration API yet; the keybind_mode setting is on file and the key
+  half of the behaviour waits on the API.
+- The original skips drawing while the debug overlay (F3) is visible; the
+  API answers the hud mode only, so that one check waits too.
+
+The asks are tracked on horizon-rust/horizon as issue #18692 and each one
+upgrades the port back to full parity when patched.
+
+Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-fpsdisplay
 """
 authors = ["Grayray75. Carries the", "sparticle"]
 owners = ["Sparticle62ops"]
@@ -26,5 +56,5 @@ version = "5.2.0"
 published = "2026-11-19"
 game = "26.3"
 file = "fpsdisplay-5.2.0.hmod"
-sha256 = "afb1d7ed6ca55594f9f1c1962938033f7d68aa2ac91d19a764a8c596527293f3"
-changelog = "Initial registry submission"
+sha256 = "24ad807bcee993b9623038f6134188cd3bc4e7279bb6fa781e1c7c14f30a3c59"
+changelog = "Rebuilt on the f00125f native-mod API: settings page, own hud layer, frame-interval fps sampling"
