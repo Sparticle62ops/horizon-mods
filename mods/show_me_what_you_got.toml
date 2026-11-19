@@ -6,7 +6,7 @@ description = """show-me-what-you-got ported to Horizon as a native Rust mod.  U
 
 Port by sparticle. Upstream: https://github.com/apace100/show-me-what-you-got (MIT).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-show-me-what-you-got
 """
@@ -23,6 +23,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "show_me_what_you_got-1.0.0.hnmod"
-sha256 = "d421d8ce00f73f9f1368f741e28b1447c9e444b222f6080846b3b8a8e56f4846"
+file = "show_me_what_you_got-1.0.0.hmod"
+sha256 = "fa5e85ae120637793e84c6e5be2eecd53b75cd1fe3b0d09debbdfcaad68282d9"
 changelog = "Initial registry submission"
