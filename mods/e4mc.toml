@@ -33,7 +33,7 @@ on by default (`https://broker.e4mc.link/getBestRelay`), fallback relay
 MIT, like the original. e4mc is by vgskye and contributors; this port keeps
 their notices and credits them for the design.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins (none, api-level bundle); exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-e4mc
 """
@@ -50,6 +50,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "e4mc-1.0.0.hnmod"
-sha256 = "b65dfebf7214ecd1b24d7ecc03045f90377eda63b2990471f25df5ffc0dd67b4"
+file = "e4mc-1.0.0.hmod"
+sha256 = "2c8f1e4d52971cb6e1d18fc365cbc6cc70022de19ca7a4e6944334e9f9d068fd"
 changelog = "Initial registry submission"
