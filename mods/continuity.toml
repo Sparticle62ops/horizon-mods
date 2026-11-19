@@ -1,0 +1,51 @@
+id = "continuity"
+kind = "native-mod"
+name = "continuity"
+summary = "A Horizon port of Continuity."
+description = """Exact 1:1 Horizon Rust port of [Continuity](https://github.com/PepperCode1/Continuity)
+by PepperCode1 (LGPL-3.0-only). Every upstream Java class maps to one Rust
+module with the same names, logic, defaults, and control flow; the Minecraft
+client / Fabric renderer surfaces the engine binds sit in `src/seams.rs` with
+one seam per upstream call.
+
+## What it carries
+
+- The full properties layer: `BaseCtmProperties` and the Connecting /
+  Compact / Random / Repeat / Overlay property families with the exact
+  parsing order, defaults, and error paths of the upstream classes.
+- The full `CtmLoaderRegistry`: all 25 loader registrations (`ctm`+`glass`,
+  `ctm_compact`, `horizontal`/`bookshelf`, `vertical`, the `h+v`/`v+h`
+  aliases, `top`, `random`, `repeat`, `fixed`, and the 10 overlay variants)
+  with the `createLoader`/`createCustomLoader` helper chain and the two
+  built-in resource packs.
+- The processor layer: Simple / Compact / Top / StandardOverlay /
+  SimpleOverlay quad processors with caching and processing predicates,
+  DirectionMaps, QuadUtil, MathUtil, RandomIndexProvider, and the five
+  sprite providers.
+- The model layer: `CtmBakedModel` + `EmissiveBakedModel` with the
+  `ModelWrappingHandler` bake wrap, `ModelObjectsContainer`, and the
+  feature states the entity renderer mixins toggle.
+- The resource layer: `CtmPropertiesLoader` (pack priority order,
+  `java.util.Properties` parsing), `ResourceRedirectHandler`, 
+  `CustomBlockLayers` + `EmissiveSuffixLoad
+
+Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+
+Licence: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-continuity
+"""
+authors = ["PepperCode1", "sparticle"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "LGPL-3.0-or-later"
+source = "https://github.com/Sparticle62ops/horizon-continuity"
+icon = "icons/continuity.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-19"
+game = "26.3"
+file = "continuity-1.0.0.hnmod"
+sha256 = "b5e9aded5a9696b16aa6d828fee25954c5e97a1210b7ac571de17e8bcc7fcf15"
+changelog = "Initial registry submission"
