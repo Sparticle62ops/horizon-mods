@@ -33,7 +33,7 @@ stored tokens are compatible with its OAuth client.
 
 ## What
 
-Pinned to Horizon 3fb4c31 and horizon-mixins e8cd0aa; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-auto-reauth
 """
@@ -50,6 +50,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "auto_reauth-1.0.0.hnmod"
-sha256 = "6abdb4a4163f7cf8921be6c3ed470b4d256b2d78a34b386d73fa324ce32df7ca"
+file = "auto_reauth-1.0.0.hmod"
+sha256 = "6e34b5dfe6a389222ca4e19b2224ce8754abf5174863f2a8a9a39d793c7219af"
 changelog = "Initial registry submission"
