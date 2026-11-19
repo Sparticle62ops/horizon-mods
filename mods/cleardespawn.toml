@@ -6,7 +6,7 @@ description = """cleardespawn (Horizon Rust port), slice 1: the despawn filter m
 
 Port by sparticle. Upstream: https://github.com/StrikerRockers-Mods/ClearDespawn/ (MIT).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-cleardespawn
 """
@@ -23,6 +23,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "cleardespawn-1.0.0.hnmod"
-sha256 = "7e2525504ae65bcc71f561e239bcde61f5429fee87d763f77f9666deb444dde0"
+file = "cleardespawn-1.0.0.hmod"
+sha256 = "770085c9f47712c4200f8f2ab18990cf3689c218e9e550fa8145a5aaedcc5cf5"
 changelog = "Initial registry submission"
