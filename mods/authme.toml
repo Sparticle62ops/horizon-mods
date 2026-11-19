@@ -27,7 +27,7 @@ Ported for the Horizon client by sparticle. Upstream credit: axieum (MIT).
 Build: `cargo test` (25 tests). Package: `tools/package.py` (source-only
 `.hnmod`, pinned to Horizon revision 3fb4c3138e0c5d8fdd2fdb555cf31368e8897497).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-auth-me
 """
@@ -44,6 +44,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "authme-1.0.0.hnmod"
-sha256 = "08a00b4f3c796a0b0607b887d14272dd355c4172732851b114413cf4d0dcc72d"
+file = "authme-1.0.0.hmod"
+sha256 = "b67427103f236529f1f0d21b7e98174408be29c568efc0ac9abe71a652ea0ade"
 changelog = "Initial registry submission"
