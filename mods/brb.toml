@@ -6,7 +6,7 @@ description = """Better Recipe Book -> Horizon native mod, slice 1: pure-logic c
 
 Port by sparticle. Upstream: https://github.com/mrshmllow/BetterRecipeBook (MIT).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-brb
 """
@@ -23,6 +23,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "brb-1.0.0.hnmod"
-sha256 = "aef30d88d62cb6cbfc463a3bfdc5ea22d9d0a3fe7804b238c87e6ac479bd70ac"
+file = "brb-1.0.0.hmod"
+sha256 = "f818d67ad1515e1802117002c724024793a6c55eba6015ad27e29b7b101f416b"
 changelog = "Initial registry submission"
