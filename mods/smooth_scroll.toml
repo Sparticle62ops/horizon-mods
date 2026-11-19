@@ -19,7 +19,7 @@ d9c83d7096b7ea5b83678da2efdfd6161f74997e).
 
 Ported by sparticle.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Upstream licence: GPL-3.0-only (Modrinth); port licence as stated in the source repo: GPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-smooth-scroll
 """
@@ -36,6 +36,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "smooth_scroll-1.0.0.hnmod"
-sha256 = "097b3eff02e9898119ba3a8fe42abfa0bde220a1513bd6ad7cdf754c9f782f7f"
+file = "smooth_scroll-1.0.0.hmod"
+sha256 = "349fde1a1995d306e19445e2f876548f601a55331e0a1ce246ceddb89f05741f"
 changelog = "Initial registry submission"
