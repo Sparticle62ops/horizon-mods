@@ -11,7 +11,7 @@ upstream mixin, the options coefficient, and the debug HUD renderer.
 
 Port by sparticle. Upstream: https://github.com/Motschen/Blur
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-blur-plus
 """
@@ -28,6 +28,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "blur_plus-1.0.0.hnmod"
-sha256 = "743dfa8d0c0459a26f2af3b9b8cd1d0094db68d8f468485048027701a20fb882"
+file = "blur_plus-1.0.0.hmod"
+sha256 = "c969a870b6bbf87a5c23950220cc96b6b8fe6135a775f37e74afdd3da0f18795"
 changelog = "Initial registry submission"
