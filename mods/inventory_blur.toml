@@ -1,0 +1,54 @@
+id = "inventory_blur"
+kind = "native-mod"
+name = "inventory_blur"
+summary = "A Horizon port of Inventory Blur."
+description = """A Rust port of [Inventory Blur](https://github.com/Enchanted-Games/inventory-blur)
+(Enchanted_Games / ioblackshaw, CC BY-NC 4.0): applies the 1.20.5+ menu
+background blur to in-world inventories (chests, the player inventory and
+other Screen-extended menus) instead of the vanilla dark gradient.
+
+## Scope of this commit (the mod's full logic core, 1:1)
+
+Upstream read at commit 4546a17, the whole mod is 171 lines of Java. The
+1:1 core lives in mixins/inventory_blur/runtime.rs:
+
+- ModConstants (name, id) and the in-world background texture location
+  (a 16x16 image tiled across the screen).
+- ScreenMixin's renderTransparentBackground replacement as a decision
+  function: skip the vanilla fillGradient dark gradient entirely; on 1.21.6+
+  call the screen's blurred-background render, but only when the render
+  state's first stratum after blur is still unset (so the blur draws once
+  per frame); on older builds tile the inworld background texture instead.
+- The tile-count math for the legacy path.
+
+5 tests green.
+
+## Degradation (rendering rides Horizon's screen surfaces)
+
+The actual blur application and the tiled texture draw are render calls on
+Screen.renderTransparentBackground, which Horizon does not expose to client
+mods: there is no screen background render hook (no blur shader surface, no
+replacement point for the menu background, no texture tiling draw). A seam
+issue is filed on horizon-rust/horizon. Upstream's asset (the 16x16
+inworld_invent
+
+Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+
+Licence: CC-BY-NC-4.0. Source: https://github.com/Sparticle62ops/horizon-inventory-blur
+"""
+authors = ["Enchanted-Games", "sparticle"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "CC-BY-NC-4.0"
+source = "https://github.com/Sparticle62ops/horizon-inventory-blur"
+icon = "icons/inventory_blur.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-19"
+game = "26.3"
+file = "inventory_blur-1.0.0.hnmod"
+sha256 = "fba74a4368bde20583e5941833e587a666e37da46f4e5eb65c0a6eeb3986e22f"
+changelog = "Initial registry submission"
