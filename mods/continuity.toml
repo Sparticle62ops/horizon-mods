@@ -29,7 +29,7 @@ one seam per upstream call.
   `java.util.Properties` parsing), `ResourceRedirectHandler`, 
   `CustomBlockLayers` + `EmissiveSuffixLoad
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-continuity
 """
@@ -46,6 +46,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "continuity-1.0.0.hnmod"
-sha256 = "b5e9aded5a9696b16aa6d828fee25954c5e97a1210b7ac571de17e8bcc7fcf15"
+file = "continuity-1.0.0.hmod"
+sha256 = "b5f67d9f84ca17d3f7460ec8475f9c645d3bb0de6a167a9eb027961e796c0567"
 changelog = "Initial registry submission"
