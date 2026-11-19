@@ -6,7 +6,7 @@ description = """betterhurtcam (Horizon Rust port), slice 1: the shake model. NO
 
 Port by sparticle. Upstream: https://github.com/uku3lig/betterhurtcam (MIT).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-betterhurtcam
 """
@@ -23,6 +23,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "betterhurtcam-1.0.0.hnmod"
-sha256 = "13fc7587470f8831b5961eff12fcd51288857f49822e653d6f3cc1151d04f0c5"
+file = "betterhurtcam-1.0.0.hmod"
+sha256 = "0dd71dbac485162992f0546974faec6568a9c4b5cfaaa23569d5d1f4eec4f523"
 changelog = "Initial registry submission"
