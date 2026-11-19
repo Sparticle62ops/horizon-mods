@@ -1,0 +1,26 @@
+id = "music_player"
+kind = "native-mod"
+name = "music_player"
+summary = "A Horizon port of Music Player."
+description = """Port by sparticle. Upstream: https://github.com/MC-U-Team/Music-Player (Apache-2.0).
+
+Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+
+Licence: Apache-2.0. Source: https://github.com/Sparticle62ops/horizon-music-player
+"""
+authors = ["MC-U-Team", "sparticle"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "Apache-2.0"
+source = "https://github.com/Sparticle62ops/horizon-music-player"
+icon = "icons/music_player.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-19"
+game = "26.3"
+file = "music_player-1.0.0.hnmod"
+sha256 = "7fc0eed439e875fae2e2ef9e03cf2ac7c2d9e7386c8c7590fe3a62436a2d1053"
+changelog = "Initial registry submission"
