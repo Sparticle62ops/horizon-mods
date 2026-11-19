@@ -22,7 +22,7 @@ Upstream better-mount-hud is Copyright (C) Lortseam and contributors,
 GPL-3.0-or-later. This port carries the upstream license and credit per the
 port policy.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins e8cd0aa; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: GPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-better-mount-hud
 """
@@ -39,6 +39,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "better_mount_hud-1.0.0.hnmod"
-sha256 = "902f2e7633203bf9d8af84a35dcf975e5dd0cb844067b5a917919832caa4688b"
+file = "better_mount_hud-1.0.0.hmod"
+sha256 = "3cf6f729cff50e56ff718d6a895f6d5883e2d09049331fc85e17a10770a50cc1"
 changelog = "Initial registry submission"
