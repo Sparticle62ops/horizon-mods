@@ -8,7 +8,7 @@ upstream LGPL-3.0-only license and credit.
 
 Ported by sparticle.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-fpsdisplay
 """
@@ -25,6 +25,6 @@ tags = ["port", "horizon"]
 version = "5.2.0"
 published = "2026-11-19"
 game = "26.3"
-file = "fpsdisplay-5.2.0.hnmod"
-sha256 = "1bf2e2afd68b66028e73519e46d809b8258cf0e794451e364591354d6768d4c5"
+file = "fpsdisplay-5.2.0.hmod"
+sha256 = "afb1d7ed6ca55594f9f1c1962938033f7d68aa2ac91d19a764a8c596527293f3"
 changelog = "Initial registry submission"
