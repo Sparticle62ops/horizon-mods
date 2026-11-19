@@ -30,7 +30,7 @@ Complete: every upstream file is translated 1:1, including
 including the vulkan/opengl/textures subgroups, accessors). 98 unit tests on
 the t
 
-Pinned to Horizon 3fb4c31 and horizon-mixins e8cd0aa; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: OSL-3.0. Source: https://github.com/Sparticle62ops/horizon-rrls
 """
@@ -47,6 +47,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "rrls-1.0.0.hnmod"
-sha256 = "1b4e9dbb36e3e9c4171854ceec60e002733b19ddd976b3018ebd69bf8f7e002d"
+file = "rrls-1.0.0.hmod"
+sha256 = "f50c85d6df4ea0c2972dbd2abe8746c52777d8aa7bafe413a5ee99703e331874"
 changelog = "Initial registry submission"
