@@ -18,7 +18,7 @@ Ported for the Horizon client by sparticle. Upstream credit: A5b84.
 
 Build: `cargo test` (17 tests). Package: `ports/smooth-f5/tools/package.py`.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-status-effect-bars
 """
@@ -35,6 +35,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "statuseffectbars-1.0.0.hnmod"
-sha256 = "208f6ae8b9af93ff10f96d376d4226d272028e3d396ff65d9d5c4675cdfe43f1"
+file = "statuseffectbars-1.0.0.hmod"
+sha256 = "f77682fe0c179b7cfbb3796f019bd456f190a406e6c0295e05751e76d7b3570c"
 changelog = "Initial registry submission"
