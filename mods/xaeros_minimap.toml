@@ -26,7 +26,7 @@ behavior the mod's page documents. Rendering and world access ride Horizon.
   and terrain depth / slopes shading flags.
 - The **enlarge keybi
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Behavioural port: the port contains no upstream code; upstream stays All Rights Reserved with its author and is credited here.
 
@@ -45,6 +45,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "xaeros_minimap-1.0.0.hnmod"
-sha256 = "a0a663ddb5cba68e07abe3de85331db6242c71b8ac8d4f04accc1404c9b561cf"
+file = "xaeros_minimap-1.0.0.hmod"
+sha256 = "87b0e784857609807dd490ade9666954fd50fe2fc2deba76504513a0972c18ea"
 changelog = "Initial registry submission"
