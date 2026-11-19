@@ -30,7 +30,7 @@ verbatim.
 - The system clipboard write (AWT Toolkit on Windows/Linux) and the objc
   NSPasteboard chain
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-screenshot-to-clipboard
 """
@@ -47,6 +47,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "screenshot_to_clipboard-1.0.0.hnmod"
-sha256 = "b0a2eb51471c7e14805c29b08d4311517072fd22be47b121ded9b01c318fdfd3"
+file = "screenshot_to_clipboard-1.0.0.hmod"
+sha256 = "119b0540d102849e8c39124de4fc746d90ea837c86ebaac97d8bed32f27de5e4"
 changelog = "Initial registry submission"
