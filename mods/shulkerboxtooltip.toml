@@ -1,0 +1,33 @@
+id = "shulkerboxtooltip"
+kind = "native-mod"
+name = "shulkerboxtooltip"
+summary = "A Horizon port of Shulker Box Tooltip."
+description = """Ported 1:1 from [MisterPeModder/ShulkerBoxTooltip](https://github.com/MisterPeModder/ShulkerBoxTooltip) (MIT, (c) 2019 Yanis Guaye) @ 68e7f8e.
+Shows a preview of a container's contents when hovering the container item in an inventory.
+
+## What is ported (the full logic core)
+
+- `src/config.rs` - the complete configuration model with upstream defaults: preview category (enable, swap_modes, always_on, compact_preview_nbt_behavior = Separate, compact_preview_order = StackSize, default_max_row_size = 9, server_integration, theme, theme_bundle, position, short_item_counts, generic_container_preview), tooltip category (show_key_hints, type = Mod, loot_table_info_type = Hide, hide_shulker_box_lore), server category (client_integration, ender_chest_sync_type = Active), colors (colored_preview) and controls (preview/full-preview/lock-tooltip keys). Enum Display strings are the upstream lang keys, carried verbatim.
+- `src/color.rs` - ColorKey/ColorKeyImpl (float rgb components + default components), ColorRegistryImpl categories, rgbToComponents/componentsToRgb, ColorKey.ofDye with the 0.15 per-channel clamp, and the default key set (default, ender_chest, generic_container, shulker_box, bundle + all 16 dyed shulker box / bundle keys).
+- `src/item.rs` - ItemKey (item id + component map, with the upstream asymmetric hashing rule), MergedItemStack (add/get_sub_stack/first_slot/compareTo) and mergeInventory with all three ItemStackMergingStrategy
+
+Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+
+Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-shulkerboxtooltip
+"""
+authors = ["MisterPeModder", "sparticle"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "MIT"
+source = "https://github.com/Sparticle62ops/horizon-shulkerboxtooltip"
+icon = "icons/shulkerboxtooltip.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-19"
+game = "26.3"
+file = "shulkerboxtooltip-1.0.0.hnmod"
+sha256 = "eb1905e17dfef2369a760853015730f888414beecdb4bba985c5c4f087c50199"
+changelog = "Initial registry submission"
