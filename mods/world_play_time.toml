@@ -6,7 +6,7 @@ description = """world-play-time (Horizon Rust port), slice 1: the playtime mode
 
 Port by sparticle. Upstream: https://github.com/Khajiitos/WorldPlayTime (MIT).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-world-play-time
 """
@@ -23,6 +23,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "world_play_time-1.0.0.hnmod"
-sha256 = "750dec2f31a52538c84d62b34512e464caeeb2285a1dd563937fdc4e4e76c25c"
+file = "world_play_time-1.0.0.hmod"
+sha256 = "2922cbca45a22c2d93e463784832e6a2ace1a4fd1cec42bba7b742185f0e2de2"
 changelog = "Initial registry submission"
