@@ -6,7 +6,7 @@ description = """show_me_your_skin: exact 1:1 Rust port of enjarai/show-me-your-
 
 Port by sparticle. Upstream: https://codeberg.org/enjarai/show-me-your-skin (MIT).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-show-me-your-skin
 """
@@ -23,6 +23,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "show_me_your_skin-1.0.0.hnmod"
-sha256 = "2de6ab1a48d4a1841a0b3be8b8f8657040059b7300fa6ddcd08c8e0fd7290572"
+file = "show_me_your_skin-1.0.0.hmod"
+sha256 = "6cbbeee540c7d3b67c6325190e653bcde3bb76ad8e306c4a65e51bbdaab48e35"
 changelog = "Initial registry submission"
