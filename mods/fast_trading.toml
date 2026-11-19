@@ -28,7 +28,7 @@ The original's behavior is kept:
 - `tradeBlockBehavior` `DAMAGEABLE` (the default) / `UNSTACKABLE` / `DISABLED`
   refuses a trade whose result is damageab
 
-Pinned to Horizon 3fb4c31 and horizon-mixins e8cd0aa; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-fast-trading
 """
@@ -45,6 +45,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "fast_trading-1.0.0.hnmod"
-sha256 = "a0b2480b95db7a395c01c5c9aa3c2e2e131e2935c628439f24ca71b0c8b0ea2d"
+file = "fast_trading-1.0.0.hmod"
+sha256 = "2a5facc5167bf714682b7427d5787a87ec66f974e1182d9313e7b1e238824a02"
 changelog = "Initial registry submission"
