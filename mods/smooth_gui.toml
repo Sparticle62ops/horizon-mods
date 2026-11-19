@@ -6,7 +6,7 @@ description = """smooth-gui (Horizon Rust port), slice 1: the animation model. N
 
 Port by sparticle. Upstream: https://github.com/Ezzenix/SmoothGui (MIT).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-smooth-gui
 """
@@ -23,6 +23,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "smooth_gui-1.0.0.hnmod"
-sha256 = "cb0cb9e2af771a8e90b565c1a1b9fac3ffbca2da6e1369912f118629133f6381"
+file = "smooth_gui-1.0.0.hmod"
+sha256 = "62abe34e49618546c061e2618bba443e57f137a67a7ed88f63bb4877fab43634"
 changelog = "Initial registry submission"
