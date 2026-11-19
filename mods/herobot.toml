@@ -35,7 +35,7 @@ downloads), license CC-BY-NC-4.0 (LICENSE.txt copied verbatim).
 1. Server-side fake players. HeroBot's core is spawning and driving
    player entities w
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: CC-BY-NC-SA-4.0. Source: https://github.com/Sparticle62ops/horizon-herobot
 """
@@ -52,6 +52,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "herobot-1.0.0.hnmod"
-sha256 = "c996300bf9754ab8c5d630eef045d6fadacdfeebec8ab9b64d148c2ee9c5bd8b"
+file = "herobot-1.0.0.hmod"
+sha256 = "739f614827fae2417086f3ab5028207dc63970018e8394a6c5850eacbac68503"
 changelog = "Initial registry submission"
