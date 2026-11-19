@@ -30,7 +30,7 @@ Degradations vs the original (Horizon hooks missing):
   detection is not available, so the ratelimit applies everywhere.
 - Key names follow Horizon's vanilla-style
 
-Pinned to Horizon 3fb4c31 and horizon-mixins (none, api-level bundle); exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: Apache-2.0. Source: https://github.com/Sparticle62ops/horizon-commandkeys
 """
@@ -47,6 +47,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "commandkeys-1.0.0.hnmod"
-sha256 = "d86e97ea90c647ca79205151a75910b27dcfe4cad59ff596560fca92d7de234e"
+file = "commandkeys-1.0.0.hmod"
+sha256 = "b6e26506ed77fe4dba222bf118c37eab90e220f0d4242e0eb1630cbcda9b4819"
 changelog = "Initial registry submission"
