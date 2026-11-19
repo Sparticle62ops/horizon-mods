@@ -34,7 +34,7 @@ the shield cooldown reports the server sends this client.
   complete and ready to drive it the day the surface lands.
 - Oth
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-shield-statuses
 """
@@ -51,6 +51,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "shield_statuses-1.0.0.hnmod"
-sha256 = "b7ca9c8853aafe85f82e79c3806f703e27af54e2e7c42df20d474feafa32dc13"
+file = "shield_statuses-1.0.0.hmod"
+sha256 = "dd6fa8790cd914701e1f9d3ac9c007ff56f003f07de2fc8d65c622afc1bd7552"
 changelog = "Initial registry submission"
