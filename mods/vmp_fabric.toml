@@ -27,7 +27,7 @@ license preserved; the upstream LICENSE is carried verbatim.
   ships (adds iterate the new square minus the old, removals the old minus
   the new). Upstream's poo
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-vmp-fabric
 """
@@ -44,6 +44,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "vmp_fabric-1.0.0.hnmod"
-sha256 = "3fac117e5127cb0b926c99496bad82182638172f98db6f407f69b94247b73e8d"
+file = "vmp_fabric-1.0.0.hmod"
+sha256 = "fd77bd02b1166d804399d3ed6f2925b46d77d08a42c27c15a8f0d6531f9c04bf"
 changelog = "Initial registry submission"
