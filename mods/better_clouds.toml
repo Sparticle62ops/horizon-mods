@@ -18,7 +18,7 @@ the mixin carrier splice, ConfigManager serialized config load, EventHooks/ModLo
 backend resolution and `PresetLoader.ALL_PRESETS` resource population wire in at
 engine stage.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MPL-2.0. Source: https://github.com/Sparticle62ops/horizon-better-clouds
 """
@@ -35,6 +35,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "better_clouds-1.0.0.hnmod"
-sha256 = "a1b0c001f4b033b6bb76f868aecee34097bb0653a8d87efe5b62bbaa2efdb3fe"
+file = "better_clouds-1.0.0.hmod"
+sha256 = "880df670c9d382ba5c4b4e47edaf5d3421a67d536139adf3f58315902b0a7257"
 changelog = "Initial registry submission"
