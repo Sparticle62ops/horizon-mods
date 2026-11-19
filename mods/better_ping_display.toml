@@ -1,0 +1,28 @@
+id = "better_ping_display"
+kind = "native-mod"
+name = "better_ping_display"
+summary = "A Horizon port of Better Ping Display [Fabric]."
+description = """better-ping-display (Horizon Rust port), slice 1: the ping model. NOTE: the master repo keeps this port as src/lib.rs + modules; this bundle inlines the modules into one runtime.rs file, compile-equivalent, for the single-module .hnmod format.  1:1 port of the upstream logic core (MIT): a smoothed ping value per player, colored by thresholds, rendered as "+<ms> ms" text next to the vanilla bar in the player list. List-attach seams land in the next slice.
+
+Port by sparticle. Upstream: https://github.com/vladmarica/better-ping-display (MIT).
+
+Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+
+Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-better-ping-display-fabric
+"""
+authors = ["vladmarica", "sparticle"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "MIT"
+source = "https://github.com/Sparticle62ops/horizon-better-ping-display-fabric"
+icon = "icons/better_ping_display.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-19"
+game = "26.3"
+file = "better_ping_display-1.0.0.hnmod"
+sha256 = "a03168a52251be23f4c200d842c0cbdeea23f93a6ab77c13e78808c2b3e9b486"
+changelog = "Initial registry submission"
