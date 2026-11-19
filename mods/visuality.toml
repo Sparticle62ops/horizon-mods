@@ -27,7 +27,7 @@ MIT, read upstream at commit fd8e592. Upstream is 27 Java files / 1,277 lines.
   shiny-block sparkles nextFloat > 0.8 with the axis fixed-offset math
   0.5 + 0.5625*step), Am
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-visuality
 """
@@ -44,6 +44,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "visuality-1.0.0.hnmod"
-sha256 = "bfcc4f986f4c935323ade908087d05251c57f47204f4fca68a754a765499cca3"
+file = "visuality-1.0.0.hmod"
+sha256 = "e1a91a5bfa42026f13abfc5386ecd0b4a6fbb5673eed6fd607376b23a5f36d80"
 changelog = "Initial registry submission"
