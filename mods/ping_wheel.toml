@@ -22,7 +22,7 @@ Ported by sparticle.
 Upstream Ping Wheel is MIT, Copyright (c) LukenSkyne. This port carries the
 upstream license and credit per the port policy.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-ping-wheel
 """
@@ -39,6 +39,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "ping_wheel-1.0.0.hnmod"
-sha256 = "5cd34dc597259eb1c1a69b4215101b6f3e9292f88159bbf2d945c517c02033b1"
+file = "ping_wheel-1.0.0.hmod"
+sha256 = "d0a5f40fd1dd403ae6cbeaee840eb165025a8c40843ad7bc28298f4a2e2cf6d3"
 changelog = "Initial registry submission"
