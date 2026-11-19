@@ -28,7 +28,7 @@ mixins/ukus_armor_hud/runtime.rs:
   switches (bottom/hotbar minus safe area, top = offsetY, vertical center).
 - The warning gate (min value or min percent
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-ukus-armor-hud
 """
@@ -45,6 +45,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "ukus_armor_hud-1.0.0.hnmod"
-sha256 = "22ba45996f29737b63faa544536f7cc7980b2da11964bfb70b5c32614530cded"
+file = "ukus_armor_hud-1.0.0.hmod"
+sha256 = "196176568d04a827539f495d94bd4428d3ea8e308a22045aa57d1d5f267db8ef"
 changelog = "Initial registry submission"
