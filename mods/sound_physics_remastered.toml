@@ -12,7 +12,7 @@ description = """Behavioral port of [Sound Physics Remastered](https://github.co
 - Client-side world access for the raymarcher rides world snapshots (horizon-rust/horizon #10152, open).
 - SPR hooks Minecraft's client sound engine to resample each played sound's volume/reverb per position; Horizon's native mod API has no sound playback hook yet. The client glue (slice 2) waits on that surface; filed: horizon-rust/horizon #10444 (sound playback hook).
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: GPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-sound-physics-remastered
 """
@@ -29,6 +29,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "sound_physics_remastered-1.0.0.hnmod"
-sha256 = "3924e2eb7b752da8fc839483e2648d3c29082cf5b4450b867b4c8457168e87a7"
+file = "sound_physics_remastered-1.0.0.hmod"
+sha256 = "6e1e5cf518240987a5648d0fdcb659598b097d583910c250f58aa2ebba13f6a8"
 changelog = "Initial registry submission"
