@@ -31,7 +31,7 @@ The full upstream logic tree, translated 1:1:
   `ClientPacketEnv` seams, and the client handler ladder.
 - `block_entity_ticker.rs` - the ticker-side liste
 
-Pinned to Horizon 3fb4c31 and horizon-mixins e8cd0aa; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-polymorph
 """
@@ -48,6 +48,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "polymorph-1.0.0.hnmod"
-sha256 = "a36bb566002a382dc603ad95fb108110a9f3a1ea7e0f1dc375557a496712f69f"
+file = "polymorph-1.0.0.hmod"
+sha256 = "2d2ed5375a0ad8ae6ca81df378a131ac87edfe45176c38b300ae15581cc80d8b"
 changelog = "Initial registry submission"
