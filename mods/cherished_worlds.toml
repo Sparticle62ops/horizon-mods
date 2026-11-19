@@ -11,7 +11,7 @@ Minecraft client / SpectreLib / MixinExtras surfaces the engine binds sit in
 Port: sparticle. Upstream license and credit carried: the crate is
 LGPL-3.0-or-later, copyright (C) 2018-2026 Illusive Soulworks.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+Source-only .hmod built on the current SDK (Horizon f00125f)
 
 Licence: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-cherished-worlds
 """
@@ -28,6 +28,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "cherished_worlds-1.0.0.hnmod"
-sha256 = "5f9dd86c413ae289eb99e41ef6ecec96134130d20bee8e392d0caa3fccc330d1"
+file = "cherished_worlds-1.0.0.hmod"
+sha256 = "86efb16a0d75d586e97442058ceec4409e8ab6d9b90413c3063d932b103160d1"
 changelog = "Initial registry submission"
