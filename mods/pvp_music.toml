@@ -49,7 +49,7 @@ directly.
 Licence: CC0-1.0. Source: https://github.com/Sparticle62ops/horizon-pvp-music
 """
 authors = ["sparticle"]
-owners = ["Sparticle62ops"]
+owners = ["sparticle62ops"]
 owner_ids = [209812745]
 license = "CC0-1.0"
 source = "https://github.com/Sparticle62ops/horizon-pvp-music"
@@ -58,9 +58,9 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
-version = "1.2.0"
+version = "1.2.1"
 published = "2026-11-19"
 game = "26.3"
-file = "pvp_music-1.2.0.hmod"
-sha256 = "51b868c5957b3756e224277bed65a96970efc97c30bc734369f5baefae3f75f2"
-changelog = "Rebuilt on the f00125f native-mod API: hooks wired (music, client_attack_target, client_tick_pre, command)"
+file = "pvp_music-1.2.1.hmod"
+sha256 = "b0835b1bffeaac69a3302daf2448b7ba8ae0138f411a4ba5aaa4266f4acf48b9"
+changelog = "Rebuilt on the f00125f native-mod API: hooks wired (music, client_attack_target, client_tick_pre, command); the sounds.json index sits at assets/pvp_music/sounds.json where the game reads it"
