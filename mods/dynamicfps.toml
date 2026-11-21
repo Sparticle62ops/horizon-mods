@@ -1,0 +1,30 @@
+id = "dynamicfps"
+kind = "native-mod"
+name = "Dynamic FPS"
+summary = "Drops the frame rate while the window is in the background, so Horizon stops burning power for a screen nobody is looking at."
+description = """Alt-tabbing out of Horizon leaves it rendering as fast as it can into a window you cannot see. Dynamic FPS answers the game's own frame-rate hook and lowers the cap while the window is not the one in front.
+
+- In the background: the cap you pick (1, 5, 10, 15, 20 or 30 FPS), 10 by default.
+- Minimised: down to 1 FPS by default.
+- A lower cap you set yourself is never raised, and the game is never pushed below one frame, so input, ticks and the network keep running.
+- Settings under Options > Mods > Dynamic FPS.
+
+This is what Horizon's `framerate_limit` hook documents itself for, and what the game's Battery Mode uses. Nothing is drawn and nothing is sent: it only returns a number.
+
+An independent MIT implementation that follows [Dynamic FPS](https://github.com/juliand665/Dynamic-FPS) by juliand665 (MIT) without copying its code; see the NOTICE in the source."""
+authors = ["Jorungandr"]
+owners = ["Jorungandr"]
+owner_ids = [188995885]
+license = "MIT"
+source = "https://github.com/Jorungandr/horizon-rust-mods/tree/main/native/dynamicfps"
+icon = "icons/dynamicfps.png"
+categories = ["utility"]
+tags = ["fps", "performance", "background", "power", "client"]
+
+[[versions]]
+version = "0.2.0"
+published = "2026-11-20"
+game = "26.3"
+file = "dynamicfps-0.2.0.hmod"
+sha256 = "ff368963a5d743c147051c64cbb2182f50f73aa69a3e398f12eb61c740e94ffc"
+changelog = "First release: background and minimised frame-rate caps."

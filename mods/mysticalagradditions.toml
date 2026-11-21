@@ -40,3 +40,11 @@ game = "26.3"
 file = "mysticalagradditions.hmod"
 sha256 = "a72ce05bd12aa642e974460ff1cd9749bf8174957b994b3f9138c6680739d3cd"
 changelog = "First release: six tier-6 crops, their cruxes, insanium farmland and the awakened-draconium line, embedded in one .hnmod"
+
+[[versions]]
+version = "0.2.1"
+published = "2026-11-21"
+game = "26.3"
+file = "mysticalagradditions.hmod"
+sha256 = "637258ae3f0844c849e4d182b9a24075f03e3a66edafc95a30906924820c7217"
+changelog = """Slice 3, the Wither drop: the mod's last remaining server-event behaviour, and the acquisition path for two carried recipes that were dead in survival. A Wither now leaves a withering soul at the jar's own 0.35 chance (strict `<`, tested at 0.3499 against 0.35), and `mob_drops` off adds nothing. Two measured facts are recorded rather than worked around: this pin's gamerule is `mob_drops`, not `do_mob_loot`, and `living_drops` does fire for `/kill` deaths with the dying mob resolving through the host — thirty withers left nine souls. The Ender Dragon half is `blocked(living_drops-ender-dragon)`: a probe that pushed eight scales from the hook's first line, with no host read, left nothing for a dragon killed four blocks away over 400 ticks, so the dragon's death never reaches this hook; `mob_killed` is melee-only and cannot add to a drop list, and `entity_leave_level` also fires on chunk unload. The e2e asserts that gap, so it will fail the day the pin gains the hook. Proven in game: 30 kills leave 9 souls, a zombie leaves neither drop, and the gamerule gate works."""

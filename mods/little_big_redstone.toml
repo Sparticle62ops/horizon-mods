@@ -35,3 +35,11 @@ game = "26.3"
 file = "little_big_redstone.hmod"
 sha256 = "70214068c2bb7df78a0a59a0e95be642611552bef4d06f3bde3e20284857ea22"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "little_big_redstone.hmod"
+sha256 = "481bec309448c22afc34196d1d32c87828545437d6577c7d78787f0cdb4c8cb8"
+changelog = """Slice 2, the six-gate logic family: OR, XOR, NAND, NOR and NOT beside the existing AND. Each gate carries its own rule from the jar's own guide — OR and XOR are analog with XOR's odd parity, NOT/NAND/NOR are boolean, every gate takes 2 to 10 inputs clamped and NOT exactly 1 — and each has its saved compound type with `input_count`. A `/lbr circuit` action drives an output port so the guide's analog rule is observable in game. Proven in game: the truth tables per gate, analog 3+5 reading 5, XOR four-input parity (2 then 4 then 3 then 2 then 1 inputs), NAND `15,0` reading 1, NOR `0,0` reading 1, the `status` readout naming a gate and its input count, and refusals that leave the circuit unchanged."""

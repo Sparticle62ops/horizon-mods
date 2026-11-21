@@ -37,3 +37,11 @@ game = "26.3"
 file = "enderio.hmod"
 sha256 = "d85004c41de5abca2b7e9b7e8a892449c40edf0c6a835328dc95ef165e12f3ee"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "enderio.hmod"
+sha256 = "50b385b1b648cfd837394b7444ac0e79e33fe1762601ddd4b579f99eaba516c0"
+changelog = """Per-side redstone control, the gap line 'the conduit screen ..., the redstone control'. The four upstream modes (never_active, active_with_signal, active_without_signal, always_active) are stored per side beside the insert/extract toggles and applied to extraction, read from the conduit's neighbour signal. A fresh conduit now extracts nothing until its control is set, which is what the jar does — slice 1 copied the toggle and ignored the gate. Proven in game: default control moves nothing for 45 ticks; active_with_signal moves a full stack only while a redstone block is above the conduit and stops when it is removed; active_without_signal is its mirror."""

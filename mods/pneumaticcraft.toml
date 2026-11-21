@@ -37,3 +37,11 @@ game = "26.3"
 file = "pneumaticcraft.hmod"
 sha256 = "d10319383b43121399194569ac1faf8e1e7800e53677725a98abfd12e74f56eb"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.1"
+published = "2026-11-21"
+game = "26.3"
+file = "pneumaticcraft.hmod"
+sha256 = "5daf76015e34001b741b9dfbc7f7d656c779d63d6bed0371c10f323674f53fbd"
+changelog = """Slice 2, pressure tubes and the network between them: the three tubes, their six-sided connection state, per-tube volumes and tiers, network dispersion by volume, and the dead-end leak. Deferred within the same gap line: the pneumatic wrench and closed sides, tube modules, camouflage, waterlogging and the junction. One trap is recorded for every future cable-like port: a block-entity write made **during** a tick is overwritten by that entity's own write-back — a four-handler network at 25 bar lost about 200,000 mL in 40 ticks that way — so the port now applies writes in `level_tick_post` as deltas on the target's current value. Proven in game: a pair moves 2,216 mL for 5,560 FE in 139 ticks; a chain at 24.90 bar feeds a dynamo from 3,648 to 9,490 FE; a ring of four splits 4,000 mL into four 1,000 mL tubes; a dead end vents to 16 mL over 221 ticks; and each tube tier keeps upstream's volume when it is alone."""

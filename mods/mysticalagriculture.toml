@@ -27,3 +27,11 @@ game = "26.3"
 file = "mysticalagriculture.hmod"
 sha256 = "0d6c760670641b4d6aa84e122e82c62e571e85cfaa4cf6e99957452fbe3bcaee"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.1"
+published = "2026-11-21"
+game = "26.3"
+file = "mysticalagriculture.hmod"
+sha256 = "bdb1fb31d9b6d5db40e8057626cfdd0541b01418ef7345be33badbce432e38d1"
+changelog = """Slice 2, the carried crop loot table in 26.3's dialect, the port's first SDK-format in-game leg — and a measurement that corrects an assumption the campaign was working from. The table is converted to 26.3's singular `condition` with `match_block`, matching vanilla's own `wheat.json`. But running the published 0.2.0 package's own bytes at this pin shows the old array form **still rolled correctly** — age 7 gave 1 essence and 1 seed, age 0 gave 0 essence and 1 seed — so this is dialect parity, not a behaviour repair, and `notes.md` records the measurement instead of the claim it was briefed with. The leg is the port's first SDK-format run: the crop drops its essence and seeds through the native hook, a content-only copy proves the table on its own, and both legs carry a selftest that inverts the expectation."""

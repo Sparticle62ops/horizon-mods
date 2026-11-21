@@ -1,0 +1,39 @@
+id = "regions_unexplored"
+kind = "mod"
+name = "Regions Unexplored"
+summary = """Regions Unexplored's 71 biomes with their blocks, signs, leaves, saplings and items, carried as content and upgraded to 26.3's worldgen shapes."""
+description = """
+A Horizon port of [Regions Unexplored](https://github.com/Apollounknowndev/RegionsUnexplored) (MIT), carried as a content-only package.
+
+
+**Implemented so far:** the slice in the package, as described above.
+
+**Not yet ported**
+
+- **Worldgen is partial**, as the paragraph below states.
+- **Block behaviour** (data tier): the 105 blocks carry no code.
+- **Item components** are not carried: the 41 plain items are stick-like.
+- **Block shapes** follow templates (saguaro_cactus uses stone; dusktrap is approximated).
+- **Wolf variants** (9) are quarantined to `outside/data/minecraft/wolf_variant/`.
+- **The NeoForge compostables data map** and the jar's two vanilla recipe overrides are not carried.
+
+Ported to Horizon 0.2 from the upstream mod as content for game 26.3. The full corresponding source ships in this repository beside the artifact.
+
+**Worldgen.** All 71 biomes are registered with their 26.3 attributes (colours, music, particles, spawns) and all 307 configured features + 343 placed features register, but **136 of the 307 features actually place their block**; the other 171 use the mod's own Java feature types or 1.21.1-only shapes 26.3 has no decoder for. **No biome generates**: TerraBlender's region placement is Java and unported, so the features appear only through `/place feature`.
+"""
+authors = ["AdLf0208"]
+owners = ["AdLf0208"]
+owner_ids = [107615167]
+license = "MIT"
+source = "https://github.com/AdLf0208/regions_unexplored"
+icon = "icons/regions_unexplored.png"
+categories = ["technology"]
+tags = ["port"]
+
+[[versions]]
+version = "0.5.9"
+published = "2026-11-18"
+game = "26.3"
+file = "regions_unexplored.hmod"
+sha256 = "25a44d072cba73c1947aad4d181bcace57b6ec8e1587045582a9595c54f7ba5a"
+changelog = "First publication in the SDK format."

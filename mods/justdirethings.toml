@@ -37,3 +37,11 @@ game = "26.3"
 file = "justdirethings.hmod"
 sha256 = "62c233cb7112e60a66c150dd6472dd079600af0ee92eb4701dc53e61f52104df"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.3"
+published = "2026-11-21"
+game = "26.3"
+file = "justdirethings.hmod"
+sha256 = "8c9be198d40173d28253eb1b6d86ee7c8a6b4bc50d6e8578f28c184e5372a3cd"
+changelog = """Slice 2, the generator's redstone control: the four upstream modes (ignore, low, high, pulse) on `RedstoneControlledBE`, the base-class behaviour every later Just Dire Things machine inherits. Three saved keys, one tick gate, and the payload carries the recorded edge so a pulse fires once per edge. A defect found in the in-game leg and fixed: the tick replied `Unchanged` when nothing burnt, which discarded the recorded falling edge, so the second pulse bought no burn — the reply now persists when anything burnt, a fuel item was pulled, or the redstone control changed. Two of the port's own gap claims were corrected from the jar rather than copied: upstream has no comparator output in 1.5.7, and the mode set is four, not "beyond ignored". Proven in game: high runs only while powered, low freezes while powered, pulse buys 1,500 FE per edge with the stick count falling 4 to 3 to 2 while a held signal buys nothing, and a guest 40 blocks away is refused both commands while one a block away is allowed."""

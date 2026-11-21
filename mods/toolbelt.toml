@@ -29,3 +29,11 @@ game = "26.3"
 file = "toolbelt.hmod"
 sha256 = "966749f4998da4cc37eaaca0ccef6784bcf6e50ff5160e02ee6fc458f8242079"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "toolbelt.hmod"
+sha256 = "1eb8060368a9f676606d19672b42367aae220502ea62c81e8209f32ac89aa20b"
+changelog = """Slice 2, the pouch and the anvil upgrade: the pouch item and its recipe, and the forge-anvil path that grows a belt from two slots to nine. The upgrade costs are the jar's own — 3, 5, 8, 12, 15, 20 and 30 experience levels — and a belt at nine slots refuses a tenth pouch. The sewing-kit upgrades stay out because `neoforge:mod_loaded sewingkit` is not in the registry, and the config family is still a gap, so the port behaves as upstream's AUTO default. Proven in game: the belt and pouch recipes craft with their ingredients consumed, a wrong pattern crafts nothing, the anvil returns a belt at the next size with the cost taken from the player's level (2 to 3 for 3 levels; 8 to 9 for 30) and the pouch count falling, and a nine-slot belt with a pouch returns no result and consumes nothing. This version also fixes a `uses` record: a local `CommandArgumentValue::Item` match was recorded as building the SDK `Item` field by field, which made `fits` against another build refuse the package; the match now lives in a small macro the scan does not expand, so `type:Item` records `built: none` and `0b14f8a fits`."""

@@ -63,3 +63,11 @@ game = "26.3"
 file = "rootsclassic.hmod"
 sha256 = "c1c477d174a3d9be758b1c8a2e13879fc5daa86de945f540a03ca6ac9428a81b"
 changelog = "First release: the three herbs, the herb-forage table, the food items with their eaten effects, and the five recipes"
+
+[[versions]]
+version = "0.2.1"
+published = "2026-11-21"
+game = "26.3"
+file = "rootsclassic.hmod"
+sha256 = "c49f7f02fd788408151f5993636d384b83f48ac98f0d3cefa06e168e1ca64d6f"
+changelog = """Slice 2, the powder chain: growth powder (dirt to grass, a young crop to growth) and mutating powder with its three mutations — flare orchid, midnight bloom and radiant daisy — their two recipes and four convention tags. That closes the note that the three herbs had no survival-obtainable source. One content trap was found and fixed: the growth powder first used the redstone template, which made it a block item that placed a wire; both powders are plain items now. One double-spend was found in game and fixed: answering `PASS` let the click be re-issued, so one click spent two powders; the powder now answers `SuccessServer` when it acts. Proven in game: both recipes craft with their ingredients consumed and their wrong-ingredient controls stay empty; dirt becomes grass for one powder while stone spends nothing; wheat goes from age 0 to 5 for one; each mutation sets its block, discards the ingredients, spends the powder and applies the jar's Fire and skip-tick data plus blindness, while a bystander item entity and a midnight-instead-of-noon run leave it alone."""

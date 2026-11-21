@@ -1,0 +1,14 @@
+id = "keystrokes"
+name = "Keystrokes"
+version = "3.0.1"
+description = "Your movement keys, mouse buttons and space bar in a corner, lit while held, with clicks per second."
+authors = ["Horizon"]
+license = "MIT"
+homepage = "https://github.com/horizon-rust/horizon-mods/tree/main/native/keystrokes"
+api = "0.2"
+side = "client"
+capabilities = ["registries"]
+
+[wasm]
+sha512 = "f2e9e510d2fefdb4203e0c933347030042f3bcad471aa61b3a9a98429913a826abb19091b4805b6cdaa482265cc7370a7e0a4e827b9dd1207d39efd6941268f3"
+toolchain = "1.99.1 58cf8f9c35b355199727627d07ae34a4e2846d67"

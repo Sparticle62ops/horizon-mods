@@ -1,0 +1,37 @@
+id = "gmut"
+kind = "native-mod"
+name = "gmut"
+summary = "A Horizon port of gmut."
+description = """A port of [Gravitational Modulating Additional Unit](https://github.com/gisellevonbingen-Minecraft/GravitationalModulatingAdditionalUnit) by gisellevonbingen for Horizon — slice 1, the item and its stored modes.
+
+**Implemented so far**
+
+- `gmut:module_gravitational_modulating_additional_unit` on the paper template (stack size 1, rarity rare), with one of five steps kept **per stack** in the item's own `gmut:vertical_speed` component.
+- The five steps (`off` 1.0x, `low` 1.5x, `medium` 2.0x, `high` 2.5x, `ultra` 3.0x), cycled by right-click (back while sneaking) or by `/gmut mode|next|prev`, each change printing upstream's `Vertical Speed Modifier: <step> (<mult>x)` line.
+- `/gmut info` reports where the unit is (`held` / `off_hand` / `carried(N)` / `absent`), the stored step, four rule defaults and the gate; the tooltip shows the stored step and the gate line.
+- The carried model, texture, creative tab and English names.
+
+**Not yet ported / deviations**
+
+- **It does not change velocity.** The stored step is a label and a number: this port applies no vertical-speed multiplier, no gravity change, no flight, and no FOV or sound change. Upstream gates those on a worn MekaSuit carrying a working unit; Mekanism is not ported at this pin, so the gate is permanently `needs_gravitational_modulating_unit` and is reported honestly.
+- **No Mekanism recipe content.** The jar's shaped recipe and its advancement are not carried: every ingredient (`mekanism:module_base`, `mekanism:alloys/reinforced`, `c:circuits/ultimate`, `c:pellets/polonium`) does not exist at this pin, so the recipe could never match and the game rejected it at load. The item is reachable by `give` and from its creative tab only.
+- The HUD indicator, suit installation, the module GUI and the remaining config options.
+
+MIT: the original copyright and licence notices ship inside the package (`LICENSE` and `LICENSE-NOTICE.md` at its root) and are also in this repository. Pinned to Horizon 0b14f8a and horizon-mixins e59da90.
+"""
+authors = ["gisellevonbingen", "AdLf0208"]
+owners = ["AdLf0208"]
+owner_ids = [107615167]
+license = "MIT"
+source = "https://github.com/AdLf0208/gravitational_modulating_additional_unit"
+icon = "icons/gmut.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "0.2.1"
+published = "2026-11-21"
+game = "26.3"
+file = "gmut.hmod"
+sha256 = "c3f91a06d4df0c8b0935fff082b1846ab605d4bc6b7f940e3d505e2d6a0a3d76"
+changelog = """Review repair: the licence keeps upstream's full copyright line (`Copyright (c) 2022 gisellevonbingen`) and the notice names only files that exist at the package root; the listing text now says what the item actually does — it stores a step and changes no velocity, and no Mekanism recipe content is carried, because the 0.2.0 recipe files were dead data the game rejected at load and are dropped. The five steps, the readout, the tooltip and the gate are unchanged."""

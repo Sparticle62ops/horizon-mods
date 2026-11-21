@@ -42,3 +42,11 @@ game = "26.3"
 file = "integrateddynamics.hmod"
 sha256 = "d1c04daf2f8e20bc4726f903d9ec60752173e00f24ba4ae9367561b3441e2153"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "integrateddynamics.hmod"
+sha256 = "cad631ca4d603c163bd13d2bcbb8618f85170979942202206ed06ddcac4b9262"
+changelog = """Slice 2, the World Reader (`integrateddynamics:part_world_reader`). It is the same cable-block-entity-holds-parts shape slice 1 established, and it reads world state only the server can answer: light, weather and the day cycle. Six of the mod's 14 World aspects are carried — the ones whose value fits a redstone channel exactly (a boolean becomes 15/0, light 0..15); the other eight need the typed value layer and stay not ported. A placed part defaults to `light`, and the operator command `/integrateddynamics aspect <pos> <face> <aspect>` selects another. This version also repairs the fit gate: the local `Parts` type was renamed `PartSlots`, so `fits` no longer records an SDK literal at a local site and `0b14f8a fits` is true again. Proven in game: a cable carrying a world reader answers with its aspect's redstone level, and the control game without the package refuses the block."""

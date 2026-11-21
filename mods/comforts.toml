@@ -34,3 +34,11 @@ game = "26.3"
 file = "comforts.hmod"
 sha256 = "b9f3b8963a47e6069a4a94da87b905d396bf278a17445296a8a6b465924d38ef"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.1"
+published = "2026-11-21"
+game = "26.3"
+file = "comforts.hmod"
+sha256 = "1bec3751abbdd259ada3e9cc10f1f02b1618209cd971e50b6c5a9e9293196bb9"
+changelog = """Carry-dialect repair: the `sleeping_bed` recipe was in the 1.21.1 object ingredient form 26.3 rejects, so it could not be crafted. Converted to bare ids. Proven in game: `sleeping_bed` crafts with its white wool consumed and the grid emptied. Its loot table was already in the 26.3 shape and is untouched."""

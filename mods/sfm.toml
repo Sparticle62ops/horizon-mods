@@ -35,3 +35,11 @@ game = "26.3"
 file = "sfm.hmod"
 sha256 = "9ba622c09210596837d425f0f2b77076196ab917e6252022ed12e28176edb03b"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "sfm.hmod"
+sha256 = "a7ba227a4a9fe66f7f077168a87511ec8bfb363bebe9dd104437bdab21679f33"
+changelog = """Carry-dialect repair: two recipes and two loot tables were in the 1.21.1 dialect. The recipes used the object ingredient form 26.3 rejects, so they never crafted, and the tables carried the array `"conditions"`, so the blocks dropped nothing. Converted. Proven in game: `cable` crafts sixteen with its black dye consumed and the grid emptied, and `cable` drops itself beside a vanilla control that drops one."""

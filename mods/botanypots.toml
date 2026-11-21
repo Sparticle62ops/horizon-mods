@@ -26,8 +26,8 @@ Not yet ported
 
 Licensed **LGPL-2.1-only**, the original's licence, with the complete corresponding source
 in the port repository, so the licence obligations are met: original copyright
-and licence notices travel with it, inside the bundle (`mixins/botanypots/LICENSE`
-and `data/botanypots/license/`) as well as in its LICENSE and LICENSE-NOTICE.md. Help with
+and licence notices travel with it: `LICENSE` and `LICENSE-NOTICE.md` at the
+package root, with the same texts in the source repository. Help with
 the gaps above is welcome.
 """
 authors = ["Darkhax", "AdLf0208"]
@@ -40,9 +40,17 @@ categories = ["game-mechanics", "food"]
 tags = ["port", "farming", "crops", "machines"]
 
 [[versions]]
+version = "0.2.2"
+published = "2026-11-20"
+game = "26.3"
+file = "botanypots.hmod"
+sha256 = "f76388afda5f28434323247b9e95d237de925de741cc806f6d8a78839e7f23f9"
+changelog = """Repair, slice 2, and the operator gate. 0.2.0 could not load: it carried 131 crop, soil, interaction and fertilizer recipe files whose serializers do not exist at this pin, so Horizon refused the pack and the game exited (those files are dropped: 168 content files down to 37). Slice 2 adds the hopper pot: 15 slots, self-harvest on the tick with no click, and the storage pushed into the container below, with the harvest's overflow no longer destroyed. `/botanypots info` was level 0, so any player could read any pot's soil, seed and growth at coordinates of their choosing, and a non-pot position echoed that block's id; it is now `Command::op(…, 2)` with a body re-check, and a position holding no pot answers only that it is not a botany pot. Proven in game: an operator reads the pot, a non-pot position answers `not a botany pot`, and a level-0 LAN guest is refused `/botanypots info` while `/help` and `/list` answer that same guest — so the refusal is the gate, not guest commands being switched off."""
+[[versions]]
 version = "0.2.0"
 published = "2026-11-10"
 game = "26.3"
 file = "botanypots.hmod"
 sha256 = "18218cafb9ad6fc5d2c5de49c93311efef4cb912c1e68bc20a4a287f9556e515"
 changelog = "First release: slice 1 of the port, with the full licence and corresponding source in the port repository"
+

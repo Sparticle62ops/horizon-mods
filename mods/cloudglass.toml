@@ -35,3 +35,11 @@ game = "26.3"
 file = "cloudglass.hmod"
 sha256 = "4a8b9fb7617faacad05ce489793d47a321a528fd2290cc7549671837b40bc497"
 changelog = "First release (port 0.1.0: the sixteen carried blocks, their items, recipes, drops and walking behaviour, all inside one .hnmod)"
+
+[[versions]]
+version = "0.2.1"
+published = "2026-11-20"
+game = "26.3"
+file = "cloudglass.hmod"
+sha256 = "af0a220fda3d19b06fe3803d56cacdd84d0140f50687bf8084476dd5f8effc5c"
+changelog = "Slice 2: the in-game leg, and with it the parity coverage — all 16 variants placed and read back, all 16 loot tables mined for their self-drop, all 31 carried recipes crafted with their ingredients consumed (two stick controls stay empty), the two content tags matched positively and negatively, and collision measured against vanilla glass. The eye tint remains a recorded gap."

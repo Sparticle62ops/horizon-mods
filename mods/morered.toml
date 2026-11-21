@@ -39,3 +39,11 @@ game = "26.3"
 file = "morered.hmod"
 sha256 = "9f3370b86a092635e2d9b33071e231e7e0090ddc9add7794860d5ea961fdda5c"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.3"
+published = "2026-11-21"
+game = "26.3"
+file = "morered.hmod"
+sha256 = "1dfa52998bcd77825a093dd1f8292425f132aaf691363d9ecd860c205ea1f4fb"
+changelog = """Carry-dialect repair: 46 data files were still in the 1.21.1 dialect. Four recipes used the `{"item": …}` / `{"tag": …}` ingredient form 26.3 rejects, so they never crafted, and 42 loot tables carried the array `"conditions"`, `bonus_rolls` and `1.0` rolls, so their blocks dropped nothing. All converted to the 26.3 shapes. Proven in game: `redwire_post` crafts with its red alloy consumed and the grid emptied, and `redwire_post` drops itself beside a vanilla control that drops one too."""

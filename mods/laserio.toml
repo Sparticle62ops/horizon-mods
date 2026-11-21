@@ -37,3 +37,11 @@ game = "26.3"
 file = "laserio.hmod"
 sha256 = "d6ecb42221cab8a18d8e714a4141a7c4b05c3a2507371a1f41f0e3628e628a16"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "laserio.hmod"
+sha256 = "b695047561e05bedb6ad57a94dc5d6578bbc3551528681c1864f9fe4b3370ef5"
+changelog = """Slice 2, channels as routing: a card's channel now decides where its stacks go. Upstream hands a stack only to inserter cards on the same channel and takes nothing when none answers, so until now the port's channel was decorative — every insert endpoint in a network was a destination, and the mod's central routing rule was missing. The service and destination order now carry the channel, the card stores it, and `/laserio channel` sets it. Five carried recipes were dead and are fixed, with their second half: all five used the 1.21.1 `{"item": …}` ingredient form the pin rejects, and the `c:` tags they name exist in no target data, so even the right shape could not match — the port now declares the seven tags it needs. Proven in game: the five recipes craft with their ingredients consumed and a wrong pattern crafts nothing; a channel-3 extract card fills the channel-3 card 20/20 and leaves the channel-0 card at 0; moving that card to channel 5 makes the extract card take nothing while the source keeps 20; and returning it receives all 20."""

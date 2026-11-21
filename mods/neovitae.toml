@@ -41,3 +41,11 @@ game = "26.3"
 file = "neovitae.hmod"
 sha256 = "3f0e610056b6fa12a56cb0f733d81108d0bb8507e97de37563423c15b9f1adb2"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "neovitae.hmod"
+sha256 = "e0453f447ebc0db5e3111b7f237b03038ebfde43d26784875c01f1b042a26d57"
+changelog = """Carry-dialect repair: four loot tables were in the 1.21.1 dialect — the array `"conditions"`, `bonus_rolls` and `1.0` rolls — so those blocks dropped nothing. Converted to 26.3's singular `"condition"` and integral rolls, and `rune_blank` now drops itself beside a vanilla control that drops one. The port carries no crafting recipe (its altar crafting is its own path), so the in-game proof here is the drop family."""

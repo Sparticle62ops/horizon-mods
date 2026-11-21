@@ -1,0 +1,28 @@
+id = "mcaccel"
+kind = "native-mod"
+name = "Pumpkins Accelerated"
+summary = "Pumpkins Accelerated: carved pumpkin faces and more."
+description = """
+Pumpkins Accelerated: carved pumpkin faces and more.
+
+**Differences from the original:** A snow golem built with one of the mod's heads still looks like a plain carved pumpkin and drops one when sheared. Pistons push the pumpkins instead of breaking them. Only shears in the main hand change the face, and the blocks have their own creative tab instead of sitting in Building Blocks. Players joining over LAN may not hear the carving sound.
+
+A port of [Minecraft Accelerated](https://github.com/Cookieglue/PumpkinsAccelerated) 1.0.0 by Mari, published under its licence, CC0-1.0. The original copyright and licence notices are kept in the file (LICENSE, NOTICE).
+
+Its textures, models and data come from the original mod. No Minecraft code is included."""
+authors = ["lavoide", "Mari"]
+owners = ["lavoide"]
+owner_ids = [38075742]
+license = "CC0-1.0"
+source = "https://github.com/lavoide/horizon-ports/tree/main/mcaccel"
+icon = "icons/mcaccel.png"
+categories = ["decoration"]
+tags = ["homestead", "port"]
+
+[[versions]]
+version = "0.4.1"
+published = "2026-11-20"
+game = "26.3"
+file = "mcaccel.hmod"
+sha256 = "4bce13ed1d0b6bd84e188c8507fec9d7d1d957a5e14d7b2bcbd81705d8e35769"
+changelog = "0.4.1: reverse carving runs inside the game's own left-click handling, after its permission checks, and writes at once: no deferred write is left to go stale."

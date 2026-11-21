@@ -19,7 +19,7 @@ A port of [Artifacts](https://github.com/ochotonida/artifacts) for Horizon.
 - **Upstream's own equipment slots** (and Curios) are not carried; the off-hand equip is the stand-in.
 - The other artifacts of the mod, their configs and the durability/repair behaviour are later slices.
 
-MIT: the original copyright (`Copyright (c) Wouter Pauwels`) and licence travel inside the bundle, not only in the source repository. Pinned to Horizon 1d63e0a and horizon-mixins 5a64af93.
+MIT: the original copyright (`Copyright (c) Wouter Pauwels`) and licence travel inside the bundle, not only in the source repository. Pinned to Horizon 0b14f8a and horizon-mixins e59da90.
 """
 authors = ["ochotonida", "AdLf0208"]
 owners = ["AdLf0208"]
@@ -37,3 +37,11 @@ game = "26.3"
 file = "artifacts.hmod"
 sha256 = "72ebd4a225639317da2e7defd95ec3018c8b207e961a2b1ba057f7ddf8ddcae3"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.1"
+published = "2026-11-20"
+game = "26.3"
+file = "artifacts.hmod"
+sha256 = "9382fa0cc62bddf15cf410c5811063a1e14c27489a7f355815b00ab5c5726442"
+changelog = """Slice 3: the off hand is now the only worn slot. Until this version any artifact anywhere in the inventory counted, so carrying one was the same as wearing it — the Feral Claws gave +30% attack speed from a backpack slot. Now only the off hand grants an effect, and a carried duplicate adds nothing. Equip path unchanged; the off hand is not replaced when occupied, and an unknown id is refused."""

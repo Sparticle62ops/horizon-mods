@@ -41,3 +41,11 @@ game = "26.3"
 file = "naturesaura.hmod"
 sha256 = "7ff4203525ca1d9ff54cb42d324130d08b6ae2fb3a975a830dda5a2f9dbc3c0b"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "naturesaura.hmod"
+sha256 = "be31234c0485c8873071b0a4ff2f1568dc23bbc3a35a96a1140fe61d8d978143"
+changelog = """Slice 2, the two carried crafting recipes — and the 1.21.1 dialect they shipped in. `gold_brick` is a shapeless recipe, and the port's carry script upgraded a shaped recipe's `key` for both tag and item forms but left a shapeless `ingredients` list in the old `{"item": …}` form, so 26.3 rejected it at load and the recipe returned nothing. The shaped `gold_fiber` beside it crafted perfectly, which is why slice 1 never noticed the dead one. The script now upgrades both shapes through one helper, and regenerating the carry from the kept jar changes exactly one file of fifty-two. The port also gains the checks that would have caught it: a dialect check over the built package, a real-table craft check for both recipes with two wrong-ingredient controls, item and block read-backs, and the four carried loot tables proved by breaking them. Proven in game: both recipes craft with their ingredients consumed, two wrong patterns return nothing, the load log has zero `invalid ingredient` lines against six in the red run, and all four blocks drop themselves."""

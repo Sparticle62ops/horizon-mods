@@ -1,0 +1,46 @@
+id = "mekanism"
+kind = "native-mod"
+name = "Mekanism"
+summary = "The Energized Smelter, Enrichment Chamber, Basic Energy Cube and Universal Cable, ported."
+description = """
+A port of [Mekanism](https://github.com/mekanism/Mekanism) by Aidan C. Brady and the Mekanism contributors for Horizon. These first slices bring four pieces of the ore-processing chain:
+
+- **Energized Smelter** — 50 FE/t, 200 ticks per smelt, a 20,000 FE buffer.
+- **Enrichment Chamber** — the jar's recipes: one ore becomes two dusts, raw ore 3 becomes 4, a raw block 1 becomes 12.
+- **Basic Energy Cube** — a 4,000,000 FE buffer.
+- **Basic Universal Cable** — moves 8,000 FE/t between them.
+
+Feed items and FE through their sides and right-click a machine to open its menu.
+
+**Not yet ported**
+
+- **The Energy Cube has no menu and no side configuration.** The container hook returns for the cube and all six of its faces are both inputs and outputs; the side configuration the mod is known for is not implemented.
+- **The four block recipes are this slice's own**, using vanilla stand-ins (iron, redstone, glass, copper) for the steel casing, the basic alloy, the circuits and the energy tablet that this slice does not register; upstream's recipes depend on the steel chain, which is a later slice.
+- The rest of Mekanism — the other machines, the multiblocks, the tools and the deep-tier content — is a planned gap list.
+
+MIT: the original copyright (`Copyright (c) 2017-2025 Aidan C. Brady`) and licence travel inside the bundle, not only in the source repository. Pinned to Horizon 1d63e0a and horizon-mixins 5a64af93.
+"""
+authors = ["Aidancbrady", "Thommy101", "Thiakil", "pupnewfster", "dizzyd", "AdLf0208"]
+owners = ["AdLf0208"]
+owner_ids = [107615167]
+license = "MIT"
+source = "https://github.com/AdLf0208/mekanism"
+icon = "icons/mekanism.png"
+categories = ["technology"]
+tags = ["port", "machines", "energy", "ore-processing"]
+
+[[versions]]
+version = "0.2.1"
+published = "2026-11-09"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "2cf935e4b568d876535fafec9f0eb7c7aaf8c851ff30f424e1931b993ec76c5a"
+changelog = "First release"
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "mekanism.hmod"
+sha256 = "d52219f7f369bded568a031d8a8e31d8e0a8a2cb8b0fc19bafe43112187d38f6"
+changelog = """Slice 3, the Crusher — the ore-processing machine that needs no new capability: 50 FE/t, a 20,000 FE buffer and 200 ticks (10,000 FE) per operation, from the jar's own config, carrying 145 of its 313 crushing rows (the rest need dusts this port does not register, and each skipped row is printed by the generator). Two defects found while carrying it, both fixed. First: every shaped recipe in 0.2.x used the 1.21.1 `{"item": …}` ingredient form, which 26.3 rejects — all four existing recipes and the new one could not craft at all; they now use bare item ids and are proven in game. Second: the local `Stack` and `Recipe` types shadowed SDK names, so the `uses` table claimed SDK types the port never used and `fits` against a different build failed; renamed `ItemAmount` and `MachineRecipe`, and the table is now true. Proven in game: cobblestone becomes gravel with the buffer at 0 after exactly one 10,000 FE operation, all 145 rows crush in a sweep, an uncharged crusher does nothing, and dirt with no recipe burns nothing."""

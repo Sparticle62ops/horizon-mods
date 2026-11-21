@@ -44,3 +44,11 @@ game = "26.3"
 file = "compactmachines.hmod"
 sha256 = "3088104a0e02b3a8887cf09b8b7743d8b522fdbf12c554794097c4fa9cb7cc09"
 changelog = "First release"
+
+[[versions]]
+version = "0.2.2"
+published = "2026-11-21"
+game = "26.3"
+file = "compactmachines.hmod"
+sha256 = "0ce22800355b08221d3f8203e737d4c09db0ce2e547fdad59d95f81b7a80c161"
+changelog = """Carry-dialect repair: four loot tables were in the 1.21.1 dialect, so those blocks dropped nothing. Converted to 26.3's singular `"condition"` and integral rolls. Proven in game: `wall` crafts eight with its polished deepslate consumed (that recipe was already 26.3), and `wall` drops itself beside a vanilla control that drops one."""
