@@ -6,23 +6,24 @@ description = """Exact 1:1 Rust translation of [better-mount-hud](https://github
 (Lortseam, GPL-3.0) for Horizon.
 
 Upstream logic: `mixin/HudMixin.java` (62 lines), carried 1:1 in
-`mixins/better_mount_hud/runtime.rs` as a Horizon client runtime splice
-(`crates/horizon-client/src/game.rs`). The mixin's injections into `Hud`
-(extractVehicleHealth / extractPlayerHealth / getAirBubbleYLine /
+`src/hud_mixin.rs` on the current mod API. The mixin's five injections into
+`Hud` (extractVehicleHealth / extractPlayerHealth / getAirBubbleYLine /
 nextContextualInfoState / extractHotbarAndDecorations) run their exact handler
 bodies against a `HudMixinEnv` seam that supplies the shadowed `Hud` state
 (`minecraft`, `getPlayerVehicleWithHealth`, `getVehicleMaxHearts`) and the
 player/game-mode surface the handlers read.
 
+Upstream has no config and no client entrypoints, so the registration is
+empty, matching the original.
+
 Ported by sparticle.
 
-## License
+The handlers are HUD injections into vanilla's `Hud` extraction pipeline and
+wait on a HUD-injection surface in the mod API (tracked on
+horizon-rust/horizon).
 
-Upstream better-mount-hud is Copyright (C) Lortseam and contributors,
-GPL-3.0-or-later. This port carries the upstream license and credit per the
-port policy.
-
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Source-only .hmod built on the current SDK (Horizon f00125f,
+horizon-mixins e59da909). Full GPL-3.0 licence text verbatim from upstream.
 
 Licence: GPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-better-mount-hud
 """
@@ -40,5 +41,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "better_mount_hud-1.0.0.hmod"
-sha256 = "3cf6f729cff50e56ff718d6a895f6d5883e2d09049331fc85e17a10770a50cc1"
-changelog = "Initial registry submission"
+sha256 = "88516b62dcf68a640cd6e49e0065837f5b1f84db80cce76d5194b97c46461cae"
+changelog = "Rebuilt on the current SDK mod API: upstream HudMixin handlers 1:1 (hud_mixin.rs), empty registration (upstream has no config or entrypoints), full GPL-3.0 verbatim; pins aligned to Horizon f00125f / horizon-mixins e59da909"
