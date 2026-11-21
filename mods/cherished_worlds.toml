@@ -26,8 +26,8 @@ tags = ["port", "horizon"]
 
 [[versions]]
 version = "1.0.0"
-published = "2026-11-19"
+published = "2026-11-21"
 game = "26.3"
-file = "cherished_worlds-1.0.0.hmod"
-sha256 = "86efb16a0d75d586e97442058ceec4409e8ab6d9b90413c3063d932b103160d1"
-changelog = "Initial registry submission"
+file = "cw-1.0.0.hmod"
+sha256 = "db25e89931893c394a21d0de00da1e92ff668554a03a5b4d5a582b58e5de3926"
+changelog = "Rebuilt on the current SDK (Horizon f00125f, mixins e59da909): full source package with the LGPL and GPL texts, mod API settings for backupWorldType."
