@@ -31,7 +31,7 @@ The whole Microsoft authentication chain, the session status check, the
 stored-account flow and the auto toggle work as in the original, and the
 stored tokens are compatible with its OAuth client.
 
-## What
+## Packaging
 
 Source-only .hmod built on the current SDK (Horizon f00125f)
 
@@ -51,5 +51,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "auto_reauth-1.0.0.hmod"
-sha256 = "6e34b5dfe6a389222ca4e19b2224ce8754abf5174863f2a8a9a39d793c7219af"
-changelog = "Initial registry submission"
+sha256 = "b77a8024a5ba4774f8182b971fd10b70ed833c6e4f3752a9c8c2f7cfc2311c72"
+changelog = "Rebuilt on the f00125f native-mod API: auto + debug settings with 1:1 config load, full OAuth/XSTS/Minecraft core with the outbound-IO host seam; package drops the generated Cargo.lock"
