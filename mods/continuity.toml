@@ -26,17 +26,38 @@ one seam per upstream call.
   `ModelWrappingHandler` bake wrap, `ModelObjectsContainer`, and the
   feature states the entity renderer mixins toggle.
 - The resource layer: `CtmPropertiesLoader` (pack priority order,
-  `java.util.Properties` parsing), `ResourceRedirectHandler`, 
-  `CustomBlockLayers` + `EmissiveSuffixLoad
+  `java.util.Properties` parsing), `ResourceRedirectHandler`,
+  `CustomBlockLayers` + `EmissiveSuffixLoader` reload listeners, and the
+  `BakedModelManagerReloadExtension` with the atlas/sprite loader contexts
+  (AtlasLoader/SpriteLoader/BakedModelManager mixins, emissive control,
+  stitch carry).
+- The config screen, the ModMenu entry, and the falling-block / piston
+  entity renderer mixins.
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+## Mod API wiring (rebuild)
 
-Licence: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-continuity
-"""
+- The four config booleans (connected textures, emissive textures, custom
+  block layers, manual culling) are settings on Horizon's Options > Mods
+  page, same defaults.
+- `client_setup` runs the core init: the 25 CTM loader registrations, the
+  model-wrapping plugin, and the custom-block-layers reload listener.
+- `client_resources_reloaded` re-applies the wrap flags on every reload,
+  the original's `ValueFlag::ReloadWorldRenderer` effect.
+
+## Tracked gap
+
+The quad wrap itself runs in the engine's model-bake pass; the pinned mod
+API has no baked-geometry hook (horizon-rust/horizon#861), so models bake
+un-wrapped until that lands. Tracked on horizon-rust/horizon#861.
+
+Source-only .hmod built on the current SDK (Horizon f00125f, mixins e59da909,
+api 0.2). 134 cargo tests green.
+
+Licence: LGPL-3.0-only. Source: https://github.com/Sparticle62ops/horizon-continuity"""
 authors = ["PepperCode1", "sparticle"]
 owners = ["Sparticle62ops"]
 owner_ids = [209812745]
-license = "LGPL-3.0-or-later"
+license = "LGPL-3.0-only"
 source = "https://github.com/Sparticle62ops/horizon-continuity"
 icon = "icons/continuity.png"
 categories = ["utility"]
@@ -47,5 +68,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "continuity-1.0.0.hmod"
-sha256 = "b5f67d9f84ca17d3f7460ec8475f9c645d3bb0de6a167a9eb027961e796c0567"
-changelog = "Initial registry submission"
+sha256 = "d6bdd72d58291cb04f631d6bb65c7b8bb3a9aa852933a4b4f8bab7eb93ce98dc"
+changelog = "Rebuilt on the current SDK mod API"
