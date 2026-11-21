@@ -25,9 +25,9 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
-version = "1.0.0"
+version = "1.0.1"
 published = "2026-11-21"
 game = "26.3"
-file = "cleardespawn-1.0.0.hmod"
+file = "cleardespawn-1.0.1.hmod"
 sha256 = "fb2a2ae701a4f1bc7db5f8f0868cc22c0cac8b830965c739b881472b01be9bf9"
 changelog = "Rebuilt as the exact 1:1 port on the current SDK: full module tree (constants, config, config_helper, services, render_item_entity_extended, clear_despawn, mod_menu, seams), the original's three config entries as settings with upstream's lang keys, the despawn-flash renderer entry wired on client setup, MIT notices carried in the repo and package."
