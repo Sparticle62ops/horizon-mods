@@ -43,9 +43,9 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
-version = "1.0.1"
+version = "1.0.2"
 published = "2026-11-21"
 game = "26.3"
-file = "fabrishot-1.0.1.hmod"
-sha256 = "d651e543c5cda8258cbec4be0f0e7a5d85d006ca6788bd56dccd6b4273a64d46"
-changelog = "Full 1:1 rebuild on the current SDK: the CaptureTask state machine driven from the F9 key and the render frame post hook, the F2 override path (override_screenshot_key), the seven config entries as settings with upstream labels and defaults, and the writer encoding real frames in the original's four formats."
+file = "fabrishot-1.0.2.hmod"
+sha256 = "348990a3fc995624a7feaad6e4ebef8c0e17cef24d5b30ab4c6cfddf54f7edb5"
+changelog = "Full 1:1 rebuild on the current SDK: the CaptureTask state machine driven from the F9 key and the render frame post hook, the F2 override path (override_screenshot_key), the seven config entries as settings with upstream labels and defaults, and the writer encoding real frames in the original's four formats. 1.0.2: package rebuilt from the tested tree (the 1.0.1 archive carried a broken src/tests.rs; fixed and verified under cargo test, 8 green)."
