@@ -37,9 +37,9 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
-version = "1.0.0"
+version = "1.0.1"
 published = "2026-11-19"
 game = "26.3"
-file = "better_mount_hud-1.0.0.hmod"
+file = "better_mount_hud-1.0.1.hmod"
 sha256 = "bd72c997af76909aa00d1666c0d74218e843eb7d60c2d280744ca91cabd8c10c"
 changelog = "Rebuilt on the current SDK mod API: upstream HudMixin handlers 1:1 (hud_mixin.rs), empty registration (upstream has no config or entrypoints), full GPL-3.0 verbatim; pins aligned to Horizon f00125f / horizon-mixins e59da909"
