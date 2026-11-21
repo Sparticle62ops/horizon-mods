@@ -1,14 +1,35 @@
 id = "enhanced_attack_indicator"
 kind = "native-mod"
 name = "enhanced_attack_indicator"
-summary = "A Horizon port of Enhanced Attack Indicator."
-description = """enhanced-attack-indicator (Horizon Rust port), slice 1: the indicator model. NOTE: the master repo keeps this port as src/lib.rs + modules; this bundle inlines the modules into one runtime.rs file, compile-equivalent, for the single-module .hnmod format.  1:1 port of the upstream logic core (MIT): the vanilla attack indicator is replaced by selectable variants (the horizontal bar under the crosshair, or the circumferential arc around it), driven by the vanilla attack cooldown with the mod's charge/fill colors. Render hooks land in the next slice.
+summary = "The attack indicator shows more than melee attack cooldowns: sleeping, block breaking, ranged draw, food, shulker fullness, item cooldowns."
+description = """Exact 1:1 Rust translation of [Enhanced Attack Indicator](https://github.com/Minenash/Enhanced-Attack-Indicator)
+(upstream Java, MIT (c) 2021 Minenash). Carries the upstream license and credit.
 
-Port by sparticle. Upstream: https://github.com/Minenash/Enhanced-Attack-Indicator (MIT).
+Ported for the Horizon client by sparticle.
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+The attack indicator shows more than melee attack cooldowns: the crosshair
+indicator renders the mod's progress chain instead - sleeping, block
+breaking, bow/crossbow/trident draw, food and potions, shulker/bundle
+fullness, item cooldowns, charged crossbow, with the vanilla weapon
+cooldown at the configured priority (First/Middle/Last). The vanilla
+crosshair layer is replaced by the engine's own crosshair sequence driven
+by the chain, in place of the upstream render-crosshair redirect.
 
-Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-enhanced-attack-indicator
+Live on the mod API: the nine config entries as settings (upstream lang
+labels, same defaults); the progress chain and the replacement draw 1:1;
+the crosshair layer replacement wired (register above, cancel, draw).
+Pending host wires (tracked): the chain's world inputs - the local attack
+strength scale, sleep timer, block breaking progress, item cooldown
+progress and held-stack components - so the weapon branch follows the
+snapshot until they land; the hotbar-mode sword indicator stays the
+engine's draw.
+
+Pinned to Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d and
+horizon-mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0, mod api 0.2; exact
+1:1 Rust port tested against those revisions (18 tests).
+
+Licence: MIT (LICENSE carries the upstream text). Source:
+https://github.com/Sparticle62ops/horizon-enhanced-attack-indicator
 """
 authors = ["Minenash", "sparticle"]
 owners = ["Sparticle62ops"]
@@ -20,9 +41,9 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
-version = "1.0.0"
-published = "2026-11-19"
+version = "1.0.1"
+published = "2026-11-21"
 game = "26.3"
-file = "enhanced_attack_indicator-1.0.0.hmod"
-sha256 = "92eb808f2cc01f1004f6b66f713ba7a3f54dd2777c5f103fabc5b27e7976be53"
-changelog = "Initial registry submission"
+file = "enhanced_attack_indicator-1.0.1.hmod"
+sha256 = "70286496ef837cebcd53e3abde8797537488eb37255af03ff4ebc89de13d346f"
+changelog = "Full 1:1 rebuild on the current SDK: the real upstream progress chain, the nine config entries as settings, and the crosshair layer replacement (the engine's own crosshair sequence with the chain's answer) in place of the render-crosshair redirect."
