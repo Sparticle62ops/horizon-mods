@@ -1,4 +1,4 @@
-id = "crosshair_indicator"
+id = "crosshair_indicator_port"
 kind = "native-mod"
 name = "Crosshair Indicator"
 summary = "Dynamic target reach awareness: visual feedback on your crosshair when hovering over an entity in attack range."
@@ -16,24 +16,27 @@ The mod API wires the original's four settings: the enabled and cooldown-bar tog
 Options > Mods page (same defaults); the style and theme pickers stay config-file entries because
 the settings API only takes toggles and ranges.
 
+Listed under this fresh id: the original `crosshair_indicator` entry is archived, its owner keys
+are the archived author's, and its versions are signed under that key, so a reactivated entry
+cannot take a new version. The archived entry stays archived and untouched.
+
 Source-only .hmod built on the current SDK (Horizon f00125f, mixins e59da909, mod api 0.2).
 
 Licence: MIT (upstream text). Source: https://github.com/Sparticle62ops/horizon-crosshair-indicator
 """
 authors = ["CayMac", "sparticle"]
-owners = ["CayMac97"]
-owner_ids = [197672048]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
 license = "MIT"
 source = "https://github.com/Sparticle62ops/horizon-crosshair-indicator"
-icon = "icons/crosshair_indicator.png"
+icon = "icons/crosshair_indicator_port.png"
 categories = ["utility"]
 tags = ["crosshair", "pvp", "combat", "hud", "port"]
-key = "RWS411U2KXdTN4/y5bQhqBYxNlZvCtSZ5lNy46eeSAcgy0cxSJo2+Sm3"
 
 [[versions]]
 version = "1.0.1"
 published = "2026-11-21"
 game = "26.3"
-file = "crosshair_indicator-1.0.1.hmod"
-sha256 = "fe0af5310016a16faf3eadf1084878f4822ecf60ef7078752c344268dfb9eb3e"
-changelog = "Reactivated as the exact 1:1 port of CayMac97/crosshair-indicator on the current SDK (Horizon f00125f, mixins e59da909, mod api 0.2): full runtime module 1:1 (styles, themes, settings), enabled+cooldown wired as mod API settings, style/theme enums kept config-file, 12 tests; the retired slice-1 progress model is replaced. Archived owner and signing key preserved."
+file = "crosshair_indicator_port-1.0.1.hmod"
+sha256 = "42d26563c29d8ab6548fb3bd1c68d86530fb31d8d915256aabf2841017b93502"
+changelog = "Fresh registry id for the exact 1:1 port of CayMac97/crosshair-indicator on the current SDK (Horizon f00125f, mixins e59da909, mod api 0.2): full runtime module 1:1 (styles, themes, settings), enabled+cooldown wired as mod API settings, style/theme enums kept config-file, 12 tests."
