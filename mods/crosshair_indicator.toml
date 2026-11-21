@@ -1,28 +1,39 @@
 id = "crosshair_indicator"
 kind = "native-mod"
-name = "crosshair_indicator"
-summary = "A Horizon port of Crosshair Indicator."
-description = """crosshair-indicator (Horizon Rust port), slice 1: the progress model. NOTE: the master repo keeps this port as src/lib.rs + modules; this bundle inlines the modules into one runtime.rs file, compile-equivalent, for the single-module .hnmod format.  1:1 port of the upstream logic core (CC0-1.0): the crosshair swaps between variants (vanilla cross, attack-indicator arc, break-progress arc) based on what the player is doing, and colors follow the vanilla attack strength. Render hooks land in the next slice behind the same seam.
+name = "Crosshair Indicator"
+summary = "Dynamic target reach awareness: visual feedback on your crosshair when hovering over an entity in attack range."
+description = """Exact 1:1 Rust port of [Crosshair Indicator](https://github.com/CayMac97/crosshair-indicator)
+(MIT, CayMac), itself a 1:1 port of AmerDz01's Java Crosshair Indicator mod; carries the upstream
+license and credit. Port by sparticle.
 
-Port by sparticle. Upstream: https://modrinth.com/mod/crosshair-indicator (CC0-1.0).
+Your crosshair tells you when the mob or player you aim at is within attack reach: the target
+indicator picks one of four styles (corner brackets, center dot, diamond pips, chevron above the
+crosshair), the color theme follows the weapon's charge state (classic white, dynamic
+green/orange, combat red, pink, diamond cyan, gold), and an optional thin cooldown bar sits below
+the crosshair while the weapon charges.
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+The mod API wires the original's four settings: the enabled and cooldown-bar toggles live on the
+Options > Mods page (same defaults); the style and theme pickers stay config-file entries because
+the settings API only takes toggles and ranges.
 
-Licence: CC0-1.0. Source: https://github.com/Sparticle62ops/horizon-crosshair-indicator
+Source-only .hmod built on the current SDK (Horizon f00125f, mixins e59da909, mod api 0.2).
+
+Licence: MIT (upstream text). Source: https://github.com/Sparticle62ops/horizon-crosshair-indicator
 """
-authors = ["sparticle"]
-owners = ["Sparticle62ops"]
-owner_ids = [209812745]
-license = "CC0-1.0"
+authors = ["CayMac", "sparticle"]
+owners = ["CayMac97"]
+owner_ids = [197672048]
+license = "MIT"
 source = "https://github.com/Sparticle62ops/horizon-crosshair-indicator"
 icon = "icons/crosshair_indicator.png"
 categories = ["utility"]
-tags = ["port", "horizon"]
+tags = ["crosshair", "pvp", "combat", "hud", "port"]
+key = "RWS411U2KXdTN4/y5bQhqBYxNlZvCtSZ5lNy46eeSAcgy0cxSJo2+Sm3"
 
 [[versions]]
-version = "1.0.0"
-published = "2026-11-19"
+version = "1.0.1"
+published = "2026-11-21"
 game = "26.3"
-file = "crosshair_indicator-1.0.0.hmod"
-sha256 = "b85986eb8a5f5058a168c31007d3b2acb34c8f040fd31bb76a32c91e43130244"
-changelog = "Initial registry submission"
+file = "crosshair_indicator-1.0.1.hmod"
+sha256 = "fe0af5310016a16faf3eadf1084878f4822ecf60ef7078752c344268dfb9eb3e"
+changelog = "Reactivated as the exact 1:1 port of CayMac97/crosshair-indicator on the current SDK (Horizon f00125f, mixins e59da909, mod api 0.2): full runtime module 1:1 (styles, themes, settings), enabled+cooldown wired as mod API settings, style/theme enums kept config-file, 12 tests; the retired slice-1 progress model is replaced. Archived owner and signing key preserved."
