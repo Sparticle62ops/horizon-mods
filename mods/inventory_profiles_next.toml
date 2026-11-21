@@ -1,22 +1,24 @@
 id = "inventory_profiles_next"
 kind = "native-mod"
-name = "inventory_profiles_next"
-summary = "A Horizon port of Inventory Profiles Next."
-description = """Behavioral port of [Inventory Profiles Next](https://github.com/shirkaness/inventory-profiles-next) (AGPL-3.0-or-later) for the Horizon client. Port repo: `Sparticle62ops/horizon-inventory-profiles-next`; master copy in `horizon-modport/ports/inventory-profiles-next`.
+name = "Inventory Profiles Next"
+summary = "Inventory sorting and profiles for Horizon."
+description = """Inventory sorting and profiles for Horizon. Exact 1:1 Rust port of [Inventory Profiles Next](https://codeberg.org/Inventory-Profiles-Next-Mod/IPN) (AGPL-3.0-or-later, upstream LICENSE shipped in the package), ported for the Horizon client by sparticle.
 
-## Status
-- [x] Slice 1: the core logic. Inventory grid model, sort comparators (name, name-then-count, count; ascending/descending), row and column layouts, and the minimal move plan (each displaced stack moves once; already-sorted grids produce zero moves). 7/7 tests.
-- [ ] Slice 2: profiles (per-screen save/load of configurations), locked slots, item filters.
-- [ ] Slice 3: client glue, turning the move plan into slot clicks on Horizon's container screen.
+## What ships today
 
-## Degradations
-- IPN is an inventory-screen mod: it needs a GUI/widget interaction surface (slot clicks, overlays) that Horizon's native mod API does not expose yet; same scope as horizon-rust/horizon #10025's GUI/widget gap. The port's slice 3 glue waits on that surface; issue to be filed once the saved GitHub token has Issues permission (currently 403 on writes to horizon-rust repos).
+The inventory core, compiled and tested on the pinned SDK: the container grid model (width-by-height stacks), IPN's sorting comparators (by item name, by name then count, by count), ascending/descending order, the rows/columns layout switch, and the minimal move plan that turns a sort into the shortest list of slot moves (each displaced stack moves once; already-sorted grids produce zero moves). 7/7 tests.
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+## Horizon feature gaps, tracked on horizon-rust/horizon
 
-Licence: AGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-inventory-profiles-next
+- Client container-screen interaction: IPN's point is acting on the player's real inventory (read the open screen's slots, perform the move plan as slot clicks). Horizon's mod API does not expose a client surface for container-screen slot reads and clicks yet; the glue wires to it when it lands. (A dedicated issue is linked from the PR.)
+
+Profiles (per-screen save/load of configurations), locked slots and item filters land with the screen glue.
+
+Pinned to Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d, horizon-mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0 and mod API 0.2; exact 1:1 Rust port tested against those revisions.
+
+Licence: AGPL-3.0-or-later (upstream, carried). Source: https://github.com/Sparticle62ops/horizon-inventory-profiles-next
 """
-authors = ["shirkaness", "sparticle"]
+authors = ["sparticle", "blackd"]
 owners = ["Sparticle62ops"]
 owner_ids = [209812745]
 license = "AGPL-3.0-or-later"
@@ -27,8 +29,8 @@ tags = ["port", "horizon"]
 
 [[versions]]
 version = "1.0.0"
-published = "2026-11-19"
+published = "2026-11-21"
 game = "26.3"
 file = "inventory_profiles_next-1.0.0.hmod"
-sha256 = "cbf7514c79216f59e1cc513aa64ce08b84fd3a099620a34f7c27fce63de25930"
-changelog = "Initial registry submission"
+sha256 = "40161ed8a71a22ce6bd062b0c480c312e76744ce36058d61792f8a809bd57861"
+changelog = "Rebuilt on the pinned SDK (Horizon f00125f, mixins e59da909, mod API 0.2): real mod-API wiring in src/lib.rs (#[mod_api::horizon_mod] impl + re-exports), [[native.module]] injection table removed, upstream AGPL-3.0 LICENSE carried in the package, upstream credit corrected to the Codeberg IPN repo."
