@@ -3,7 +3,7 @@ kind = "native-mod"
 name = "smooth_f5"
 summary = "A Horizon port of Countered's Smooth F5."
 description = """A 1:1 Rust port of [Countered's Smooth F5](https://modrinth.com/mod/smooth-f5)
-(MIT): the camera glides between perspectives instead of cutting, with the
+(CC0-1.0): the camera glides between perspectives instead of cutting, with the
 original's mode (transition, movement, always, never), the position and
 rotation springs and the return duration. The package is the .hmod source: a
 native mod built against the pinned Horizon SDK (api 0.2, game 26.3).
@@ -37,7 +37,7 @@ native mod built against the pinned Horizon SDK (api 0.2, game 26.3).
   horizon-rust/horizon as issue #18694 and tracked until patched, at which
   point the springs go back to full parity.
 
-Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-smooth-f5
+Licence: CC0-1.0. Source: https://github.com/Sparticle62ops/horizon-smooth-f5
 """
 authors = ["Coun7ered", "sparticle"]
 owners = ["Sparticle62ops"]
@@ -47,6 +47,14 @@ source = "https://github.com/Sparticle62ops/horizon-smooth-f5"
 icon = "icons/smooth_f5.png"
 categories = ["utility"]
 tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.1"
+published = "2026-11-20"
+game = "26.3"
+file = "smooth_f5-1.0.1.hmod"
+sha256 = "b759ebada80c93980e4e4a84adad3b65cd39e07a07fcb509b16d792385b20d3d"
+changelog = "Fixes from registry review: commands match the bare form the engine dispatches, the eased pose writes yaw and pitch on the camera pose hook with the runtime's own basis, licence fields line up with the upstream CC0-1.0"
 
 [[versions]]
 version = "1.0.0"
