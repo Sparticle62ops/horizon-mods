@@ -42,9 +42,9 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
-version = "1.0.0"
-published = "2026-11-19"
+version = "1.0.1"
+published = "2026-11-21"
 game = "26.3"
-file = "fast_trading-1.0.0.hmod"
-sha256 = "2a5facc5167bf714682b7427d5787a87ec66f974e1182d9313e7b1e238824a02"
-changelog = "Initial registry submission"
+file = "fast_trading-1.0.1.hmod"
+sha256 = "aa3be00798725109ab40d3ce1b93bfa802b0bba14c599b27b9feee32a372d3c5"
+changelog = "Rebuilt on the pinned SDK (Horizon f00125f): fixed the merchant-screen bindings and the autofill re-lock hang, added the upstream copyright line."
