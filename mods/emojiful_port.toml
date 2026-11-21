@@ -1,0 +1,46 @@
+id = "emojiful_port"
+kind = "native-mod"
+name = "Emojiful Port"
+summary = "Emoji codes in chat from asset packs and Twemoji."
+description = """Exact 1:1 Rust translation of [Emojiful](https://github.com/InnovativeOnlineIndustries/Emojiful)
+(upstream Java, MIT (c) 2022 Innovative Online Industries). Carries the upstream license and
+credit. Port by sparticle.
+
+Emoji resource packs, Twemoji and custom emoji sources load through the original pipeline: the
+8 vanilla categories first, then custom packs from emojiful-assets, then Twemoji from
+iamcal/emoji-data with the :swear: alias and text emoticons, all indexed into the original's
+9-slot selection rows. The emoji registry, regex matching, profanity filter and datapack-emoji
+flow are ported whole; the nine config toggles register as settings with the upstream lang
+labels and defaults, and the replacement string stays in config/emojiful.json.
+
+The font-renderer swap, emoji quad rendering, texture/GIF upload and the chat-screen
+autocomplete, selector and keybinds are the tracked seams: the pinned mod API (api 0.2) has no
+font, dynamic-texture or chat-GUI hook yet, so installing the package leaves chat unchanged
+until one lands; the scan and registry logic ships tested behind those seams.
+
+Listed under a fresh id: the upstream \`emojiful\` id is a live registry entry owned by another
+publisher (their 0.4.0 record stands), so this port lists under \`emojiful_port\`; the package
+id carries it so the mod's settings scope to the installed package.
+
+Source-only .hmod built on the current SDK (Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d,
+mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0, mod api 0.2). 12 cargo tests green (regex
+builders, renderer scan, category YAML, Twemoji mapping, indexing, profanity, datapack flow).
+
+Licence: MIT (upstream text). Source: https://github.com/Sparticle62ops/horizon-emojiful
+"""
+authors = ["InnovativeOnlineIndustries", "sparticle"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "MIT"
+source = "https://github.com/Sparticle62ops/horizon-emojiful"
+icon = "icons/emojiful_port.png"
+categories = ["utility"]
+tags = ["chat", "emoji", "port", "horizon"]
+
+[[versions]]
+version = "1.0.1"
+published = "2026-11-21"
+game = "26.3"
+file = "emojiful_port-1.0.1.hmod"
+sha256 = "94d6ba2ec0083c2116a98b4cc48f27c69d711c69350bdf78836b76bcddbaa61e"
+changelog = "Full 1:1 mod-API rebuild of the port; fresh id (the upstream emojiful id is a live entry owned by another publisher)."
