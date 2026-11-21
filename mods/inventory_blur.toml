@@ -7,32 +7,20 @@ description = """A Rust port of [Inventory Blur](https://github.com/Enchanted-Ga
 background blur to in-world inventories (chests, the player inventory and
 other Screen-extended menus) instead of the vanilla dark gradient.
 
-## Scope of this commit (the mod's full logic core, 1:1)
+The 1:1 core (ModConstants, the Logging wrapper, ModEntry, the loader
+entrypoints and ScreenMixin's renderTransparentBackground replacement:
+skip the vanilla dark gradient entirely, apply the blur once per frame
+when the render state's first stratum after blur is still unset, then
+tile the bundled inworld_inventory_background.png over the menu) runs
+inside the mod API wiring (Horizon f00125f61f, mixins e59da909, api 0.2).
+Upstream holds no config file, so there are no settings to register.
 
-Upstream read at commit 4546a17, the whole mod is 171 lines of Java. The
-1:1 core lives in mixins/inventory_blur/runtime.rs:
+The draw itself waits on horizon-rust/horizon#19349, the screen-render
+hook the port needs (first filed as #10131, closed 2026-11-06 without
+the surface landing in the SDK). Until it lands the screens draw
+vanilla's gradient.
 
-- ModConstants (name, id) and the in-world background texture location
-  (a 16x16 image tiled across the screen).
-- ScreenMixin's renderTransparentBackground replacement as a decision
-  function: skip the vanilla fillGradient dark gradient entirely; on 1.21.6+
-  call the screen's blurred-background render, but only when the render
-  state's first stratum after blur is still unset (so the blur draws once
-  per frame); on older builds tile the inworld background texture instead.
-- The tile-count math for the legacy path.
-
-5 tests green.
-
-## Degradation (rendering rides Horizon's screen surfaces)
-
-The actual blur application and the tiled texture draw are render calls on
-Screen.renderTransparentBackground, which Horizon does not expose to client
-mods: there is no screen background render hook (no blur shader surface, no
-replacement point for the menu background, no texture tiling draw). A seam
-issue is filed on horizon-rust/horizon. Upstream's asset (the 16x16
-inworld_invent
-
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Source-only .hmod with the full port source and the texture asset.
 
 Licence: CC-BY-NC-4.0. Source: https://github.com/Sparticle62ops/horizon-inventory-blur
 """
@@ -50,5 +38,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "inventory_blur-1.0.0.hmod"
-sha256 = "0da243b61540d2f44659b720f81c33ffdce5210b863a3774cacb0392de5ee5c3"
+sha256 = "b8f31615856fc87595fc2420208a36fbbded1675c4c9c96078e29bbcc2411f29"
 changelog = "Initial registry submission"
