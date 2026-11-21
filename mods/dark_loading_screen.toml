@@ -8,10 +8,14 @@ ported for the Horizon mod loader. Licensed LGPL-3.0-only, upstream license and 
 
 Port by sparticle.
 
-Rebuilt as a source-only .hmod on the current SDK (Horizon f00125f, mod API 0.2): the seven
-menu config entries (5 colors + 2 fade durations) are wired as mod API settings, the config
-cell syncs from host reads with config-file fallback, and an 11-test suite covers the
-upstream logic 1:1. Full source ships in the .hmod.
+Live today on the mod API: the seven menu config entries (5 colors + 2 fade durations) register
+as mod API settings, the config cell syncs from host setting reads with config-file fallback,
+and an 11-test suite covers the upstream logic 1:1. Full source ships in the .hmod.
+
+Pending the host: the in-game overlay draw (brand background, bar fill/border, logo blit,
+overlay setter) waits on the loading-overlay hooks the mod API does not expose yet, tracked at
+horizon-rust/horizon#19461. The handlers are ported 1:1 behind the seams harness and activate
+when those hooks land.
 
 Upstream licence: LGPL-3.0-only (Modrinth and the source repo agree). Source: https://github.com/Sparticle62ops/horizon-dark-loading-screen
 """
