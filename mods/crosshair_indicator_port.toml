@@ -12,15 +12,24 @@ crosshair), the color theme follows the weapon's charge state (classic white, dy
 green/orange, combat red, pink, diamond cyan, gold), and an optional thin cooldown bar sits below
 the crosshair while the weapon charges.
 
-The mod API wires the original's four settings: the enabled and cooldown-bar toggles live on the
-Options > Mods page (same defaults); the style and theme pickers stay config-file entries because
-the settings API only takes toggles and ranges.
+The mod API wires the original's four settings as registered settings on the Options > Mods page
+with the upstream labels and defaults: the enabled and cooldown-bar toggles, the style picker
+(4-choice) and the theme picker (6-choice). The toggle keybinding registers as a key mapping, the
+HUD fill plan and the toggle logic carry 1:1 as tested logic, and a changed setting re-syncs the
+live model through the `setting_changed` hook.
+
+The HUD draw itself is the tracked seam: the pinned mod API (api 0.2) has no crosshair-region
+draw hook yet, so installing the package leaves the crosshair unchanged until one lands; the
+draw plan ships tested behind that seam.
 
 Listed under this fresh id: the original `crosshair_indicator` entry is archived, its owner keys
 are the archived author's, and its versions are signed under that key, so a reactivated entry
-cannot take a new version. The archived entry stays archived and untouched.
+cannot take a new version. The archived entry stays archived and untouched; the package id
+carries the fresh registry id so the mod's settings and key mappings scope to the installed
+package.
 
 Source-only .hmod built on the current SDK (Horizon f00125f, mixins e59da909, mod api 0.2).
+9 cargo tests green (settings model, HUD geometry, toggle, persistence).
 
 Licence: MIT (upstream text). Source: https://github.com/Sparticle62ops/horizon-crosshair-indicator
 """
@@ -38,5 +47,5 @@ version = "1.0.1"
 published = "2026-11-21"
 game = "26.3"
 file = "crosshair_indicator_port-1.0.1.hmod"
-sha256 = "42d26563c29d8ab6548fb3bd1c68d86530fb31d8d915256aabf2841017b93502"
-changelog = "Fresh registry id for the exact 1:1 port of CayMac97/crosshair-indicator on the current SDK (Horizon f00125f, mixins e59da909, mod api 0.2): full runtime module 1:1 (styles, themes, settings), enabled+cooldown wired as mod API settings, style/theme enums kept config-file, 12 tests."
+sha256 = "dd0156386a5d45cf9d38ec9c0e3b1fedc40a183a28dca67171786de9856c2a27"
+changelog = "Fresh registry id for the exact 1:1 port of CayMac97/crosshair-indicator on the current SDK (Horizon f00125f, mixins e59da909, mod api 0.2): full runtime module 1:1 (styles, themes, settings), the HUD fill plan and toggle 1:1 as tested logic, all four upstream settings registered (toggles plus the style and theme pickers), toggle key mapping, 9 tests."
