@@ -26,7 +26,7 @@ this port; see LICENSE.
   ClientPlayNetworkHandler: merchant screen open/close, command tree
   update, entity-tracker librarian switch, item pickup animation, and the
   full trade pipeline: findCheapestTrade, checkTrades, attemptLockTrade,
-  dete
+  determineTrades).
 
 Source-only .hmod built on the current SDK (Horizon f00125f)
 
@@ -46,5 +46,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "auto_lectern-1.0.0.hmod"
-sha256 = "ab00bd50423e4e3dd969fff51c20823293677098cf288cabb43db35a57ba9f99"
-changelog = "Initial registry submission"
+sha256 = "8d1bca6506d1774ba4bc023b4d9e7afcd209916a1e888483d11b8b5e1236595d"
+changelog = "Rebuilt on the f00125f native-mod API: the /autolec command tree and the tick hook wired through the seams, autolec.txt config load 1:1, full source package; description tail repaired"
