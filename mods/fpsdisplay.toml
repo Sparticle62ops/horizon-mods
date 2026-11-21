@@ -40,12 +40,12 @@ native mod built against the pinned Horizon SDK (api 0.2, game 26.3).
 The asks are tracked on horizon-rust/horizon as issue #18692 and each one
 upgrades the port back to full parity when patched.
 
-Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-fpsdisplay
+Licence: LGPL-3.0-only. Source: https://github.com/Sparticle62ops/horizon-fpsdisplay
 """
-authors = ["Grayray75. Carries the", "sparticle"]
+authors = ["Grayray75", "sparticle"]
 owners = ["Sparticle62ops"]
 owner_ids = [209812745]
-license = "LGPL-3.0-or-later"
+license = "LGPL-3.0-only"
 source = "https://github.com/Sparticle62ops/horizon-fpsdisplay"
 icon = "icons/fpsdisplay.png"
 categories = ["utility"]
@@ -56,5 +56,5 @@ version = "5.2.0"
 published = "2026-11-19"
 game = "26.3"
 file = "fpsdisplay-5.2.0.hmod"
-sha256 = "24ad807bcee993b9623038f6134188cd3bc4e7279bb6fa781e1c7c14f30a3c59"
-changelog = "Rebuilt on the f00125f native-mod API: settings page, own hud layer, frame-interval fps sampling"
+sha256 = "006bd3a05456c81826532c985036f3ff39333b5d7ce8df875248a7ca7fa1f90a"
+changelog = "Rebuilt on the f00125f native-mod API: settings page, own hud layer, frame-interval fps sampling; package drops the generated Cargo.lock"
