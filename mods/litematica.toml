@@ -1,42 +1,30 @@
 id = "litematica"
 kind = "native-mod"
-name = "litematica"
-summary = "A Horizon port of Litematica."
-description = """Port of [maruohon/litematica](https://github.com/maruohon/litematica) (Java, Fabric) to a Horizon native mod.
+name = "Litematica"
+summary = "Schematics for Horizon."
+description = """Schematics for Horizon. Exact 1:1 Rust port of [Litematica](https://github.com/maruohon/litematica) (LGPL-3.0-only, upstream LICENSE shipped in the package), ported for the Horizon client by sparticle.
 
-## License
-Upstream: LGPL-3.0. Per horizon-mods MOD-POLICY, source under LGPL cannot be reviewed by registry
-reviewers without a written grant from the authors, so this port cannot be LISTED on the registry
-unless masa grants it. Until then it ships from this repo for personal use; entry drafting deferred.
+## What ships today
 
-## Upstream scope (mapped 2026-11-05, shallow clone masa-faki master)
-238 Java files, ~43k lines. Main packages:
-- schematic/ (container, verifiers, placements, projects, data) - the core data model
-- materials/ - material lists
-- render/schematic - ghost-block overlay rendering
-- task/ - printer + paste + fill tasks
-- util/world, world/ - world access glue
-- input/, event/, data/, gui/ (elsewhere), mixin/ - Java-side glue to drop in ports
+Phase 1, compiled and tested on the pinned SDK: the schematic data model with multi-region containers, the .litematic (NBT) reader/writer, the bit-packed BlockStates array matching the format's palette rule (max(ceil(log2(palette)), 2), LSB-first across i64 words, y-major ordering), gzip with a dependency-free stored/inflate codec, placements with turns and mirrors, the ghost overlay for previews, verification against a placed region, the print order, materials lists, and the /litematica command surface (load, save, savearea, verify, clipboard, build). 58/58 tests.
 
-## Port plan (phases)
-1. Pure logic: schematic data model + .litematic (NBT) reader/writer, multi-region container; unit tests.
-2. Pure logic: verifier (wrong block / wrong state / extra), material lists, placements (move/rotate/mirror).
-3. Horizon client render: ghost-block overlay (translucent models, layers, see-through option).
-4. Printer: placement legality via Horizon's own placement logic, bottom-up placement order.
-5. Selection tool, saving own .litematic, menus (M), hotkeys, pick-block, highlights.
+## Hardening
 
-## Status
-- [x] Phase 0: upstream mapping (this README)
-- [x] Phase 1
+The NBT reader caps nesting at 512 levels and array lengths by the bytes actually left (a crafted .litematic claiming a 2^31-element array aborts the old reader); negative lengths are rejected. Region loads cap the volume at 8,388,608 blocks (the same cap the saver applies), use checked size arithmetic, bounds-check index/get/set, and map palette indices past the end to air. /litematica save, save and savearea paths are sandboxed to the mod's ./schematics folder.
 
-Pinned to Horizon 764df32 and horizon-mixins d9c83d7; exact 1:1 Rust port tested against those revisions.
+## Horizon feature gaps, tracked on horizon-rust/horizon
 
-Licence: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-litematica
+- World render primitives: the ghost overlay draws translucent filled boxes with outlines; Horizon has no client surface to add primitives to the world render yet, so the overlay wires to it when it lands. (A dedicated issue is linked from the PR.)
+- Client command surface with world reads: /litematica's commands run in the client command hook, which has no access to the game, so reading the world (verify against real placed blocks, savearea from the selection box, clipboard copy, the printer walking placements into block changes) needs a client surface that reaches the open world. (A dedicated issue is linked from the PR.)
+
+Pinned to Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d, horizon-mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0 and mod API 0.2; exact 1:1 Rust port tested against those revisions.
+
+Licence: LGPL-3.0-only (upstream, carried, with the upstream notice and credit to maruohon). Source: https://github.com/Sparticle62ops/horizon-litematica
 """
 authors = ["maruohon", "sparticle"]
 owners = ["Sparticle62ops"]
 owner_ids = [209812745]
-license = "LGPL-3.0-or-later"
+license = "LGPL-3.0-only"
 source = "https://github.com/Sparticle62ops/horizon-litematica"
 icon = "icons/litematica.png"
 categories = ["utility"]
@@ -44,8 +32,8 @@ tags = ["port", "horizon"]
 
 [[versions]]
 version = "0.1.0"
-published = "2026-11-19"
+published = "2026-11-21"
 game = "26.3"
-file = "litematica-0.1.0.hnmod"
-sha256 = "c7a362e76a2c44975c20426b4ad8789d1cd4cc5b8efeed62a9f934e097b56b75"
-changelog = "Initial registry submission"
+file = "litematica-0.1.0.hmod"
+sha256 = "9d41c0dd577da29a297c8f468cb79fc69101900b07e799086bf1fde3bce9d99d"
+changelog = "Rebuilt on the pinned SDK (Horizon f00125f, mixins e59da909, mod API 0.2): flat mod-API crate with #[mod_api::horizon_mod] and the [[module]] injection table removed, NBT and region hardening (depth cap, length caps, bounds checks, volume cap), /litematica save paths sandboxed to ./schematics, upstream LGPL-3.0-only notice and credit corrected, square 128px icon. The old registry entry's written-permission claim is retired: MOD-POLICY permits LGPL with notice."
