@@ -1,39 +1,45 @@
 id = "commandkeys"
 kind = "native-mod"
 name = "commandkeys"
-summary = "A Horizon port of Command Keys."
-description = """Rust port of CommandKeys by TerminalMC (github.com/TerminalMC/CommandKeys,
-Apache-2.0) for the Horizon client; this port keeps Apache-2.0.
+summary = "A Horizon port of CommandKeys."
+description = """Exact 1:1 Rust translation of [CommandKeys](https://github.com/TerminalMC/CommandKeys)
+(upstream Java, Apache-2.0) by TerminalMC. Carries the upstream license and credit.
 
-Bind keys to macros: lists of chat messages/commands with per-message delays
-(`delayTicks`), spacing-based repeats (`sendMode: REPEAT` with `spaceTicks`
-and `maxRepeats`), message cycling (`CYCLE`, the alt keybind cycles
-backwards, messages split on ",,"), random pick (`RANDOM`), dual-key
-activation (`keybind.limitKeyName` must be held), HOLD/RELEASE/VANILLA
-activation, a global ratelimit (`ratelimitCount` triggers per
-`ratelimitTicks`) and the chat length limit.
+Ported for the Horizon client by sparticle.
 
-Config lives at the mod data dir's `commandkeys.json`, schema-compatible with
-the original's `config/commandkeys.json`.
+Client-side chat macros on hotkeys: profiles of macros, each macro a list of
+messages with a primary and optional alternate keybind, per-message delays
+(`delayTicks`), send modes (SEND, TYPE, EDIT, CYCLE, RANDOM, REPEAT with
+`spaceTicks` and `maxRepeats`), activation types (HOLD, VANILLA, RELEASE),
+dual-key activation (`keybind.limitKeyName` must be held), conflict
+strategies (SUBMIT, ASSERT, VETO, AVOID), per-macro placeholder substitution,
+a global ratelimit, the chat length limit and automatic per-world/per-server
+profile switching via `links`.
 
-Degradations vs the original (Horizon hooks missing):
+## Mod API wiring (rebuild)
 
-- No GUI: config is file-only, the K config key and the vanilla KeyMapping
-  macro keys (`mcActivatorKey`) do nothing.
-- `TYPE`/`EDIT` modes send the first message directly instead of opening the
-  chat screen; a message that is exactly `%edit%` is skipped.
-- The ratelimit and length-limit client messages are not shown; blocked
-  sends are silently dropped.
-- Conflict strategies are approximated: AVOID skips the macro, and VETO or
-  ASSERT on any macro sharing the pressed key suppresses all of them.
-- The multiplayer default profile is used; `ratelimitSp` singleplayer
-  detection is not available, so the ratelimit applies everywhere.
-- Key names follow Horizon's vanilla-style
+- The config key (`K`) and the macros' activator keys register as key
+  mappings with the upstream conflict contexts; releases clear held state on
+  every input event, and the dispatch path gates itself on the open screen
+  like upstream's `handleKey`.
+- The trigger path runs through the input, mouse and client-tick hooks; chat
+  sends go through the network host, and the `/commandkeys` command tree
+  registers as client commands.
+- The config lives at the mod data dir's `commandkeys.json`,
+  schema-compatible with the original's, written back when a load
+  substituted defaults.
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+## Tracked seams
 
-Licence: Apache-2.0. Source: https://github.com/Sparticle62ops/horizon-commandkeys
-"""
+- Chat lines arrive without their translation keys on the SDK, so the
+  incoming-PM placeholder scan cannot match until one lands.
+- A chat component's resolved text is not readable through the API surface,
+  so recorded lines carry no content.
+
+Source-only .hmod built on the current SDK (Horizon f00125f, mixins e59da909,
+api 0.2). 23 cargo tests green.
+
+Licence: Apache-2.0. Source: https://github.com/Sparticle62ops/horizon-commandkeys"""
 authors = ["TerminalMC", "sparticle"]
 owners = ["Sparticle62ops"]
 owner_ids = [209812745]
@@ -44,9 +50,9 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
-version = "1.0.0"
-published = "2026-11-19"
+version = "1.0.1"
+published = "2026-11-21"
 game = "26.3"
-file = "commandkeys-1.0.0.hmod"
-sha256 = "b6e26506ed77fe4dba222bf118c37eab90e220f0d4242e0eb1630cbcda9b4819"
-changelog = "Initial registry submission"
+file = "commandkeys-1.0.1.hmod"
+sha256 = "a9de94b0078f0283aa39a959a6e4eb121eaff58251ab9779426761954530c336"
+changelog = "Rebuilt on the current SDK mod API"
