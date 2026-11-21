@@ -2,15 +2,20 @@ id = "cleardespawn"
 kind = "native-mod"
 name = "cleardespawn"
 summary = "A Horizon port of ClearDespawn."
-description = """cleardespawn (Horizon Rust port), slice 1: the despawn filter model. NOTE: the master repo keeps this port as src/lib.rs + modules; this bundle inlines the modules into one runtime.rs file, compile-equivalent, for the single-module .hnmod format.  1:1 port of the upstream logic core (MIT): when an item entity despawns, its poof particles are suppressed, except for entity ids on the ignore list. Sound and render seams land in the next slice.
+description = """cleardespawn (Horizon Rust port): item entities blink out as they near their despawn time.
 
-Port by sparticle. Upstream: https://github.com/StrikerRockers-Mods/ClearDespawn/ (MIT).
+Exact 1:1 Rust translation of ClearDespawn (upstream Java, MIT) by StrikerRockers-Mods,
+carrying the upstream license and credit. Inside the last flashStartTime seconds of an
+item entity's lifetime the extended item entity renderer drops the item's draw on the
+flash schedule, and when urgentFlash is on the blink period shrinks with the remaining
+time so the flashing accelerates toward despawn. Port by sparticle.
+Upstream: https://github.com/StrikerRockers-Mods/ClearDespawn (MIT).
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Source-only .hmod built on the current SDK (Horizon f00125f, mixins e59da909, mod api 0.2).
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-cleardespawn
 """
-authors = ["StrikerRockers-Mods", "sparticle"]
+authors = ["StrikerRocker", "Guntram Blohm", "sparticle"]
 owners = ["Sparticle62ops"]
 owner_ids = [209812745]
 license = "MIT"
@@ -21,8 +26,8 @@ tags = ["port", "horizon"]
 
 [[versions]]
 version = "1.0.0"
-published = "2026-11-19"
+published = "2026-11-21"
 game = "26.3"
 file = "cleardespawn-1.0.0.hmod"
-sha256 = "770085c9f47712c4200f8f2ab18990cf3689c218e9e550fa8145a5aaedcc5cf5"
-changelog = "Initial registry submission"
+sha256 = "9fd7bd72637af46a6c7f10a8845cb1a0217aa05a56de42406cdbbf7cec40fcb8"
+changelog = "Rebuilt as the exact 1:1 port on the current SDK: full module tree (constants, config, config_helper, services, render_item_entity_extended, clear_despawn, mod_menu, seams), the original's three config entries as settings with upstream's lang keys, the despawn-flash renderer entry wired on client setup, MIT notices carried in the repo and package."
