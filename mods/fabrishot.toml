@@ -1,38 +1,37 @@
 id = "fabrishot"
 kind = "native-mod"
 name = "fabrishot"
-summary = "A Horizon port of Fabrishot."
-description = """A Rust port of [fabrishot](https://github.com/ramidzkh/fabrishot) (MIT,
-(c) 2021 Ramid Khan, itself a Fabric port of ata4's mineshot), which takes
-screenshots at a custom resolution far above the window size: it swaps the
-game window to the configured width and height for a few frames, hides the
-HUD on request, then captures the framebuffer and writes the image out.
+summary = "High-resolution, delay-timed screenshots with custom file names and formats, 1:1 from Fabrishot."
+description = """Exact 1:1 Rust translation of [Fabrishot](https://github.com/ramidzkh/fabrishot)
+(upstream Java, MIT (c) 2021 Ramid Khan). Carries the upstream license and credit.
 
-## Ported (logic core)
+Ported for the Horizon client by sparticle.
 
-- All eight config values with the original defaults (custom_file_name
-  `huge_%time%`, override_screenshot_key off, hide_hud off, save_file on,
-  3840x2160, delay 3, PNG), loaded and saved as
-  `fabrishot.properties`-style key=value lines with upstream's all-or-nothing
-  fallback to defaults on a bad line.
-- The output filename: the screenshots directory, the `%time%` and `%world%`
-  placeholders with the `no_world` fallback, and the no-clobber suffix loop,
-  preserving upstream's exact suffix sequence (first file plain, then _3,
-  _4, ... because the Java increment order never fills the _2 slot).
-- The capture state machine: the resolution swap with bookkeeping for the
-  restore, the delay frame count, and the HUD hide/restore around the
-  capture frame.
-- The FileFormat set (PNG, JPG, TGA, BMP) with upstream's extensions.
+High-resolution, delay-timed screenshots with custom file names and formats:
+the F9 screenshot key runs the original's CaptureTask state machine (HUD
+hide, the frame-count delay, the resolution swap/restore), the file naming
+carries the original's `%time%`/`%world%` substitution and the suffix loop
+verbatim (including the `_3` second candidate), and the writer encodes and
+saves real frames in the original's four formats (PNG, JPG at quality 90,
+TGA, BMP). With `override_screenshot_key` on, the vanilla F2 screenshot
+feeds the mod's naming, message and format instead of vanilla's own save.
 
-## Horizon seams
+Live on the mod API: the seven config entries as settings (upstream labels,
+same defaults, `custom_file_name` file-held), the CaptureTask state machine
+driven from the F9 key and the render frame post hook, and the F2 override.
 
-The heart of fabrishot is the framebuffer read, and Horizon has no screenshot
-hook yet: the client's own screenshot path supports a custom capture size
-(`ScreenshotRequest` carries `size`), but no native mod can request a
+Pending host wires (tracked in seams.rs): no framebuffer resize/read at the
+modded resolution (the 4K upscale waits for a surface), no world-name read
+(`%world%` rides the original's own `no_world` branch), no wall-clock read
+(the timestamp is UTC), the chat line's underline and click-to-open and the
+narrator line.
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Pinned to Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d and
+horizon-mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0, mod api 0.2; exact
+1:1 Rust port tested against those revisions (8 tests).
 
-Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-fabrishot
+Licence: MIT (LICENSE carries the upstream text). Source:
+https://github.com/Sparticle62ops/horizon-fabrishot
 """
 authors = ["ramidzkh", "sparticle"]
 owners = ["Sparticle62ops"]
@@ -44,9 +43,9 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
-version = "1.0.0"
-published = "2026-11-19"
+version = "1.0.1"
+published = "2026-11-21"
 game = "26.3"
-file = "fabrishot-1.0.0.hmod"
-sha256 = "eb0b0f15109f0a1408d97d1ebcde03f54f6f5db952dc00a2c14ade7331e1427e"
-changelog = "Initial registry submission"
+file = "fabrishot-1.0.1.hmod"
+sha256 = "d651e543c5cda8258cbec4be0f0e7a5d85d006ca6788bd56dccd6b4273a64d46"
+changelog = "Full 1:1 rebuild on the current SDK: the CaptureTask state machine driven from the F9 key and the render frame post hook, the F2 override path (override_screenshot_key), the seven config entries as settings with upstream labels and defaults, and the writer encoding real frames in the original's four formats."
