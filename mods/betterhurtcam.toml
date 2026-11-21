@@ -2,11 +2,21 @@ id = "betterhurtcam"
 kind = "native-mod"
 name = "betterhurtcam"
 summary = "A Horizon port of BetterHurtCam."
-description = """betterhurtcam (Horizon Rust port), slice 1: the shake model. NOTE: the master repo keeps this port as src/lib.rs + modules; this bundle inlines the modules into one runtime.rs file, compile-equivalent, for the single-module .hnmod format.  1:1 port of the upstream logic core (MIT): on damage the camera gets a shake whose intensity comes from the hurt direction and a configurable multiplier, decays over a configurable duration, and repeats a configurable number of times. Game-facing hooks (camera rotation write) land in the next slice behind the same seam upstream uses.
+description = """Horizon port of uku3lig/betterhurtcam (commit d0bf3d0, MIT, (c) 2022 uku): the full
+hurt cam experience as a native Rust mod. 1:1 logic core: the three bobHurt handler
+bodies (the intensity multiplier, the cancel when the mod is disabled, the hurt-cam
+type switch between old and yaw-based), the hearts-blink gate, the BHCConfig model
+and the HurtCamType enum, and the F6/F7/F8 keybind actions with the multiplier
+overlay text.
 
-Port by sparticle. Upstream: https://github.com/uku3lig/betterhurtcam (MIT).
+Port by sparticle. Upstream: https://github.com/uku3lig/betterhurtcam
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Source-only .hmod built on the current SDK (Horizon f00125f). The config is wired
+as mod settings on Horizon's Options > Mods page (enabled, heartBlink, type, with
+the upstream lang keys; the multiplier stays in the config file, the way upstream
+ships it) and the three keys register on Options > Controls, read per client tick.
+The vanilla hurt cam, the hearts' blink argument and the action-bar overlay wait
+on horizon#19406, the hurt-cam surface.
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-betterhurtcam
 """
@@ -21,8 +31,8 @@ tags = ["port", "horizon"]
 
 [[versions]]
 version = "1.0.0"
-published = "2026-11-19"
+published = "2026-11-21"
 game = "26.3"
 file = "betterhurtcam-1.0.0.hmod"
-sha256 = "0dd71dbac485162992f0546974faec6568a9c4b5cfaaa23569d5d1f4eec4f523"
-changelog = "Initial registry submission"
+sha256 = "5d0601be85e62c6c59bfaafbe8765bd43c253cfe5011dabc6103ff9c4aa6657c"
+changelog = "Rebuilt on the mod API: the config is wired as the original settings on Options > Mods and the three keys on Options > Controls; 1:1 core unchanged (sha refreshed)."
