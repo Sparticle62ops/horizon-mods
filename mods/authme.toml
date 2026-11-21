@@ -27,7 +27,14 @@ Ported for the Horizon client by sparticle. Upstream credit: axieum (MIT).
 Build: `cargo test` (25 tests). Package: `tools/package.py` (source-only
 `.hnmod`, pinned to Horizon revision 3fb4c3138e0c5d8fdd2fdb555cf31368e8897497).
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Source-only .hmod built on the current SDK (Horizon f00125f61f, mixins e59da909, mod API 0.2)
+
+- Mod API wiring: the original's config fields as settings on Horizon's
+  Options > Mods page (auth button position and draggable flag, the
+  Microsoft OAuth callback port), same defaults as the annotated statics;
+  `client_setup` runs the fabric entrypoint 1:1 with AuthMeFabric.onInitialize
+  (the old config/authme.json5 migration, then AuthMe#init), then syncs the
+  settings into the live config cells the mixins and screens read.
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-auth-me
 """
@@ -45,5 +52,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "authme-1.0.0.hmod"
-sha256 = "b67427103f236529f1f0d21b7e98174408be29c568efc0ac9abe71a652ea0ade"
+sha256 = "473dcfe1b0ace862d4b91f811380f2fef70d79a1a76c3f7eb11a252dad7a7bd1"
 changelog = "Initial registry submission"
