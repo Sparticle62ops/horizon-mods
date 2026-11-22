@@ -29,9 +29,12 @@ The full upstream logic tree, translated 1:1:
   `PlayerRecipeSync`, `RecipesList`, `HighlightRecipe`, `UpdatePreview`)
   with their `FriendlyByteBuf` field order, `ServerPacketEnv` /
   `ClientPacketEnv` seams, and the client handler ladder.
-- `block_entity_ticker.rs` - the ticker-side liste
+- `block_entity_ticker.rs` - the ticker-side listener tick loop with the
+  re-entrancy-safe map handling.
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Built on the current SDK: Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d,
+mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0, mod API 0.2. 70 tests
+passing.
 
 Licence: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-polymorph
 """
@@ -49,5 +52,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "polymorph-1.0.0.hmod"
-sha256 = "2d2ed5375a0ad8ae6ca81df378a131ac87edfe45176c38b300ae15581cc80d8b"
-changelog = "Initial registry submission"
+sha256 = "28ee4a7924e98a531e822e1d096953e9177d943ff4220a66eb1149270ce84dde"
+changelog = "Rebuilt on SDK api 0.2: native mod_api port, review fixes, 70 tests"
