@@ -28,7 +28,7 @@ library (LGPL-3.0) to Horizon's native mod API. Goal: real ReplayMod
   speed colour blend with its exponential easing, keyframe points.
 - **Timeline players**: AbstractTimelinePlayer + RealtimeTimeline
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Source-only .hmod built on SDK api 0.2 (Horizon f00125f, mixins e59da909)
 
 Licence: GPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-replaymod
 """
@@ -46,5 +46,5 @@ version = "0.1.0"
 published = "2026-11-19"
 game = "26.3"
 file = "replaymod-0.1.0.hmod"
-sha256 = "52fb5e4291966f9e1bd4a015963c167a2700781b4379e8314a14aa7ec72ad476"
-changelog = "Initial registry submission"
+sha256 = "2c383aa5dea02186bc58ce4cfe12e2c9176ccdbd4f22ebe9ebdfb290bab705d7"
+changelog = "Rebuilt on SDK api 0.2 (Horizon f00125f, mixins e59da909): real mod entry point, no [[native.module]] copy, ReplayMod-derived licence notices corrected to GPL-3.0-or-later, zip/JSON/sync hardening against crafted replay data. 13 tests."
