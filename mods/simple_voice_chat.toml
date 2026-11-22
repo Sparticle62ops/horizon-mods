@@ -1,15 +1,22 @@
 id = "simple_voice_chat"
 kind = "native-mod"
 name = "simple_voice_chat"
-summary = "A Horizon port of Simple Voice Chat."
+summary = "An unofficial, independent Simple Voice Chat client for Horizon."
 description = """
+Unofficial, independent Simple Voice Chat CLIENT for Horizon (MIT (c) 2026 sparticle). Not affiliated with Max Henkel (henkelmax), the author of Simple Voice Chat; it speaks the documented Simple Voice Chat wire protocol (compatibility version 20) so it interops with Java servers running the original mod. No code, assets, textures or lang files from the original Java mod are included.
 
-Pinned to Horizon 3fb4c31 and horizon-mixins (none, api-level bundle); exact 1:1 Rust port tested against those revisions.
+The mod core: the config model (ptt key, mute, volume), the Simple Voice Chat 2.6.x protocol client (handshake, state, voice packets, AES-128-GCM), the session state machine, push-to-talk and mute keys, positional mixing by server distance, groups, the Opus codec at 48 kHz mono / 20 ms frames (vendored libopus 1.4, Xiph.Org, BSD), and the audio device layer (cpal) behind the optional "audio" feature.
+
+Attribution: the protocol module is derived from the voicechat-server native mod in this registry (MIT, Ludovic Marie and the Horizon contributors); its MIT notice is carried in the package LICENSE.
+
+Honest status: nothing in game yet - the client mod API has no net-channel, key/input, world-lifecycle, tick or command hook surface, so no voice happens in game and the /svc and /vcgroup gate has nothing to run in.
+
+Full-source .hmod built on the current SDK (Horizon f00125f61f, mixins e59da909, mod api 0.2): the package ships src/ with the real mod API entry (#[mod_api::horizon_mod] impl Hooks), build.rs and the vendored libopus tree, with a Cargo.lock. New version 1.1.0 (not the archived 1.0.0).
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-simple-voice-chat
 """
 authors = ["sparticle"]
-owners = ["Sparticle62ops"]
+owners = ["sparticle62ops"]
 owner_ids = [209812745]
 license = "MIT"
 source = "https://github.com/Sparticle62ops/horizon-simple-voice-chat"
@@ -18,9 +25,9 @@ categories = ["utility"]
 tags = ["port", "horizon"]
 
 [[versions]]
-version = "1.0.0"
-published = "2026-11-19"
+version = "1.1.0"
+published = "2026-11-21"
 game = "26.3"
-file = "simple_voice_chat-1.0.0.hnmod"
-sha256 = "bf14f4045bf3fe54b7cf38186d4434247a9a04250b42ee9c8c19d8621e3bca14"
-changelog = "Initial registry submission"
+file = "simple_voice_chat-1.1.0.hmod"
+sha256 = "14f3fabec90d237d7a5a221e164e24eb837e3b3709e0e7673d3e2b3bc1fdfec3"
+changelog = "Full-source rebuild on the current SDK (f00125f61f / e59da909 / api 0.2): real mod API entry, /svc and /vcgroup-only command gate, capped mic queue, protocol MIT notice, original icon"
