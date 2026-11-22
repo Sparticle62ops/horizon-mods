@@ -6,7 +6,7 @@ description = """Simple Music Control ported to Horizon as a native mod. Slice 1
 
 Port by sparticle. Upstream: https://github.com/pajicadvance/simple-music-control (MIT).
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Full-source .hmod built on the current SDK (Horizon f00125f61f, mixins e59da909, mod api 0.2): the package ships src/lib.rs with the real mod API entry (#[mod_api::horizon_mod] impl Hooks) plus the full runtime source and a Cargo.lock; no native.module splice. Honest status: nothing in game yet - the client mod API has no input/keybind hook, no sound-engine or music-player surface and no client tick hook.
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-simple-music-control
 """
@@ -24,5 +24,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "simple_music_control-1.0.0.hmod"
-sha256 = "1cef87b2fc7999cf29ac230323f3a29d2b744680cb09845ac31857f3e7f17d3d"
+sha256 = "b1ddca13172850a563e8194ef19511601a3d91a0ba76665798354444d2f3cd43"
 changelog = "Initial registry submission"
