@@ -8,17 +8,19 @@ master @7c00964 (2026-06-18), by A5b84.
 
 Ported for the Horizon client by sparticle. Upstream credit: A5b84.
 
-- The fabric client entrypoint `StatusEffectBars` maps to the carrier's
-  client-init hook (`status_effect_bars::on_initialize_client`).
+- The fabric client entrypoint `StatusEffectBars` maps to the mod's
+  `#[mod_api::horizon_mod]` entry in `src/lib.rs`; `status_effect_bars::on_initialize_client`
+  stays the init point.
 - The ModMenu config-screen entrypoint joins the config-screen batch later,
   as with the other ports.
 - Mixins: `HudMixin`, `EffectsInInventoryMixin`, `LivingEntityMixin`,
   `MobEffectInstanceMixin` (adds the `maxDuration` attribute used for
-  rendering), all carried 1:1 with host seams.
+  rendering), all carried 1:1 with host seams. The engine `[[native.mixin]]`
+  rows are pending target verification, so no bars show in game yet.
 
-Build: `cargo test` (17 tests). Package: `ports/smooth-f5/tools/package.py`.
+Build: `cargo test` (17 tests), run from the package source.
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Package rebuilt on the current SDK (Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d, mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0); the package source and the repo match (main @7b4b026). Upstream's COPYING and COPYING.LESSER ship with the package.
 
 Licence: LGPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-status-effect-bars
 """
@@ -36,5 +38,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "statuseffectbars-1.0.0.hmod"
-sha256 = "f77682fe0c179b7cfbb3796f019bd456f190a406e6c0295e05751e76d7b3570c"
-changelog = "Initial registry submission"
+sha256 = "317df1160344dd31b09884d3c14c7c80fcbb3cb5a7ff8d1d939791ed7a1f6363"
+changelog = "Rebuilt on Horizon f00125f / mixins e59da90 (api 0.2): real mod_api entry, upstream COPYING + COPYING.LESSER shipped, config fallback and zero-duration guard, legacy splice bundle removed."
