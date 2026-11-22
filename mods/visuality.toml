@@ -25,9 +25,15 @@ MIT, read upstream at commit fd8e592. Upstream is 27 Java files / 1,277 lines.
 - EntityMixin sprint soul puffs (1 in 5 over wither-summon base blocks),
   BlockMixin randomDisplayTick (soul above wither bases nextFloat > 0.995,
   shiny-block sparkles nextFloat > 0.8 with the axis fixed-offset math
-  0.5 + 0.5625*step), Am
+  0.5 + 0.5625*step).
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+## Status
+
+Nothing shows in game yet: particle rendering waits on a Horizon client
+particle surface, so no hook draws the ported particles; the logic core is
+carried 1:1 and tested.
+
+Pinned to Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d and horizon-mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0.
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-visuality
 """
@@ -45,5 +51,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "visuality-1.0.0.hmod"
-sha256 = "e1a91a5bfa42026f13abfc5386ecd0b4a6fbb5673eed6fd607376b23a5f36d80"
-changelog = "Initial registry submission"
+sha256 = "ef9f22cca8f126e2cefa3deb47092be259d45b56ee3d015ca27bc42c256a6a75"
+changelog = "Rebuilt on Horizon f00125f / mixins e59da90 (api 0.2): real mod_api entry, modular package layout with tests, honest particle-surface status, description completed."
