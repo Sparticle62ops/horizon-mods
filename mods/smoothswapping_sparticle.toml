@@ -1,0 +1,46 @@
+id = "smoothswapping_sparticle"
+kind = "native-mod"
+name = "Smooth Swapping"
+summary = "A Horizon port of Smooth Swapping."
+description = """Exact 1:1 Rust translation of [Smooth Swapping](https://modrinth.com/mod/smooth-swapping)
+(Schauweg, LGPL-3.0-only, branch 26.3/dev @88e2988) for Horizon.
+
+Upstream logic carried 1:1 in `smoothswapping/runtime.rs` as a Horizon
+client runtime splice (`crates/horizon-client/src/game.rs`): Vec2 (including
+the Java `=-` negation quirk), SwapStacks, the swaps trio (InventorySwap,
+ItemToCursorInventorySwap, ItemToItemInventorySwap) behind the AnySwap enum,
+the SmoothSwapping state object (serde_json in place of Gson; snake_case
+field naming and pretty printing match upstream), SwapUtil (quadrants,
+i2i/i2c assignment, hasArrived), the CatmullRomWidget config set, the config
+manager, and the mixin set. Engine injection points are wired through
+`[[native.mixin]]` rows; see the README for the wiring state.
+
+Ported by sparticle.
+
+## License
+
+Upstream Smooth Swapping is LGPL-3.0-only, Copyright (c) Schauweg. This
+port carries the upstream license and credit per the port policy.
+
+Pinned to Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d and
+horizon-mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0; exact 1:1 Rust port
+tested against those revisions.
+
+Licence: LGPL-3.0-only. Source: https://github.com/Sparticle62ops/horizon-smooth-swapping
+"""
+authors = ["sparticle", "Schauweg"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "LGPL-3.0-only"
+source = "https://github.com/Sparticle62ops/horizon-smooth-swapping"
+icon = "icons/smoothswapping_sparticle.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.1"
+published = "2026-11-22"
+game = "26.3"
+file = "smoothswapping_sparticle-1.0.1.hmod"
+sha256 = "f8c3e1973662ac5f99444cab5a833bfbcaa4169bed90598471d201f50bde781f"
+changelog = "Full-source rebuild on Horizon f00125f / mixins e59da90 (api 0.2): the draw hooks are wired as mixin rows; new id smoothswapping_sparticle with its own icon; LGPL-3.0-only normalization."
