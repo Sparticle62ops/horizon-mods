@@ -11,15 +11,16 @@ description = """Behavioral port of [Sound Physics Remastered](https://github.co
 ## Degradations
 - Client-side world access for the raymarcher rides world snapshots (horizon-rust/horizon #10152, open).
 - SPR hooks Minecraft's client sound engine to resample each played sound's volume/reverb per position; Horizon's native mod API has no sound playback hook yet. The client glue (slice 2) waits on that surface; filed: horizon-rust/horizon #10444 (sound playback hook).
+- Nothing calls the physics yet, so players see no effect; slice 2 lands with the sound playback hook.
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Package rebuilt on the current SDK (Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d, mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0) with a real `mod_api` entry in `lib.rs`; the package source and the repo match.
 
-Licence: GPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-sound-physics-remastered
+Licence: GPL-3.0-only, carrying upstream's license and credit. Source: https://github.com/Sparticle62ops/horizon-sound-physics-remastered
 """
 authors = ["henkelmax", "sparticle"]
 owners = ["Sparticle62ops"]
 owner_ids = [209812745]
-license = "GPL-3.0-or-later"
+license = "GPL-3.0-only"
 source = "https://github.com/Sparticle62ops/horizon-sound-physics-remastered"
 icon = "icons/sound_physics_remastered.png"
 categories = ["utility"]
@@ -30,5 +31,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "sound_physics_remastered-1.0.0.hmod"
-sha256 = "6e1e5cf518240987a5648d0fdcb659598b097d583910c250f58aa2ebba13f6a8"
-changelog = "Initial registry submission"
+sha256 = "577931a8c4f80c046137921c7137b209bb9f684b61f3bcdcfd9738d8ab40246b"
+changelog = "Rebuilt on Horizon f00125f / mixins e59da90 (api 0.2): real mod_api entry, crate:: imports resolved, GPL-3.0-only correction."
