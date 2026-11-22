@@ -20,7 +20,7 @@ comes back.
 
 The state logic (config, per-player shield-cooldown tracker, tint and
 interpolation math, shown-players gating) lives in
-mixins/shield_statuses/runtime.rs. The cooldown facts arrive through the
+src/runtime.rs. The cooldown facts arrive through the
 client packet hook (API 408, read-only clientbound play packets), which hears
 the shield cooldown reports the server sends this client.
 
@@ -32,9 +32,17 @@ the shield cooldown reports the server sends this client.
   (native_mob_submit covers mobs, native_render_item_in_frame covers item
   frames only), so the tint cannot reach the shield model yet. The logic is
   complete and ready to drive it the day the surface lands.
-- Oth
+- Other players' shield states: upstream's other-player feature is
+  server-assisted through its WalksyLib payload. Horizon has no equivalent
+  surface; the tracker here keys on what the client itself hears.
+- Filed on horizon-rust/horizon per standing policy; tracked until patched.
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Honest status: the tint is NOT visible in game yet - the packet feed is not
+registered and nothing renders it (no held-item render hook in the client
+mod API). The logic is complete and ready the day the surface lands.
+
+Package ships the full modular source (src/runtime.rs + the mod API entry)
+on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-shield-statuses
 """
@@ -52,5 +60,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "shield_statuses-1.0.0.hmod"
-sha256 = "dd6fa8790cd914701e1f9d3ac9c007ff56f003f07de2fc8d65c622afc1bd7552"
-changelog = "Initial registry submission"
+sha256 = "bfda9862c3eb23c37c897bbc12c10b5d3211385e3b1b30738aca5ae3e3ffc25a"
+changelog = "Review r2: real mod API entry in src/lib.rs (bare Mod + horizon_mod Hooks on the pinned SDK), the [[native.module]] row is gone and the package ships the full modular source (src/runtime.rs + entry), the upstream MIT LICENSE (Walksy, 2025) is carried verbatim at the package root, the summary says the tint is not visible yet (packet feed not registered, nothing renders it), the cut-off seam line is restored, and the pin line reads f00125f/e59da90. 7 tests green."
