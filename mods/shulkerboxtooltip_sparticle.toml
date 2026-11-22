@@ -1,7 +1,7 @@
-id = "shulkerboxtooltip"
+id = "shulkerboxtooltip_sparticle"
 kind = "native-mod"
-name = "shulkerboxtooltip"
-summary = "A Horizon port of Shulker Box Tooltip."
+name = "shulkerboxtooltip_sparticle"
+summary = "An independent Horizon port of Shulker Box Tooltip by sparticle."
 description = """Ported 1:1 from [MisterPeModder/ShulkerBoxTooltip](https://github.com/MisterPeModder/ShulkerBoxTooltip) (MIT, (c) 2019 Yanis Guaye) @ 68e7f8e.
 Shows a preview of a container's contents when hovering the container item in an inventory.
 
@@ -20,7 +20,7 @@ owners = ["Sparticle62ops"]
 owner_ids = [209812745]
 license = "MIT"
 source = "https://github.com/Sparticle62ops/horizon-shulkerboxtooltip"
-icon = "icons/shulkerboxtooltip.png"
+icon = "icons/shulkerboxtooltip_sparticle.png"
 categories = ["utility"]
 tags = ["port", "horizon"]
 
@@ -28,6 +28,6 @@ tags = ["port", "horizon"]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
-file = "shulkerboxtooltip-1.0.0.hmod"
+file = "shulkerboxtooltip_sparticle-1.0.0.hmod"
 sha256 = "f082b329c66f0408dfc417848fe2a6b3c7a634482340b81ed15f3fb4632a290b"
-changelog = "Initial registry submission"
+changelog = "Review r2: resubmitted under the new id shulkerboxtooltip_sparticle because the archived shulkerboxtooltip listing is DeportedToHell\'s and reactivation needs a recorded owner transfer; this is an independent port by sparticle with its own icon. The package ships the full modular source (src/**, 13 files) with a real mod API entry in src/lib.rs (bare Mod + horizon_mod Hooks on the pinned SDK), the legacy runtime.rs splice file and horizon-mixin.toml are removed, the upstream MIT LICENSE (Yanis Guaye, 2019) is at the package root, and the summary says nothing shows in game yet (no tooltip-render/keybind/packet surfaces in the client mod API). 11 tests green."
