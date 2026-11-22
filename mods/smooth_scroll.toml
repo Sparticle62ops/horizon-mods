@@ -2,40 +2,30 @@ id = "smooth_scroll"
 kind = "native-mod"
 name = "smooth_scroll"
 summary = "A Horizon port of Smooth Scrolling."
-description = """Exact 1:1 Rust translation of [Smooth Scrolling](https://modrinth.com/mod/smooth-scroll)
-(upstream Java: SmajloSlovakian/Minecraft-Smooth-Scrolling @639d45b), which makes
-scrolling in lists, inventories and the chat smooth instead of jumping slot to slot.
+description = """Smooth Scrolling, a native mod: container, chat, creative-screen, entry-list and text-field scrolling animates smoothly instead of stepping. An unofficial, independent port of SmajloSlovakian's Smooth Scrolling (GPL-3.0-only); not affiliated with SmajloSlovakian. No code, assets, textures or lang files from the original Java mod are included.
 
-Upstream copyright (C) SmajloSlovakian, licensed under GPL-3.0-only:
-https://www.gnu.org/licenses/gpl-3.0.txt
+Ported 1:1: the whole config model (CfgValue, CfgValueBuilder, NewConfig, SmScCfg with the format data corrections), SmoothSc/Globals statics, the menu module, the duck interfaces and TransformationAccess, and the client mixins' logic (hotbar smoothness and rollover, chat and suggestion-window smoothness and speeds, creative-screen smoothness with RP compatibility mode, entry-list smoothness and speed, text-input smoothness, speed and cursor margin, touchpad inertia thresholds, merged-scroll handling). The config fields are Horizon settings (Options > Mods) with the same defaults and ranges; /smoothscroll (short form /ss) reads and writes them.
 
-The Rust translation carries the same GPL-3.0-only license and credits the
-upstream author in the LICENSE shipped alongside. It is a Horizon native mod:
-mixins/smooth_scroll/runtime.rs is a runtime splice of the full 1:1 module set
-(src/), with crate:: mapped to super:: for the carrier, built against the
-revisions pinned in compatibility.json (Minecraft 26.3, Horizon
-3fb4c3138e0c5d8fdd2fdb555cf31368e8897497, Horizon Mixins
-d9c83d7096b7ea5b83678da2efdfd6161f74997e).
+Honest status: nothing scrolls smoothly in game yet - the client mod API has no mouse-wheel / scroll-event surface for container, creative, chat or entry-list screens, and no text-field cursor surface, so the logic runs its tests and stays unwired until that lands.
 
-Ported by sparticle.
+Licence: GPL-3.0-only, the upstream license, carried with credit. Source: https://github.com/Sparticle62ops/horizon-smooth-scroll
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
-
-Upstream licence: GPL-3.0-only (Modrinth); port licence as stated in the source repo: GPL-3.0-or-later. Source: https://github.com/Sparticle62ops/horizon-smooth-scroll
+Built on the current SDK (Horizon f00125f, mixins e59da909, mod API 0.2).
 """
-authors = ["sparticle"]
+authors = ["SmajloSlovakian", "sparticle"]
 owners = ["Sparticle62ops"]
 owner_ids = [209812745]
-license = "GPL-3.0-or-later"
+license = "GPL-3.0-only"
 source = "https://github.com/Sparticle62ops/horizon-smooth-scroll"
 icon = "icons/smooth_scroll.png"
 categories = ["utility"]
 tags = ["port", "horizon"]
+side = "client"
 
 [[versions]]
 version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "smooth_scroll-1.0.0.hmod"
-sha256 = "349fde1a1995d306e19445e2f876548f601a55331e0a1ce246ceddb89f05741f"
-changelog = "Initial registry submission"
+sha256 = "979f5509e5f22749dfb5d97f9cde5761f77a8f7254bc86a0aaa2de9fae169c83"
+changelog = "Real mod-API entry on the current SDK (Horizon f00125f, mixins e59da909, api 0.2): 23 config fields as settings with upstream defaults and ranges, /smoothscroll + /ss commands, GPLv3 LICENSE shipped in the package, legacy runtime splice removed; 109 tests green."
