@@ -33,7 +33,7 @@ Source-only .hmod built on the current SDK (Horizon f00125f)
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-fast-trading
 """
 authors = ["bendy1234", "sparticle"]
-owners = ["Sparticle62ops"]
+owners = ["sparticle62ops"]
 owner_ids = [209812745]
 license = "MIT"
 source = "https://github.com/Sparticle62ops/horizon-fast-trading"
@@ -46,5 +46,5 @@ version = "1.0.1"
 published = "2026-11-21"
 game = "26.3"
 file = "fast_trading-1.0.1.hmod"
-sha256 = "aa3be00798725109ab40d3ce1b93bfa802b0bba14c599b27b9feee32a372d3c5"
-changelog = "Rebuilt on the pinned SDK (Horizon f00125f): fixed the merchant-screen bindings and the autofill re-lock hang, added the upstream copyright line."
+sha256 = "98164fc2779eb29dc5dbf81577f8eabd0962b14c30a93162d82c94f119ae3022"
+changelog = "Rebuilt on the pinned SDK (Horizon f00125f): fixed the merchant-screen bindings and the autofill re-lock hang, added the upstream copyright line. Repacked without the .gitignore the staging fetch rejects."
