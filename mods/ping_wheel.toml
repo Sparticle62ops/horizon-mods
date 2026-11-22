@@ -1,0 +1,51 @@
+id = "ping_wheel"
+kind = "native-mod"
+name = "Ping Wheel"
+summary = "A Horizon port of Ping Wheel."
+description = """Exact 1:1 Rust translation of [Ping Wheel](https://modrinth.com/mod/ping-wheel)
+(LukenSkyne, MIT) for Horizon. Carries the upstream license and credit.
+
+The full upstream client and server logic, compiled and tested on the pinned
+SDK: the config handler and validation, the ping data model and manager
+(dimension tracking, position correction, expiry, grouping), the ping
+controller (raycast path, directional sound, ping queueing), the server core
+(channel modes, rate limiting, player tracking, packet dispatch), the network
+packets and codecs, the math helpers, the compat migrations (legacy config
+rename, key mapping migration, deprecated resource-pack notice), the settings
+screen, the integration loaders and the render logic for the overlay, the
+direction indicator and the ping location marker.
+
+The mod API wires the original's config as nine settings (volume, duration,
+distance, correction period, size, item icon, direction indicator, player
+info mode, team color mode) and registers the original's ping key (mouse
+button 5) on Options > Controls.
+
+Known seams (engine-stage; tracked):
+- the HUD overlay draw, the world raycast read, the client-to-server custom
+  channel and a read of the player's current (rebound) key binding run behind
+  the seams until those surfaces land; see the package description for the
+  tracked gaps.
+
+Pinned to Horizon f00125f and horizon-mixins e59da909; exact 1:1 Rust port
+tested against those revisions.
+
+Licence: MIT (upstream, carried, with the upstream notice and credit to
+LukenSkyne). Upstream: https://github.com/LukenSkyne/Minecraft-Ping-Wheel.
+Source: https://github.com/Sparticle62ops/horizon-ping-wheel
+"""
+authors = ["LukenSkyne", "sparticle"]
+owners = ["Sparticle62ops"]
+owner_ids = [209812745]
+license = "MIT"
+source = "https://github.com/Sparticle62ops/horizon-ping-wheel"
+icon = "icons/ping_wheel.png"
+categories = ["utility"]
+tags = ["port", "horizon"]
+
+[[versions]]
+version = "1.0.0"
+published = "2026-11-21"
+game = "26.3"
+file = "ping_wheel-1.0.0.hmod"
+sha256 = "6a819fc758a16d403ccf56095f17e8ec911389273dbb7f2278ca8753c5b78fc3"
+changelog = "Mod API 0.2 rebuild: the native mod_api Hooks impl replaces the runtime splice; nine settings and the ping key wired on api 0.2; registry-only Cargo.lock; launcher-validated manifest and assets"
