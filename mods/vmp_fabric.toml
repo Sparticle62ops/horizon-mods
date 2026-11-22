@@ -4,7 +4,7 @@ name = "vmp_fabric"
 summary = "A Horizon port of Very Many Players (Fabric)."
 description = """Slice 1 of a Horizon port of [Very Many Players (Fabric)](https://github.com/RelativityMC/VMP-fabric)
 by ishland (MIT, upstream read at ver/26.1.1, commit 7e89476). Credits and
-license preserved; the upstream LICENSE is carried verbatim.
+license preserved; the upstream LICENSE is carried verbatim in the package.
 
 ## What slice 1 holds (1:1 logic core, 27 passing tests)
 
@@ -25,13 +25,26 @@ license preserved; the upstream LICENSE is carried verbatim.
   with add/remove/update diffing, per-cell object sets, the sorted listener
   walk by Chebyshev distance, and the same update-diff asymmetry upstream
   ships (adds iterate the new square minus the old, removals the old minus
-  the new). Upstream's poo
+  the new). Upstream's pooled insertion-ordered identity sets run on plain
+  sets here with identical observable behavior.
+- **AreaPlayerChunkWatchingManager** (`chunk_watching.rs`): the two-map
+  bookkeeping (player map at view distance, general map at
+  `GENERAL_PLAYER_AREA_MAP_DISTANCE` = 6, computed from the upstream
+  `ceil(max immediate despawn range / 16.0)` formula over the vanilla
+  SpawnGroup table), add/remove/move and on-watch-distance-change.
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+## Status
+
+Ships as the tested 1:1 logic core; nothing is wired in game yet (no hooks).
+The server-coupled surfaces (Netty event loops, async chunks, portals, async
+logging, entity tracking, ticket propagator, biome access, spawn density cap)
+are seams noted in the README for slice 2+.
+
+Pinned to Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d and horizon-mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0.
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-vmp-fabric
 """
-authors = ["Chebyshev distance", "sparticle"]
+authors = ["ishland", "sparticle"]
 owners = ["Sparticle62ops"]
 owner_ids = [209812745]
 license = "MIT"
@@ -42,8 +55,8 @@ tags = ["port", "horizon"]
 
 [[versions]]
 version = "1.0.0"
-published = "2026-11-19"
+published = "2026-11-22"
 game = "26.3"
 file = "vmp_fabric-1.0.0.hmod"
-sha256 = "fd77bd02b1166d804399d3ed6f2925b46d77d08a42c27c15a8f0d6531f9c04bf"
-changelog = "Initial registry submission"
+sha256 = "ef207c2ca06dc331b085f6532399b827b2e526c2d07bade188eed98bba25ce4d"
+changelog = "Full-source rebuild on the current SDK: package carries the repo's modular layout with a real mod entry in lib.rs (no game.rs splice), upstream's MIT LICENSE in the package, corrected authors, description and pins."
