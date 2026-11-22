@@ -1,52 +1,61 @@
 id = "rrls"
-kind = "native-mod"
-name = "rrls"
-summary = "A Horizon port of Remove Reloading Screen."
-description = """Exact 1:1 Rust translation of [Remove Reloading Screen](https://github.com/dima-dencep/rrls)
-by dima_dencep (OSL-3.0), per Danil's port policy (2026-11-12): never clean-room,
-always exact code. License + upstream credit carried.
-
-**Status: complete.** Translated (98/98 tests passing):
-
-- `Rrls.java` -> `rrls.rs` (MOD_ID, logger, MOD_RELOADERS_FUTURE as an
-  epoch-locked slot with set/complete semantics)
-- `config/` -> `config/` (AprilFool with Calendar month/day math,
-  DoubleLoad.is_load, HideType.affect_initial + can_hide matrix, Type,
-  RrlsConfig defaults)
-- `utils/Ease.java` -> `utils/ease.rs` (34 variants, upstream enum ids incl.
-  the 2..=5 gap, easeIn/easeOut/easeInOut wrappers)
-- `utils/Easing.java` -> `utils/easing.rs` (sine/cubic/quadratic/pow/exp/
-  circle/back/elastic/bounce/step with the binary-search loop/catmullRom,
-  formulas transcribed literally)
-- `utils/RainbowUtils.java` -> `utils/rainbow.rs` (makeChannel, rainbowColor
-  with nanos injectable, ARGB packing)
-- `utils/WaitingSharedState.java` -> `utils/waiting_shared_state.rs`
-  (failed-future fallback for future-typed keys)
-
-Complete: every upstream file is translated 1:1, including
-`utils/DummyGuiGraphics`, `utils/GuiGraphicsGenerator`, `utils/OverlayHelper`,
-`utils/TextureUtils`, `utils/AtlasUtils`, the `services/` reloader,
-`screens/`, and the full mixin set (core, animation, compat, workaround
-including the vulkan/opengl/textures subgroups, accessors). 98 unit tests on
-the t
-
-Source-only .hmod built on the current SDK (Horizon f00125f)
-
-Licence: OSL-3.0. Source: https://github.com/Sparticle62ops/horizon-rrls
-"""
-authors = ["dima-dencep", "sparticle"]
-owners = ["Sparticle62ops"]
-owner_ids = [209812745]
-license = "OSL-3.0"
-source = "https://github.com/Sparticle62ops/horizon-rrls"
-icon = "icons/rrls.png"
-categories = ["utility"]
-tags = ["port", "horizon"]
-
-[[versions]]
+name = "Remove Reloading Screen"
 version = "1.0.0"
-published = "2026-11-19"
+description = """Background resource reloads for Horizon. Exact 1:1 Rust port
+of Remove Reloading Screen (upstream https://github.com/dima-dencep/rrls,
+OSL-3.0, upstream licence and credit carried).
+
+## What ships today
+
+The full translated mod: the config data model (every upstream field with its
+released defaults) loaded from config/rrls.json and saved on changes, the
+reload bookkeeping (ReloadersFuture shared state), the texture and atlas
+reload queues with single-flight dedupe, the overlay helper state machine and
+its screen-kind handling, the animation and easing math (34 easing curves,
+interpolation, RGB progress), the screens and services translations, and the
+translated mixin logic the overlay drives.
+
+## Settings
+
+15 of the 17 config fields register on the mod's Options > Mods page with
+upstream labels: overlay hiding, block-overlay, mini render, scissor, the
+overlay display type, RGB progress, both interpolation toggles, the easing
+curve, animation speed, reset-resources, re-init-screen, early pack-status
+send, double-load and skip-(Neo)Forge-overlay. Two fields stay file-held in
+config/rrls.json because the settings API has no string or optional-number
+field kind yet: reload_text and easing_arg.
+
+## Horizon feature gaps, tracked on horizon-rust/horizon
+
+1. Resource-reload lifecycle events. Upstream replaces the vanilla
+   resource-reload screen and runs reloads in the background; the mod API
+   carries no reload-lifecycle or screen-replacement surface, so the
+   translated overlay logic cannot take over the reload screen yet and the
+   vanilla screen stays. When the surface lands, the logic wires to it
+   as-is (tracked under horizon-rust/horizon #15868).
+2. HUD overlay draw. The custom overlay draws through the game's GUI pose
+   stack and texture draw; the mod API carries no HUD sprite/pose draw
+   surface for a mod crate, so the render path stays behind the seams.
+3. Resource-pack status channel. The early pack-status send rides the
+   server resource-pack protocol; the mod API carries no channel to send
+   it on, so that path stays a seam.
+
+Pinned to Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d, horizon-mixins
+e59da9094f0c2fdda6c627fe9eff22dec6a906f0 and mod API 0.2; exact 1:1 Rust
+port tested against those revisions.
+
+Licence: OSL-3.0 (upstream, carried, with the upstream notice and credit to
+dima_dencep). Upstream: https://github.com/dima-dencep/rrls.
+Source: https://github.com/Sparticle62ops/horizon-rrls
+"""
+authors = ["dima_dencep", "sparticle"]
+license = "OSL-3.0"
+homepage = "https://github.com/Sparticle62ops/horizon-rrls"
+api = "0.2"
+side = "client"
+capabilities = ["registries"]
+
+[native]
 game = "26.3"
-file = "rrls-1.0.0.hmod"
-sha256 = "f50c85d6df4ea0c2972dbd2abe8746c52777d8aa7bafe413a5ee99703e331874"
-changelog = "Initial registry submission"
+horizon = "f00125f61f794aaa3d4e950d301f353b35b6ee3d"
+mixins = "e59da9094f0c2fdda6c627fe9eff22dec6a906f0"
