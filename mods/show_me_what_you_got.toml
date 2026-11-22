@@ -6,7 +6,14 @@ description = """show-me-what-you-got ported to Horizon as a native Rust mod.  U
 
 Port by sparticle. Upstream: https://github.com/apace100/show-me-what-you-got (MIT).
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Honest status: nothing of this is visible in game yet. The client mod API has
+no client tick hook, no chat hook and no packet registration surface, so no
+item is shared in game: the packet, chat and key hooks of the original have
+nothing to register on. The logic runs its tests; the three seams stay
+recorded in the source README and get wired the day those surfaces land.
+
+Package ships the full modular source (src/runtime.rs + the mod API entry)
+on the current SDK (Horizon f00125f)
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-show-me-what-you-got
 """
@@ -24,5 +31,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "show_me_what_you_got-1.0.0.hmod"
-sha256 = "fa5e85ae120637793e84c6e5be2eecd53b75cd1fe3b0d09debbdfcaad68282d9"
-changelog = "Initial registry submission"
+sha256 = "f43bb1b4e1227cfb52a896c191d215b8e33e44a68434e58f205d1eb583071f97"
+changelog = "Review r2: real mod API entry in src/lib.rs (bare Mod + horizon_mod Hooks on the pinned SDK), the [[native.module]] row is gone and the package ships the full modular source with a Cargo.lock (runtime uses serde_json), the upstream MIT LICENSE.md (apace100, 2022) is carried verbatim at the package root, the summary says nothing is shared in game yet (no tick/chat/packet hook surfaces in the client mod API), and the pin line reads f00125f/e59da90. 22 tests green."
