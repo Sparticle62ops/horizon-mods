@@ -17,7 +17,8 @@ they play side by side without kicking the original.
 - canJoin with the original inequality (size + 1 < maxPlayers).
 - The spawn-nearby placement: sample points in the configured radius, relaxed
   minimum distance, safe-Y scan top down, nether-roof guard, creative-flight
-  passthrough, source-position fallback.
+  passthrough, source-position fallback; the sampling loop is bounded so a
+  radius of 2 or less terminates instead of stalling.
 - All seven config values with the original defaults (maxPlayers 8,
   autoWhitelist on, autoOp on, spawnNearPlayer on, radius 10, copyTexture on,
   prefixWithNumber on).
@@ -28,9 +29,12 @@ The native-mod API hears a joining player once accepted through
 native_player_login (API 172) and may cancel the join with a reason, but it
 cannot rewrite the joining player's profile. The heart of TwinSession is that
 rewrite: the duplicate's UUID is replaced before placement so two sessions of
-one account coexist. Without it the port can detect a dupl
+one account coexist. Without it the port can detect a duplicate and place it
+near the original, but cannot mint the fresh UUID and profile, so the mod does
+nothing in game yet. It ships as the tested 1:1 library until that surface
+lands (horizon-rust/horizon #10057).
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Pinned to Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d and horizon-mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0.
 
 Licence: CC0-1.0. Source: https://github.com/Sparticle62ops/horizon-twinsession
 """
@@ -48,5 +52,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "twinsession-1.0.0.hmod"
-sha256 = "23c1f428cc0faaaf42296ad2324c77f5402c9c99a3f200001766dcced991122d"
-changelog = "Initial registry submission"
+sha256 = "01a6c3fb9fa1707f3fc9a73df158bd17366f0985d4e4d8432ac3afc2f4a5c427"
+changelog = "Rebuilt on Horizon f00125f / mixins e59da90 (api 0.2): real mod_api entry, bounded spawn sampling, honest placeholder status (profile rewrite is horizon-rust/horizon #10057), CC0 text ships."
