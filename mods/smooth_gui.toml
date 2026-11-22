@@ -28,3 +28,11 @@ game = "26.3"
 file = "smooth_gui-1.0.0.hmod"
 sha256 = "7e63711158d8f44ea5de86455854270ea1404ccf47bfc7516f9d8d0088f32798"
 changelog = "Full native-mod rebuild on mod API 0.2: real mod-API entry (12 settings, /smoothgui + /sg), full modular source in the .hmod, upstream MIT licence shipped, re-entrancy fix in on_render; 11 tests green."
+
+[[versions]]
+version = "1.1.0"
+published = "2026-11-21"
+game = "26.3"
+file = "smooth_gui-1.1.0.hmod"
+sha256 = "316bfe567bc2413b2dfeb2360506a10bcaa56837662433f5948e4685106ddf13"
+changelog = "Rebuild addressing review: real #[mod_api::horizon_mod] entry (the launcher-generated hooks() now compiles), Ezzenix MIT licence shipped at repo and package root, settings as the config surface with the upstream defaults and ranges, README with the port map and honest status, /smoothgui + /sg commands; 11 tests green. Head 25bcf02."
