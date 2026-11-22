@@ -1,25 +1,18 @@
 id = "morechathistory"
 kind = "native-mod"
-name = "morechathistory"
-summary = "A Horizon port of MoreChatHistory Reforged."
-description = """An exact 1:1 Rust translation of
-[MoreChatHistory](https://github.com/JackFred2/MoreChatHistory)
-(JackFred, CC0-1.0) for Horizon. Raises the chat history cap from vanilla's
-100 entries to 16384, for the display queue, the send queue and the
-recent-chat list.
+name = "MoreChatHistory"
+summary = "Raises the chat history cap from 100 to 16384 entries."
+description = """Raises the chat history cap from 100 entries to 16384. Exact 1:1 Rust port of [MoreChatHistory](https://github.com/JackFred2/MoreChatHistory) (JackFred, CC0-1.0), ported for the Horizon client by sparticle.
 
-Upstream is one mixin: `ChatComponentMixin.morechathistory_changeMaxHistory`
-adds 16284 to the vanilla 100-message cap wherever the chat component enforces
-it (addMessageToDisplayQueue, addMessageToQueue, addRecentChat), taking the
-history from 100 to 16384 entries. This port maps that class code-for-code;
-the engine-bound ChatComponent surfaces sit behind `seams`, and nothing else
-about the chat paths changes.
+Upstream is one mixin: `ChatComponentMixin.morechathistory_changeMaxHistory` adds 16284 to the vanilla 100-message cap wherever the chat component enforces it (`addMessageToDisplayQueue`, `addMessageToQueue`, `addRecentChat`), taking the history from 100 to 16384 entries. This port maps that class code-for-code in `src/history.rs`, with the three capped call sites mirrored and tested; nothing else about the chat paths changes.
 
-Credited to sparticle.
+## Horizon feature gap, tracked on horizon-rust/horizon
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+- Chat history cap surface: the engine's chat component enforces the cap inline (`truncate(100)` on the display queue and the wrapped lines, `>= 100` on the recent-chat list) and the mod API has no hook that can change it, so the port's `#[mod_api::horizon_mod]` impl registers the cap values and the call-site application waits on a Horizon surface that lets a native-mod override the chat history cap (the equivalent of the mixin's constant modification). When it lands, the cap wires to it as-is. (A dedicated issue is linked from the PR.)
 
-Licence: CC0-1.0. Source: https://github.com/Sparticle62ops/horizon-morechathistory
+Pinned to Horizon f00125f61f794aaa3d4e950d301f353b35b6ee3d, horizon-mixins e59da9094f0c2fdda6c627fe9eff22dec6a906f0 and mod API 0.2; exact 1:1 Rust port tested against those revisions.
+
+Licence: CC0-1.0 (upstream, carried, with the upstream notice and credit to JackFred). Source: https://github.com/Sparticle62ops/horizon-morechathistory
 """
 authors = ["JackFred2", "sparticle"]
 owners = ["Sparticle62ops"]
@@ -32,8 +25,8 @@ tags = ["port", "horizon"]
 
 [[versions]]
 version = "1.0.0"
-published = "2026-11-19"
+published = "2026-11-21"
 game = "26.3"
 file = "morechathistory-1.0.0.hmod"
-sha256 = "95597506d8ab9c4a47ac3ac9582d371b06820f542fa9975afafc41e5169bda15"
-changelog = "Initial registry submission"
+sha256 = "4e4bb98f0fa983686f819e3ed05dd5739ccb55a47cf860ae0d38b2c0b7d28d4d"
+changelog = "Rebuilt on the pinned SDK (Horizon f00125f, mixins e59da909, mod API 0.2): flat mod-API crate with a real #[mod_api::horizon_mod] impl, the [[module]] injection table removed, the crate::mixins/crate::seams imports retired, the full CC0-1.0 upstream LICENSE shipped in the repo and package, square 128px icon. The chat history cap's call-site application is documented as a Horizon mod API gap (linked from the PR)."
