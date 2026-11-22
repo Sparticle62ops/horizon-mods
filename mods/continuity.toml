@@ -41,16 +41,24 @@ one seam per upstream call.
   page, same defaults.
 - `client_setup` runs the core init: the 25 CTM loader registrations, the
   model-wrapping plugin, and the custom-block-layers reload listener.
-- `client_resources_reloaded` re-applies the wrap flags on every reload,
-  the original's `ValueFlag::ReloadWorldRenderer` effect.
+- `setting_changed` reads the wrap toggles where the mod API allows
+  `setting_bool` (it is a world-only read, unreachable in Setup and
+  Reloading) and rebuilds the wrapping handler; `client_setup` applies the
+  defaults and `client_resources_reloaded` re-applies the stored flags on
+  every reload, the original's `ValueFlag::ReloadWorldRenderer` effect.
+- The config file is no longer rewritten at startup: the settings page
+  owns the values now (upstream saves on every load; that write is the one
+  deliberate deviation).
 
 ## Tracked gap
 
 The quad wrap itself runs in the engine's model-bake pass; the pinned mod
-API has no baked-geometry hook (horizon-rust/horizon#861), so models bake
-un-wrapped until that lands. Tracked on horizon-rust/horizon#861.
+API has no baked-geometry hook (horizon-rust/horizon#19759,
+`model_baking_completed` gives no view of the baked geometry and edits
+nothing; lineage #4953 / #6303 / #6360), so models bake un-wrapped until
+that lands and connected/emissive textures do not apply yet.
 
-Source-only .hmod built on the current SDK (Horizon f00125f, mixins e59da909,
+Source .hmod built on the current SDK (Horizon f00125f, mixins e59da909,
 api 0.2). 134 cargo tests green.
 
 Licence: LGPL-3.0-only. Source: https://github.com/Sparticle62ops/horizon-continuity"""
@@ -65,8 +73,8 @@ tags = ["port", "horizon"]
 
 [[versions]]
 version = "1.0.0"
-published = "2026-11-19"
+published = "2026-11-22"
 game = "26.3"
 file = "continuity-1.0.0.hmod"
-sha256 = "6609a2672a806c3faa351e48c2870a3ce0b7e2ec0a01827b5e5486d7c8ebdb3b"
-changelog = "Rebuilt on the current SDK mod API"
+sha256 = "965033a96cfa5ced48f00d0acfde015270c22a1444d01b86a9ca442ffd2e0e70"
+changelog = "Round-2 fixes: wrap flags read in setting_changed (setting_bool is world-only, unreachable in Setup/Reloading, so the startup/reload panic path is gone), no host reads in setup/reload, config file no longer rewritten at startup, bake-gap reference corrected to horizon#19759, Cargo.lock regenerated. 134 tests green."
