@@ -6,7 +6,11 @@ description = """show_me_your_skin: exact 1:1 Rust port of enjarai/show-me-your-
 
 Port by sparticle. Upstream: https://codeberg.org/enjarai/show-me-your-skin (MIT).
 
-Source-only .hmod built on the current SDK (Horizon f00125f)
+Package ships the full modular source (src/** with the real mod API entry, no [[native.module]] paste row) on the current SDK (Horizon f00125f / mixins e59da90).
+
+Honest status: nothing of this is visible in game yet. No client tick, render/model-wrap, packet-registration or settings surface exists in the client mod API, so no armor visibility changes in game. The logic runs its tests; the seams get wired the day those surfaces land.
+
+The deprecated mixins/ splice crate (same package name, [[module]] paste row, old 3fb4c31 pin) is removed from the repo and package; the model-wrap seams live in the main crate's src/mixin modules.
 
 Licence: MIT. Source: https://github.com/Sparticle62ops/horizon-show-me-your-skin
 """
@@ -24,5 +28,5 @@ version = "1.0.0"
 published = "2026-11-19"
 game = "26.3"
 file = "show_me_your_skin-1.0.0.hmod"
-sha256 = "6cbbeee540c7d3b67c6325190e653bcde3bb76ad8e306c4a65e51bbdaab48e35"
-changelog = "Initial registry submission"
+sha256 = "2f832e58d0930a2c8b37b673e59740a6bdd0d2556d35f595d428d4a01724972a"
+changelog = "Review r2: the package ships the full modular source (src/**, 30 files) with a real mod API entry in src/lib.rs (bare Mod + horizon_mod Hooks on the pinned SDK) instead of the runtime.rs paste, the [[native.module]] row is gone, upstream MIT LICENSE (enjarai 2022) is at the package root, the deprecated mixins/ splice crate is removed, the description says nothing changes in game yet (no tick/render/packet/settings surfaces in the client mod API), and the pins read f00125f/e59da90. 47 tests green."
